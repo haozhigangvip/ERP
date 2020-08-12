@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 
-//异常通用类
-@ControllerAdvice //默认情况下链接所有Controller
+//通用异常处理
+@ControllerAdvice //默认情况下会拦截所有的Controller
 public class CommExceptionHandler {
-    @ExceptionHandler({ErpExcetpion.class})     //拦截RunTimeExceprion 异常
-    public ResponseEntity<ExceptionResult> handleException(ErpExcetpion e){
-        ExceptionEumn  myenum =e.getExceptionEumnumn();
-        return ResponseEntity.status(myenum.getCode()).body(new ExceptionResult(e.getExceptionEumnumn()));
+    @ExceptionHandler(ErpExcetpion.class) //拦截RuntimeException异常
+    public ResponseEntity<ExceptionResult> handleExceprion(ErpExcetpion e){
+        ExceptionEumn eumn=e.getExceptionEumnumn();
+        return ResponseEntity.status(eumn.getCode()).body(new ExceptionResult(e.getExceptionEumnumn() ));
     }
 }
