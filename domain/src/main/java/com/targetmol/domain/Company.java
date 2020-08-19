@@ -1,7 +1,13 @@
 package com.targetmol.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.Getter;
+import tk.mybatis.mapper.annotation.KeySql;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -9,7 +15,11 @@ import java.util.Date;
 @Table(name="[company_info]")
 @JsonIgnoreProperties(value = {"handler"})
 public class Company {
+    @Id
+    @KeySql(useGeneratedKeys = true)
+    @Column(insertable = false,name = "autoid")
     private Integer autoid;
+    @Column(insertable = false,name = "comid")
     private String  comid;
     private String companyname;
     private String comptype;
@@ -17,7 +27,10 @@ public class Company {
     private String phone;
     private String abbre;
     private String note;
+    @Column(insertable = false,name = "creatime")
     private Date creatime;
     private String csalesman;
     private Integer deltag;
+
+
 }

@@ -6,6 +6,7 @@ import com.targetmol.domain.Company;
 import com.targetmol.service.CompanyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,4 +35,12 @@ public class CompanyController {
 
         return ResponseEntity.ok(companyService.findByAll(page,pageSize,softBy,desc,key,showDel));
     }
+
+    @PostMapping
+    public ResponseEntity<Company> saveCompany(@RequestBody Company company){
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(companyService.save(company));
+    }
+
 }
