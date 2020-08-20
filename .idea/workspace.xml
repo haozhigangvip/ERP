@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="99c46c0d-ac4e-49cf-8a95-c6425e39be3f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ERP-Gateway/ERPGateway.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ERP-Gateway/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ERP-Gateway/src/main/java/com/targetmol/gateway/config/GlobalCrosConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ERP-Gateway/src/main/java/com/targetmol/gateway/erpGatewayApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ERP-Gateway/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ERP-Registry/ERPRegistry.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ERP-Registry/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ERP-Registry/src/main/java/com/targetmol/registry/erpRegistryApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ERP-Registry/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/company/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/company/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/company/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/company/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Company.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -270,7 +255,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1597916744584" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1597917225907" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -358,7 +343,7 @@
       <workItem from="1597050037245" duration="4215000" />
       <workItem from="1597111810367" duration="42470000" />
       <workItem from="1597714253851" duration="5753000" />
-      <workItem from="1597890353576" duration="8565000" />
+      <workItem from="1597890353576" duration="8946000" />
     </task>
     <task id="LOCAL-00001" summary="123">
       <created>1597111872376</created>
@@ -388,11 +373,18 @@
       <option name="project" value="LOCAL" />
       <updated>1597826113931</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="123">
+      <created>1597916772831</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1597916772831</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61003000" />
+    <option name="totallyTimeSpent" value="61384000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
