@@ -1,0 +1,39 @@
+server:
+  port: 80
+spring:
+  application:
+    name: api-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+zuul:
+  prefix: /api  #添加路由前缀
+  routes:
+    company-service:
+      path: /company/**
+      serviceId: COMPANY-SERVICE  #ID为该服务所对应的appliaction name
+      strip-prefix: false
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000  #熔断超时时长 5000毫秒
+
+ribbon:
+  ConnectionTimeout: 1000   #ribbon连接超时时长1000毫秒
+  ReadTimeout: 3500  #ribbon读取超时时长 3500毫秒
+  MaxAutoRetries: 0   #当前服务重启次数
+  MaxAutoRetriesNextServer: 0   #切换服务重试次数
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

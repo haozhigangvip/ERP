@@ -11,6 +11,8 @@
         <module>common</module>
         <module>company</module>
         <module>domain</module>
+        <module>ERP-Registry</module>
+        <module>ERP-Gateway</module>
     </modules>
     <packaging>pom</packaging>
     <parent>
