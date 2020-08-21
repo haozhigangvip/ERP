@@ -7,17 +7,18 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Table(name="[company_info]")
 @JsonIgnoreProperties(value = {"handler"})
-public class Company {
+public class Company  implements Serializable {
     @Id
     @KeySql(useGeneratedKeys = true)
-    @Column(insertable = false,name = "autoid")
+    @Column(insertable = false,updatable =false,name = "autoid")
     private Integer autoid;
-    @Column(insertable = false,name = "comid")
+    @Column(insertable = false,updatable = false,name = "comid")
     private String  comid;
     private String companyname;
     private String comptype;

@@ -14,8 +14,8 @@ zuul:
   prefix: /api  #添加路由前缀
   routes:
     company-service:
-      path: /company/**
-      serviceId: COMPANY-SERVICE  #ID为该服务所对应的appliaction name
+      path: /account/**
+      serviceId: ACCOUNT-SERVICE  #ID为该服务所对应的appliaction name
       strip-prefix: false
 
 

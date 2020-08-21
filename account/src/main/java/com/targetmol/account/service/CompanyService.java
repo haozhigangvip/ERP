@@ -1,19 +1,18 @@
-package com.targetmol.service;
+package com.targetmol.account.service;
 
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.targetmol.account.dao.CompanyDao;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.PageResult;
-import com.targetmol.dao.CompanyDao;
 import com.targetmol.domain.Company;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
-import tk.mybatis.mapper.weekend.WeekendCriteria;
 
 import java.sql.Timestamp;
 import java.util.Date;

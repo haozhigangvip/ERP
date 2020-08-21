@@ -6,12 +6,13 @@ import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 @Data
 @Table(name="[order]")
 @JsonIgnoreProperties(value = {"handler"})
 
-public class Order {
+public class Order implements Serializable {
     @Id
     @KeySql(useGeneratedKeys = true)
     private Integer autoid;
