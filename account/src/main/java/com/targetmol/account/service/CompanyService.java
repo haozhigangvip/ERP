@@ -23,10 +23,23 @@ public class CompanyService {
     @Autowired
     private CompanyDao companyDao;
 
-    public Company findByComid(String comid){
-        Company newcom=new Company();
-        newcom.setComid(comid);
-        Company result=companyDao.selectOne(newcom);
+    //按autoid查询company
+    public Company findById(Integer autoid){
+
+        Company result=companyDao.selectByPrimaryKey(autoid);
+        if(result==null ){
+            throw new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
+        }
+        return result;
+    }
+
+
+
+    //按comid查询company
+    public Company findByComId(String comid){
+        Company company=new Company();
+        company.setComid(comid);
+        Company result=companyDao.selectOne(company);
         if(result==null ){
             throw new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
         }
@@ -66,19 +79,15 @@ public class CompanyService {
     }
 
 
-    //添加
+    //添加Company
     @Transactional
-    public Company save(Company company) {
+    public Company addCompany(Company company) {
         //判断是否为空
-        if(company==null || company.getCompanyname()==null ){
-            throw new ErpExcetpion(ExceptionEumn.COMPANYNAME_CANNOT_BE_NULL);
-        }
-
+        checkCompany(company);
         //判断公司名是否存在
         Company c1=new Company();
         c1.setCompanyname(company.getCompanyname());
         Company com=companyDao.selectOne(c1);
-        System.out.println(com);
         if(com != null){
             throw new ErpExcetpion(ExceptionEumn.COMPANYNAME_ALREADY_EXISTS);
         }
@@ -88,10 +97,43 @@ public class CompanyService {
         if (rs!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
-
         return company;
     }
-    //修改
 
-    // 删除
+    //修改Company
+    public Company updateCompany(Company company) {
+        //检查company数据是否为空
+        checkCompany(company);
+        //检查company是否存在
+        if(companyDao.findRepeatCompanyName(company.getAutoid(),company.getCompanyname())!=null){
+            throw new ErpExcetpion(ExceptionEumn.COMPANYNAME_ALREADY_EXISTS);
+        }
+        if(companyDao.updateByPrimaryKeySelective(company)!=1){
+            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+        }
+        return companyDao.selectByPrimaryKey(company.getAutoid());
+    }
+
+    //检查要保存的COMPANY
+    public void checkCompany(Company company){
+        if(company==null){
+            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
+        }
+        if(company.getCompanyname()==null ||company.getCompanyname()=="") {
+            throw  new ErpExcetpion(ExceptionEumn.NAME_CANNOT_BE_NULL);
+        }
+
+    }
+
+    //设置删除标记 0 可用，1 删除
+    public void setdelbj(Integer autoid,Integer delbj) {
+        Company company=    companyDao.selectByPrimaryKey(autoid);
+        if (company==null){
+            throw  new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
+        }
+        company.setDeltag(delbj);
+        if(companyDao.updateByPrimaryKeySelective(company)!=1){
+            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
+        }
+    }
 }

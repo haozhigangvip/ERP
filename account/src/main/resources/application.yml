@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8082
   servlet:
     path: /account
 logging:
@@ -18,6 +18,7 @@ mybatis:
   type-aliases-package: com.targetmol.domain #别名路径
   configuration:
     map-underscore-to-camel-case: true      #驼峰命名
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 eureka:
   client:

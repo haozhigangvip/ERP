@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.*;
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
+    //按autoid查询company
+    @GetMapping("{autoid}")
+    public ResponseEntity<Company> findByComid(@PathVariable("autoid") Integer autoid){
 
-    @GetMapping("{comid}")
-    public ResponseEntity<Company> findByComid(@PathVariable("comid") String comid){
-
-        return ResponseEntity.ok(companyService.findByComid(comid));
+        return ResponseEntity.ok(companyService.findById(autoid));
     }
-
+    //查询所有company
     @GetMapping
     public ResponseEntity<PageResult<Company>> findByAll(
             @RequestParam(value="page",defaultValue = "1") Integer page,
@@ -35,12 +35,23 @@ public class CompanyController {
 
         return ResponseEntity.ok(companyService.findByAll(page,pageSize,softBy,desc,key,showDel));
     }
-
+    //添加company
     @PostMapping
-    public ResponseEntity<Company> saveCompany(@RequestBody Company company){
+    public ResponseEntity<Company> addCompany(@RequestBody Company company){
+        return ResponseEntity.status(HttpStatus.CREATED).body(companyService.addCompany(company));
+    }
 
+    //修改company
+    @PutMapping()
+    public ResponseEntity<Company> updateCompany(@RequestBody Company company){
+        return ResponseEntity.ok(companyService.updateCompany(company));
+    }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(companyService.save(company));
+    //删除company
+    @DeleteMapping("{autoid}")
+    public ResponseEntity deleteCompany(@PathVariable("autoid") Integer autoid){
+        companyService.setdelbj(autoid,1);
+        return ResponseEntity.ok("删除成功");
     }
 
 }
