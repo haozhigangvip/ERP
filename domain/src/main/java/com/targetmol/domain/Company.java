@@ -29,7 +29,7 @@ public class Company  implements Serializable {
     @Column(insertable = false,name = "creatime")
     private Date creatime;
     private String csalesman;
-    private Integer deltag=0;
+    private Integer deltag;
 
 
 }

@@ -2,22 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="99c46c0d-ac4e-49cf-8a95-c6425e39be3f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/ERP.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ERP-Registry/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ERP-Registry/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/CompanyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/CompanyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/ContactController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/ContactController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/CompanyDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/CompanyDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/ContactDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/ContactDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/CompanyService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/ContactService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/ContactService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/common.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/emums/ExceptionEumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/emums/ExceptionEumn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/domain.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Company.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Contact.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Contact.java" afterDir="false" />
     </list>
@@ -159,7 +148,29 @@
       <list>
         <serviceView>
           <treeState>
-            <expand />
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="com.intellij.execution.dashboard.RunDashboardServiceViewContributor@2baec3bb" type="d2cb1801:ServiceModel$ContributorNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="com.intellij.execution.dashboard.RunDashboardServiceViewContributor@2baec3bb" type="d2cb1801:ServiceModel$ContributorNode" />
+                <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="com.intellij.execution.dashboard.RunDashboardServiceViewContributor@2baec3bb" type="d2cb1801:ServiceModel$ContributorNode" />
+                <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="Running" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="com.intellij.execution.dashboard.RunDashboardServiceViewContributor@2baec3bb" type="d2cb1801:ServiceModel$ContributorNode" />
+                <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="Not Started" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+            </expand>
             <select />
           </treeState>
           <option name="groupByContributor" value="true" />
@@ -185,7 +196,7 @@
       <workItem from="1598000232232" duration="2762000" />
       <workItem from="1598022049748" duration="5458000" />
       <workItem from="1598071378347" duration="14975000" />
-      <workItem from="1598175811554" duration="4629000" />
+      <workItem from="1598175811554" duration="8842000" />
     </task>
     <task id="LOCAL-00001" summary="123">
       <created>1597111872376</created>
@@ -229,7 +240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1597917242620</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="123">
+      <created>1598187034236</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1598187034236</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,42 +262,46 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="294" y="160" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1598023304686" />
+    <state x="403" y="98" key="CommitChangelistDialog2" timestamp="1598187032773">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="403" y="98" key="CommitChangelistDialog2/0.0.1680.1010@0.0.1680.1010" timestamp="1598187032773" />
     <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1598022099818">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1598022099818" />
-    <state width="1125" height="272" key="GridCell.Tab.0.bottom" timestamp="1598117202485">
+    <state width="1125" height="272" key="GridCell.Tab.0.bottom" timestamp="1598193312551">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1125" height="272" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1598117202485" />
-    <state width="1125" height="272" key="GridCell.Tab.0.center" timestamp="1598117202485">
+    <state width="1125" height="272" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1598193312551" />
+    <state width="1125" height="272" key="GridCell.Tab.0.center" timestamp="1598193312551">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1125" height="272" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1598117202485" />
-    <state width="1125" height="272" key="GridCell.Tab.0.left" timestamp="1598117202485">
+    <state width="1125" height="272" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1598193312551" />
+    <state width="1125" height="272" key="GridCell.Tab.0.left" timestamp="1598193312551">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1125" height="272" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1598117202485" />
-    <state width="1125" height="272" key="GridCell.Tab.0.right" timestamp="1598117202485">
+    <state width="1125" height="272" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1598193312551" />
+    <state width="1125" height="272" key="GridCell.Tab.0.right" timestamp="1598193312551">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1125" height="272" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1598117202485" />
-    <state width="1125" height="272" key="GridCell.Tab.1.bottom" timestamp="1598117202486">
+    <state width="1125" height="272" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1598193312551" />
+    <state width="1125" height="272" key="GridCell.Tab.1.bottom" timestamp="1598193312552">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1125" height="272" key="GridCell.Tab.1.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1598117202486" />
-    <state width="1125" height="272" key="GridCell.Tab.1.center" timestamp="1598117202485">
+    <state width="1125" height="272" key="GridCell.Tab.1.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1598193312552" />
+    <state width="1125" height="272" key="GridCell.Tab.1.center" timestamp="1598193312552">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1125" height="272" key="GridCell.Tab.1.center/0.0.1680.1010@0.0.1680.1010" timestamp="1598117202485" />
-    <state width="1125" height="272" key="GridCell.Tab.1.left" timestamp="1598117202485">
+    <state width="1125" height="272" key="GridCell.Tab.1.center/0.0.1680.1010@0.0.1680.1010" timestamp="1598193312552" />
+    <state width="1125" height="272" key="GridCell.Tab.1.left" timestamp="1598193312552">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1125" height="272" key="GridCell.Tab.1.left/0.0.1680.1010@0.0.1680.1010" timestamp="1598117202485" />
-    <state width="1125" height="272" key="GridCell.Tab.1.right" timestamp="1598117202486">
+    <state width="1125" height="272" key="GridCell.Tab.1.left/0.0.1680.1010@0.0.1680.1010" timestamp="1598193312552" />
+    <state width="1125" height="272" key="GridCell.Tab.1.right" timestamp="1598193312552">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1125" height="272" key="GridCell.Tab.1.right/0.0.1680.1010@0.0.1680.1010" timestamp="1598117202486" />
+    <state width="1125" height="272" key="GridCell.Tab.1.right/0.0.1680.1010@0.0.1680.1010" timestamp="1598193312552" />
     <state width="1125" height="272" key="GridCell.Tab.2.bottom" timestamp="1598115483831">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -304,6 +326,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="341" y="147" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1598022101054" />
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1598187054793">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1598187054793" />
     <state x="520" y="329" key="com.intellij.ide.util.TipDialog" timestamp="1598177848203">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>

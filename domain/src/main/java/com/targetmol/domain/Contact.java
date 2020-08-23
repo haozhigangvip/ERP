@@ -37,9 +37,9 @@ public class Contact implements Serializable {
     private String weixin;
     private String lab;
 
-    private Integer contvip=0;
+    private Integer contvip;
     private String position;
-    private Integer deltag=0;
+    private Integer deltag;
     @Transient
     private Company company;
     @Transient

@@ -28,6 +28,24 @@ public class ContactService {
     @Autowired
     private CompanyService companyService;
 
+//    //关联查询所有Contact
+//    public PageResult<Contact> getByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showDelete) {
+//        //分页
+//        PageHelper.startPage(page,pageSize);
+//        //过滤
+//        //进行查询
+//        List<Contact> list=contactDao.getAll();
+//        if(list ==null ||list.size()==0){
+//            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
+//        }
+//        //loadCompanys(list);
+//        //封装到pageHelper
+//        PageInfo<Contact> pageInfo=new PageInfo<Contact>(list);
+//        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
+//    }
+
+
+
     //按autoid查询联系人
     public Contact findByAutoId(Integer autoid){
         Contact res=contactDao.selectByPrimaryKey(autoid);
@@ -103,6 +121,7 @@ public class ContactService {
         for(Contact cont: lst){
             String comid=cont.getCompanyid();
             if(comid!=null){
+                System.out.println(comid);
                 cont.setCompany(companyService.findByComId(comid));
             }
         }
@@ -111,6 +130,10 @@ public class ContactService {
     //添加联系人
     @Transactional
     public Contact add(Contact contact) {
+        //设置默认值
+        if(contact.getContvip()==null){
+            contact.setContvip(0);
+        }
         //检查联系人数据是否为空
         CheckContact(contact);
         //判断联系人是否存在
