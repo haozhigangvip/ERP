@@ -11,7 +11,7 @@ spring:
     name: account-service
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=tsbio
+    url: jdbc:sqlserver://192.168.3.15:1433; DatabaseName=tsbio
     username: tsbio
     password: ts@801
 mybatis:

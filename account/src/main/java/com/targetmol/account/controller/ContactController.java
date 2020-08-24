@@ -30,28 +30,28 @@ public class ContactController {
     @GetMapping
     public ResponseEntity<PageResult<Contact>> findByAll(
             @RequestParam(value="page",defaultValue = "1") Integer page,
-            @RequestParam(value="pageSize",defaultValue = "20") Integer pageSize,
-            @RequestParam(value="softBy",required = false) String softBy,
+            @RequestParam(value="pagesize",defaultValue = "20") Integer pageSize,
+            @RequestParam(value="softby",required = false) String softBy,
             @RequestParam(value="desc",defaultValue = "false") Boolean desc,
             @RequestParam(value="key",required = false) String key,
-            @RequestParam(value="showDel" ,defaultValue="false") Boolean showDel
+            @RequestParam(value="showdel" ,defaultValue="false") Boolean showDel
     ){
 
         return ResponseEntity.ok(contactService.findByAll(page,pageSize,softBy,desc,key,showDel));
     }
 
-    @GetMapping("a")
-    public ResponseEntity<PageResult<Contact>> findByAll1(
-            @RequestParam(value="page",defaultValue = "1") Integer page,
-            @RequestParam(value="pageSize",defaultValue = "20") Integer pageSize,
-            @RequestParam(value="softBy",required = false) String softBy,
-            @RequestParam(value="desc",defaultValue = "false") Boolean desc,
-            @RequestParam(value="key",required = false) String key,
-            @RequestParam(value="showDel" ,defaultValue="false") Boolean showDel
-    ){
-
-        return ResponseEntity.ok(contactService.getByAll(page,pageSize,softBy,desc,key,showDel));
-    }
+//    @GetMapping("a")
+//    public ResponseEntity<PageResult<Contact>> findByAll1(
+//            @RequestParam(value="page",defaultValue = "1") Integer page,
+//            @RequestParam(value="pagesize",defaultValue = "20") Integer pageSize,
+//            @RequestParam(value="softby",required = false) String softBy,
+//            @RequestParam(value="desc",defaultValue = "false") Boolean desc,
+//            @RequestParam(value="key",required = false) String key,
+//            @RequestParam(value="showdel" ,defaultValue="false") Boolean showDel
+//    ){
+//
+//        return ResponseEntity.ok(contactService.getByAll(page,pageSize,softBy,desc,key,showDel));
+//    }
 
     //新增联系人
     @PostMapping

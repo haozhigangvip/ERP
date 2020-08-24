@@ -5,6 +5,6 @@ import com.targetmol.domain.Address;
 import com.targetmol.domain.Invoice;
 
 
-public interface AddreddDao extends BaseMapper<Address> {
+public interface AddressDao extends BaseMapper<Address> {
 
 }

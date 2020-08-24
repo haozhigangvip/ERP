@@ -12,7 +12,7 @@ public class Area implements Serializable {
     @Id
     @KeySql(useGeneratedKeys= true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(insertable = false,updatable =false,name = "autoid")
+    @Column(insertable = false,updatable =false,name = "id")
     private Integer id;
     private String name;
     private Integer pid;

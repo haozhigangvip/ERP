@@ -2,13 +2,12 @@ package com.targetmol.account.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.targetmol.account.dao.AddreddDao;
+import com.targetmol.account.dao.AddressDao;
 import com.targetmol.account.dao.ContactDao;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.domain.Address;
-import com.targetmol.domain.Company;
 import com.targetmol.domain.Contact;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,32 +16,31 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
-import java.util.zip.CheckedInputStream;
 
 @Service
 public class ContactService {
     @Autowired
     private ContactDao contactDao;
     @Autowired
-    private AddreddDao addreddDao;
+    private AddressServcie addressServcie;
     @Autowired
     private CompanyService companyService;
 
-    //关联查询所有Contact
-    public PageResult<Contact> getByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showDelete) {
-        //分页
-        PageHelper.startPage(page,pageSize);
-        //过滤
-        //进行查询
-        List<Contact> list=contactDao.findAllByAnyPara(key,showDelete,softBy,desc);
-        if(list ==null ||list.size()==0){
-            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
-        }
-        //loadCompanys(list);
-        //封装到pageHelper
-        PageInfo<Contact> pageInfo=new PageInfo<Contact>(list);
-        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
-    }
+//    //关联查询||特殊查询所有Contact
+//    public PageResult<Contact> getByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showDelete) {
+//        //分页
+//        PageHelper.startPage(page,pageSize);
+//        //过滤
+//        //进行查询
+//        List<Contact> list=contactDao.findAllByAnyPara(key,showDelete,softBy,desc);
+//        if(list ==null ||list.size()==0){
+//            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
+//        }
+//        //loadCompanys(list);
+//        //封装到pageHelper
+//        PageInfo<Contact> pageInfo=new PageInfo<Contact>(list);
+//        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
+//    }
 
 
 
@@ -56,9 +54,7 @@ public class ContactService {
                res.setCompany(companyService.findByComId(res.getCompanyid()));
 
            }
-            Address add=new Address();
-            add.setAdrcontact(res.getContid());
-            res.setAddressList(addreddDao.select(add));
+            res.setAddressList(addressServcie.findByAll(res.getContid()));
         }
         return res;
     }
@@ -73,11 +69,8 @@ public class ContactService {
         }else{
             if(res.getCompanyid()!=null){
                 res.setCompany(companyService.findByComId(res.getCompanyid()));
-
             }
-            Address add=new Address();
-            add.setAdrcontact(res.getContid());
-            res.setAddressList(addreddDao.select(add));
+            res.setAddressList(addressServcie.findByAll(res.getContid()));
         }
         return res;
     }
@@ -96,12 +89,12 @@ public class ContactService {
                     .orEqualTo("contid",key.toUpperCase().trim());
             example.and(criteria1);
         }
-        if(!showDelete){
+        if(showDelete==false){
             criteria2.orEqualTo("deltag",0).orEqualTo("deltag" ,null);
             example.and(criteria2);
         }
         //排序
-        if(StringUtils.isNotBlank(softBy)) {
+        if(StringUtils.isNotBlank(softBy)==true) {
             String orderByClause=softBy+(desc ? " DESC" : " ASC");
             example.setOrderByClause(orderByClause);
         }
@@ -116,12 +109,11 @@ public class ContactService {
         return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
     }
 
-    //查询公司及地址
+    //查询公司
     private void loadCompanys(List<Contact> lst){
         for(Contact cont: lst){
             String comid=cont.getCompanyid();
             if(comid!=null){
-                System.out.println(comid);
                 cont.setCompany(companyService.findByComId(comid));
             }
         }

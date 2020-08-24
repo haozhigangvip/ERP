@@ -22,6 +22,7 @@ public enum  ExceptionEumn {
     CONTACTNAME_ALREADY_EXISTS(400,"修改的联系人名已存在"),
     FAIIL_TO_DELETE(500,"删除失败"),
     SUCCESS_TO_DELETE(200,"删除成功"),
+    CONTACTID_CANNOT_BE_NULL(400,"联系人ID不能为空"),
     ;
 
     private Integer code;
