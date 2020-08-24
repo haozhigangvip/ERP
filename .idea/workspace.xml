@@ -268,10 +268,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="123" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="433" y="98" key="CommitChangelistDialog2" timestamp="1598282236877">
+    <state x="433" y="98" key="CommitChangelistDialog2" timestamp="1598282274853">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="433" y="98" key="CommitChangelistDialog2/0.0.1680.1010@0.0.1680.1010" timestamp="1598282236877" />
+    <state x="433" y="98" key="CommitChangelistDialog2/0.0.1680.1010@0.0.1680.1010" timestamp="1598282274853" />
     <state width="1125" height="272" key="GridCell.Tab.0.bottom" timestamp="1598282176826">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -308,6 +308,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="341" y="147" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1598276888068" />
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1598282309826">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1598282309826" />
   </component>
   <component name="masterDetails">
     <states>
