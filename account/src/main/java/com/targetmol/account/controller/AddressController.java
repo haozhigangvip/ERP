@@ -32,33 +32,22 @@ public class AddressController {
         return ResponseEntity.ok(addressServcie.findByAll(contid));
     }
 
-//    @GetMapping("a")
-//    public ResponseEntity<PageResult<Contact>> findByAll1(
-//            @RequestParam(value="page",defaultValue = "1") Integer page,
-//            @RequestParam(value="pagesize",defaultValue = "20") Integer pageSize,
-//            @RequestParam(value="softby",required = false) String softBy,
-//            @RequestParam(value="desc",defaultValue = "false") Boolean desc,
-//            @RequestParam(value="key",required = false) String key,
-//            @RequestParam(value="showdel" ,defaultValue="false") Boolean showDel
-//    ){
-//
-//        return ResponseEntity.ok(contactService.getByAll(page,pageSize,softBy,desc,key,showDel));
-//    }
 
-//    //新增联系人
-//    @PostMapping
-//    public ResponseEntity<Contact> addContact(@RequestBody Contact contact){
-//        return ResponseEntity.ok(contactService.add(contact));
-//    }
-//    //修改联系人
-//    @PutMapping()
-//    public ResponseEntity<Contact> updateContact(@RequestBody Contact contact){
-//        return ResponseEntity.ok(contactService.update(contact));
-//    }
-//    //删除联系人
-//    @DeleteMapping("{autoid}")
-//    public ResponseEntity deleteContanct(@PathVariable("autoid") Integer autoid){
-//        contactService.setdelbj(autoid,1);
-//        return ResponseEntity.ok("删除成功");
-//    }
+
+    //新增联系人
+    @PostMapping
+    public ResponseEntity<Address> addAddress(@RequestBody Address address){
+        return ResponseEntity.ok(addressServcie.addAddress(address));
+    }
+    //修改联系人
+    @PutMapping()
+    public ResponseEntity<Address> updateAddress(@RequestBody Address address){
+        return ResponseEntity.ok(addressServcie.updateAddress(address));
+    }
+    //删除联系人
+    @DeleteMapping("{autoid}")
+    public ResponseEntity deleteAddress(@PathVariable("autoid") Integer autoid){
+        addressServcie.delAddress(autoid);
+        return ResponseEntity.ok("删除成功");
+    }
 }

@@ -23,6 +23,7 @@ public enum  ExceptionEumn {
     FAIIL_TO_DELETE(500,"删除失败"),
     SUCCESS_TO_DELETE(200,"删除成功"),
     CONTACTID_CANNOT_BE_NULL(400,"联系人ID不能为空"),
+    ADDRESS_ISNOT_FOUND(404,"该地址不存在"),
     ;
 
     private Integer code;
