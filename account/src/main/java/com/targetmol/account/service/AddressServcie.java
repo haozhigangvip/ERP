@@ -25,7 +25,7 @@ public class AddressServcie {
         return addressDao.select(address);
     }
     //按id查询address
-    private Address findbyAutoid(Integer autoid){
+    public Address findbyAutoid(Integer autoid){
 
         return (addressDao.selectByPrimaryKey(autoid));
 

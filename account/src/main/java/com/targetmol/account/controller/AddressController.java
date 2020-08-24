@@ -18,12 +18,12 @@ import java.util.List;
 public class AddressController {
     @Autowired
     private AddressServcie addressServcie;
-//
-//    //按ID查询联系人
-//    @GetMapping("{autoid}")
-//    public ResponseEntity<Contact> findbyContactid(@PathVariable("autoid") Integer autoid){
-//        return ResponseEntity.ok(contactService.findByAutoId(autoid));
-//    }
+
+    //按ID查询地址
+    @GetMapping("{autoid}")
+    public ResponseEntity<Address> findbyContactid(@PathVariable("autoid") Integer autoid){
+        return ResponseEntity.ok(addressServcie.findbyAutoid(autoid));
+    }
 
     //查询联系人
     @GetMapping()
