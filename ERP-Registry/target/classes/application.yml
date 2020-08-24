@@ -1,0 +1,14 @@
+server:
+  port: 10086
+spring:
+  application:
+    name: Erp-registry
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    fetch-registry: false         #自己本身不在注册中心中进行拉取
+    register-with-eureka: false   #自己本身不在注册中心中进行注册
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
