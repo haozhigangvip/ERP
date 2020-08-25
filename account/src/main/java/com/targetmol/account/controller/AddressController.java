@@ -25,7 +25,7 @@ public class AddressController {
         return ResponseEntity.ok(addressServcie.findbyAutoid(autoid));
     }
 
-    //查询联系人
+    //查询肚子鼓
     @GetMapping()
     public ResponseEntity<List<Address>> findByAll(@RequestParam("contid") String contid){
 
@@ -34,17 +34,17 @@ public class AddressController {
 
 
 
-    //新增联系人
+    //新增地址
     @PostMapping
     public ResponseEntity<Address> addAddress(@RequestBody Address address){
         return ResponseEntity.ok(addressServcie.addAddress(address));
     }
-    //修改联系人
+    //修改地址
     @PutMapping()
     public ResponseEntity<Address> updateAddress(@RequestBody Address address){
         return ResponseEntity.ok(addressServcie.updateAddress(address));
     }
-    //删除联系人
+    //删除地址
     @DeleteMapping("{autoid}")
     public ResponseEntity deleteAddress(@PathVariable("autoid") Integer autoid){
         addressServcie.delAddress(autoid);
