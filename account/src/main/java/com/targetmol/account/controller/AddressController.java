@@ -3,6 +3,7 @@ package com.targetmol.account.controller;
 import com.targetmol.account.service.AddressServcie;
 import com.targetmol.account.service.ContactService;
 import com.targetmol.common.vo.PageResult;
+import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.Address;
 import com.targetmol.domain.Contact;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +28,9 @@ public class AddressController {
 
     //查询肚子鼓
     @GetMapping()
-    public ResponseEntity<List<Address>> findByAll(@RequestParam("contid") String contid){
+    public ResponseEntity<ResultMsg> findByAll(@RequestParam("contid") String contid){
 
-        return ResponseEntity.ok(addressServcie.findByAll(contid));
+        return ResponseEntity.ok(ResultMsg.success(addressServcie.findByAll(contid)));
     }
 
 
@@ -48,6 +49,7 @@ public class AddressController {
     @DeleteMapping("{autoid}")
     public ResponseEntity deleteAddress(@PathVariable("autoid") Integer autoid){
         addressServcie.delAddress(autoid);
+
         return ResponseEntity.ok("删除成功");
     }
 }
