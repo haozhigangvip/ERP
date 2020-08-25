@@ -2,11 +2,13 @@ package com.targetmol.common.vo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class ResultMsg<T> {
     private int code;
     private String msg;
-    private Long timestamp;
+    private Date timestamp;
     private T data;
 
     public static <T> ResultMsg<T> success() {
@@ -24,23 +26,24 @@ public class ResultMsg<T> {
     public ResultMsg(int code, String msg) {
         this.code = code;
         this.msg = msg;
-        this.timestamp=System.currentTimeMillis();
+        this.timestamp=new Date(System.currentTimeMillis());
         this.data = null;
     }
 
     public ResultMsg(T data) {
-        this.code = 0;
+        this.code = 200;
         this.msg = "success";
         this.data = data;
-        this.timestamp=System.currentTimeMillis();
+        this.timestamp=new Date(System.currentTimeMillis());
     }
 
     public ResultMsg() {
-        this.code = 0;
+        this.code = 200;
         this.msg = "success";
         this.data = null;
-        this.timestamp=System.currentTimeMillis();
+        this.timestamp=new Date(System.currentTimeMillis());
     }
+
 
 
 }
