@@ -1,4 +1,7 @@
 package com.targetmol.users.dao;
 
-public class UserDao {
+import com.targetmol.common.mapper.BaseMapper;
+import com.targetmol.domain.User;
+
+public interface UserDao  extends BaseMapper<User> {
 }
