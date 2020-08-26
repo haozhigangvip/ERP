@@ -26,7 +26,7 @@ public class AddressController {
         return ResponseEntity.ok(addressServcie.findbyAutoid(autoid));
     }
 
-    //查询肚子鼓
+    //按联系人ID查询所有地址
     @GetMapping()
     public ResponseEntity<ResultMsg> findByAll(@RequestParam("contid") String contid){
 

@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="99c46c0d-ac4e-49cf-8a95-c6425e39be3f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/vo/ResultMsg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/AddressController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/target/classes/META-INF/account.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/account/target/classes/META-INF/account.kotlin_module" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/target/classes/com/targetmol/account/controller/AddressController.class" beforeDir="false" afterPath="$PROJECT_DIR$/account/target/classes/com/targetmol/account/controller/AddressController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/target/classes/com/targetmol/account/service/AddressServcie.class" beforeDir="false" afterPath="$PROJECT_DIR$/account/target/classes/com/targetmol/account/service/AddressServcie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/target/classes/com/targetmol/account/service/InvoiceService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/vo/ExceptionResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/vo/ExceptionResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/vo/PageResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/vo/PageResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/targetmol/common/emums/ExceptionEumn.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/targetmol/common/emums/ExceptionEumn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/targetmol/common/vo/ExceptionResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/targetmol/common/vo/ExceptionResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/targetmol/common/vo/PageResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/targetmol/common/vo/PageResult.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +151,7 @@
     <property name="ToolWindowEvent Log.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1598402894655" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1598350203188" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -380,18 +391,11 @@
       <option name="project" value="LOCAL" />
       <updated>1598327792196</updated>
     </task>
-    <task id="LOCAL-00012" summary="123">
-      <created>1598350236615</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1598350236615</updated>
-    </task>
-    <option name="localTasksCounter" value="13" />
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13469000" />
+    <option name="totallyTimeSpent" value="12820000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
