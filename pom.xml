@@ -13,6 +13,8 @@
         <module>domain</module>
         <module>ERP-Registry</module>
         <module>ERP-Gateway</module>
+        <module>users</module>
+        <module>ITEM</module>
     </modules>
     <packaging>pom</packaging>
     <parent>

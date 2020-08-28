@@ -1,14 +1,14 @@
 server:
   port: 8083
   servlet:
-    path: /users
+    path: /sys
 logging:
   level:
     com.targetmol:  info
 
 spring:
   application:
-    name: user-service
+    name: USER-SERVICE
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     url: jdbc:sqlserver://192.168.3.15:1433; DatabaseName=tsbio

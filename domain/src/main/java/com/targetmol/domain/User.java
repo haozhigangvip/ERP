@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Table(name="users")
+@Table(name="[user]")
 public class User implements Serializable {
     @Id
     @KeySql(useGeneratedKeys = true)
@@ -16,16 +16,42 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String name;
-    private Integer groupid;
+    private Integer departmentid;
     private String phone;
     private String email;
     private Boolean issales;
     @Column(insertable = false)
     private Date creatime;
-    private Date lastlogtime;
-    private String lastlogip;
     private String note;
+    private Integer actived;
 
+    @Transient
+    private Role role;
+
+
+    public Integer getActived() {
+        return actived;
+    }
+
+    public void setActived(Integer actived) {
+        this.actived = actived;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Integer getDepartmentid() {
+        return departmentid;
+    }
+
+    public void setDepartmentid(Integer departmentid) {
+        this.departmentid = departmentid;
+    }
 
     public Integer getUid() {
         return uid;
@@ -68,23 +94,6 @@ public class User implements Serializable {
         this.creatime = creatime;
     }
 
-    public Date getLastlogtime() {
-        return lastlogtime;
-    }
-
-    public void setLastlogtime(Date lastlogtime) {
-        this.lastlogtime = lastlogtime;
-    }
-
-
-
-    public String getLastlogip() {
-        return lastlogip;
-    }
-
-    public void setLastlogip(String lastlogip) {
-        this.lastlogip = lastlogip;
-    }
 
     public String getNote() {
         return note;
@@ -102,13 +111,6 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public Integer getGroupid() {
-        return groupid;
-    }
-
-    public void setGroupid(Integer groupid) {
-        this.groupid = groupid;
-    }
 
     public String getPhone() {
         return phone;

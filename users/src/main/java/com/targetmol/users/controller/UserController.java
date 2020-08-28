@@ -1,18 +1,14 @@
 package com.targetmol.users.controller;
 
 import com.targetmol.common.vo.PageResult;
-import com.targetmol.domain.Contact;
+import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.User;
 import com.targetmol.users.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Slf4j
 @RequestMapping("/user")
@@ -20,15 +16,59 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    //查找所有用户
     @GetMapping()
     public ResponseEntity<PageResult<User>> findByAll(
             @RequestParam(value="page",defaultValue = "1") Integer page,
-            @RequestParam(value="pagesize",defaultValue = "20") Integer pageSize,
+            @RequestParam(value="pagesize",defaultValue = "30") Integer pageSize,
             @RequestParam(value="softby",required = false) String softBy,
             @RequestParam(value="desc",defaultValue = "false") Boolean desc,
             @RequestParam(value="key",required = false) String key,
-            @RequestParam(value="showdel" ,defaultValue="false") Boolean showDel
+            //active属性：0 所有 ，1仅看已激活 ，2仅看未激活
+            @RequestParam(value="active" ,defaultValue="0") Integer active,
+            @RequestParam(value="showsales" ,defaultValue="false")Boolean showsales
     ){
-        return ResponseEntity.ok(userService.findByAll(page,pageSize,softBy,desc,key,showDel));
+        return ResponseEntity.ok(userService.findByAll(page,pageSize,softBy,desc,key,active,showsales));
     }
+
+
+
+    //添加用户
+    @PostMapping
+    public  ResponseEntity<ResultMsg>addUser(@RequestBody User user) {
+        return ResponseEntity.ok(ResultMsg.success(userService.addUser(user)));
+    }
+
+
+
+    //更新用户
+    @PutMapping
+    public ResponseEntity<ResultMsg>updateUser(@RequestBody User user){
+        return ResponseEntity.ok(ResultMsg.success(userService.updateUser(user)));
+    }
+
+    //修改用户激活状态
+    @PutMapping("{uid}")
+    public ResponseEntity<ResultMsg>active(@PathVariable("uid") Integer uid,
+                                           @RequestParam (value="active" ,required = false) Integer active,
+                                           @RequestParam(value="password",required = false) String password){
+        if(active!=null){
+            userService.updateActive(uid,active);
+        }
+        if(password!=null){
+            userService.updatePassword(uid,password);
+        }
+
+        return ResponseEntity.ok(ResultMsg.success());
+    }
+
+    //按ID查询用户
+    @GetMapping("{uid}")
+    public  ResponseEntity<ResultMsg>findById(@PathVariable("uid") Integer uid) {
+        return ResponseEntity.ok(ResultMsg.success(userService.findById(uid)));
+    }
+
+
+
 }

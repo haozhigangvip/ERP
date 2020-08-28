@@ -1,4 +1,4 @@
-package com.targetmol.gateway;
+package com.targetmol;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

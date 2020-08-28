@@ -1,6 +1,7 @@
 package com.targetmol.account.controller;
 
 import com.targetmol.account.service.AreaService;
+import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.Area;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +19,21 @@ public class AreaController {
 
     //查询国家
     @GetMapping
-    public ResponseEntity<List<Area>> findAllCountry(@RequestParam(value="key",required = false) String key){
+    public ResponseEntity<ResultMsg> findAllCountry(@RequestParam(value="key",required = false) String key){
 
-        return ResponseEntity.ok(areaService.findAllCountry(key));
+        return ResponseEntity.ok(ResultMsg.success(areaService.findAllCountry(key)));
     }
 
     //查询地区
     @GetMapping("{cid}")
-    public ResponseEntity<List<Area>> findAllState(@PathVariable("cid") Integer cid, @RequestParam(value="key",required = false) String key){
+    public ResponseEntity<ResultMsg> findAllState(@PathVariable("cid") Integer cid, @RequestParam(value="key",required = false) String key){
 
-        return ResponseEntity.ok(areaService.findAllState(cid,key));
+        return ResponseEntity.ok(ResultMsg.success(areaService.findAllState(cid,key)));
     }
     //查询城市
     @GetMapping("{cid}/{sid}")
-    public ResponseEntity<List<Area>> findAllCity(@PathVariable("sid") Integer sid, @RequestParam(value="key",required = false) String key){
+    public ResponseEntity<ResultMsg> findAllCity(@PathVariable("sid") Integer sid, @RequestParam(value="key",required = false) String key){
 
-        return ResponseEntity.ok(areaService.findAllCity(sid,key));
+        return ResponseEntity.ok(ResultMsg.success(areaService.findAllCity(sid,key)));
     }
 }

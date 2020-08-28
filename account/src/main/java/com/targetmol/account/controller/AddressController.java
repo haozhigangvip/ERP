@@ -17,13 +17,14 @@ import java.util.List;
 @RequestMapping("/address")
 @RestController
 public class AddressController {
+
     @Autowired
     private AddressServcie addressServcie;
 
     //按ID查询地址
     @GetMapping("{autoid}")
-    public ResponseEntity<Address> findbyContactid(@PathVariable("autoid") Integer autoid){
-        return ResponseEntity.ok(addressServcie.findbyAutoid(autoid));
+    public ResponseEntity<ResultMsg> findbyContactid(@PathVariable("autoid") Integer autoid){
+        return ResponseEntity.ok(ResultMsg.success(addressServcie.findbyAutoid(autoid)));
     }
 
     //按联系人ID查询所有地址
@@ -37,19 +38,21 @@ public class AddressController {
 
     //新增地址
     @PostMapping
-    public ResponseEntity<Address> addAddress(@RequestBody Address address){
-        return ResponseEntity.ok(addressServcie.addAddress(address));
+    public ResponseEntity<ResultMsg> addAddress(@RequestBody Address address){
+        return ResponseEntity.ok(ResultMsg.success(addressServcie.addAddress(address)));
     }
+
     //修改地址
     @PutMapping()
-    public ResponseEntity<Address> updateAddress(@RequestBody Address address){
-        return ResponseEntity.ok(addressServcie.updateAddress(address));
+    public ResponseEntity<ResultMsg> updateAddress(@RequestBody Address address){
+        return ResponseEntity.ok(ResultMsg.success(addressServcie.updateAddress(address)));
     }
+
     //删除地址
     @DeleteMapping("{autoid}")
-    public ResponseEntity deleteAddress(@PathVariable("autoid") Integer autoid){
+    public ResponseEntity<ResultMsg> deleteAddress(@PathVariable("autoid") Integer autoid){
         addressServcie.delAddress(autoid);
-
-        return ResponseEntity.ok("删除成功");
+        return ResponseEntity.ok(ResultMsg.success());
     }
+
 }

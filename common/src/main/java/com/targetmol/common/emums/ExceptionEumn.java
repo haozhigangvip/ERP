@@ -24,8 +24,12 @@ public enum  ExceptionEumn {
     SUCCESS_TO_DELETE(200,"删除成功"),
     CONTACTID_CANNOT_BE_NULL(400,"联系人ID不能为空"),
     ADDRESS_ISNOT_FOUND(404,"该地址不存在"),
+    USERS_ISNOT_FOUND(404,"用户不存在"),
+    USERNAME_PASSWORD_CANNOT_BE_NULL(400,"用户名及密码不能为空"),
+    EMAIL_CANNOT_BE_NULL(400,"邮箱不能为空"),
+    USERNAME_ALREADY_EXISTS(400,"用户名已存在"),
+    USERNAMEANDPASSWORD_ISNOT_MATCH(400,"用户名和密码不匹配"),
     ;
-
     private Integer code;
     private String msg;
 }

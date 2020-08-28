@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-
 //通用异常处理
 @ControllerAdvice //默认情况下会拦截所有的Controller
 public class CommExceptionHandler {
@@ -16,4 +15,5 @@ public class CommExceptionHandler {
         ExceptionEumn eumn=e.getExceptionEumnumn();
         return ResponseEntity.status(eumn.getCode()).body(new ExceptionResult(e.getExceptionEumnumn() ));
     }
+
 }
