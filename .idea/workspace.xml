@@ -2,63 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="99c46c0d-ac4e-49cf-8a95-c6425e39be3f" name="Default Changelist" comment="123">
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/utils/BeanMapUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/utils/PermissionConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/system/Permission.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/system/PermissionApi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/system/PermissionMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/system/PermissionPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/controller/DepartmentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/controller/PermissionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/dao/DepartmentDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/dao/PermissionApiDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/dao/PermissionDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/dao/PermissionMenuDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/dao/PermissionPointDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/service/DepartmentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/service/PermissionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ERP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ERP.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Java_EE_6_Java_EE_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/account/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/AddressController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/AreaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/AreaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/CompanyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/CompanyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/ContactController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/controller/ContactController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/AddressDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/AddressDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/AreaDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/AreaDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/CompanyDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/CompanyDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/ContactDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/ContactDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/DapartmentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/DapartmentDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/InvoiceinfoDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/dao/InvoiceinfoDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/AddressServcie.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/AddressServcie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/AreaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/AreaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/CompanyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/ContactService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account/src/main/java/com/targetmol/account/service/ContactService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/target/classes/META-INF/account.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/emums/ExceptionEumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/emums/ExceptionEumn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/targetmol/common/emums/ExceptionEumn.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/targetmol/common/emums/ExceptionEumn.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/account/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Area.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/account/Area.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/account/Company.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Contact.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/account/Contact.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Dapartment.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Department.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/system/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/com/targetmol/domain/system/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/target/classes/com/targetmol/domain/Dapartment.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/system/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/targetmol/UsersApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/UsersApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/targetmol/users/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/targetmol/users/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/dao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/targetmol/users/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/system/src/main/java/com/targetmol/system/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/system/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,10 +49,10 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1598607173561" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/common/src/main/java/com/targetmol/common/utils" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/system" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
@@ -395,10 +339,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="595" y="207" key="#xdebugger.evaluate/0.0.1680.1010@0.0.1680.1010" timestamp="1598715610651" />
-    <state x="433" y="98" key="CommitChangelistDialog2" timestamp="1598282391907">
+    <state x="433" y="98" key="CommitChangelistDialog2" timestamp="1598804900657">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="433" y="98" key="CommitChangelistDialog2/0.0.1680.1010@0.0.1680.1010" timestamp="1598282391907" />
+    <state x="433" y="98" key="CommitChangelistDialog2/0.0.1680.1010@0.0.1680.1010" timestamp="1598804900657" />
     <state width="452" height="466" key="DebuggerActiveHint" timestamp="1598713636921">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -407,10 +351,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="153" y="83" key="DiffContextDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1598282370377" />
-    <state x="641" y="262" key="FileChooserDialogImpl" timestamp="1598630040089">
+    <state x="641" y="262" key="FileChooserDialogImpl" timestamp="1598804849109">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="641" y="262" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1598630040089" />
+    <state x="641" y="262" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1598804849109" />
     <state x="649" y="401" key="Github.CreateGistDialog" timestamp="1598630673966">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -467,22 +411,34 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="370" y="160" key="Maven.ArtifactSearchDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1598630289470" />
-    <state x="501" y="270" key="NewModule_or_Project.wizard" timestamp="1598627820464">
+    <state x="501" y="270" key="NewModule_or_Project.wizard" timestamp="1598804851527">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="501" y="270" key="NewModule_or_Project.wizard/0.0.1680.1010@0.0.1680.1010" timestamp="1598627820464" />
-    <state x="341" y="147" key="SettingsEditor" timestamp="1598630042384">
+    <state x="501" y="270" key="NewModule_or_Project.wizard/0.0.1680.1010@0.0.1680.1010" timestamp="1598804851527" />
+    <state x="341" y="147" key="SettingsEditor" timestamp="1598804869227">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="341" y="147" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1598630042384" />
+    <state x="341" y="147" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1598804869227" />
     <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1598282412476">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1598282412476" />
+    <state x="92" y="92" width="1496" height="826" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1598804811926">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="92" y="92" width="1496" height="826" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1598804811926" />
+    <state x="92" y="92" width="1496" height="826" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1598804811926">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="92" y="92" width="1496" height="826" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1598804811926" />
     <state x="520" y="329" key="com.intellij.ide.util.TipDialog" timestamp="1598787268669">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="520" y="329" key="com.intellij.ide.util.TipDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1598787268669" />
+    <state x="628" y="405" key="git4idea.ui.GitStashDialog" timestamp="1598804713478">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="628" y="405" key="git4idea.ui.GitStashDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1598804713478" />
     <state x="496" y="233" width="672" height="677" key="run.anything.popup" timestamp="1598718861352">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
