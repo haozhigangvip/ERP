@@ -6,8 +6,8 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
 @MapperScan(basePackages= {"com.targetmol.users.dao"})
-public class UsersApplication {
+public class SystemApplication {
     public static void main(String[] args) {
-        SpringApplication.run(UsersApplication.class,args);
+        SpringApplication.run(SystemApplication.class,args);
     }
 }
