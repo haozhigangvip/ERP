@@ -49,19 +49,19 @@ public class UserController {
         return ResponseEntity.ok(ResultMsg.success(userService.updateUser(user)));
     }
 
-    //修改用户激活状态及密码
-    @PutMapping("{uid}")
-    public ResponseEntity<ResultMsg>active(@PathVariable("uid") Integer uid,
-                                           @RequestParam (value="active" ,required = false) Integer active,
-                                           @RequestParam(value="password",required = false) String password){
-        if(active!=null){
-            userService.updateActive(uid,active);
-        }
-        if(password!=null){
-            userService.updatePassword(uid,password);
-        }
-        return ResponseEntity.ok(ResultMsg.success());
-    }
+//    //修改用户激活状态及密码
+//    @PutMapping("{uid}")
+//    public ResponseEntity<ResultMsg>active(@PathVariable("uid") Integer uid,
+//                                           @RequestParam (value="active" ,required = false) Integer active,
+//                                           @RequestParam(value="password",required = false) String password){
+//        if(active!=null){
+//            userService.updateActive(uid,active);
+//        }
+//        if(password!=null){
+//            userService.updatePassword(uid,password);
+//        }
+//        return ResponseEntity.ok(ResultMsg.success());
+//    }
 
     //按ID查询用户
     @GetMapping("{uid}")

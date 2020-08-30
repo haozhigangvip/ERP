@@ -1,7 +1,6 @@
 package com.targetmol.system.controller;
 
 import com.targetmol.common.vo.ResultMsg;
-import com.targetmol.domain.Department;
 import com.targetmol.system.service.PermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
