@@ -1,4 +1,4 @@
-package com.targetmol.domain;
+package com.targetmol.domain.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

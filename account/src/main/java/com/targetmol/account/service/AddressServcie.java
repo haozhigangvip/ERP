@@ -3,10 +3,10 @@ package com.targetmol.account.service;
 import com.targetmol.account.dao.AddressDao;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
-import com.targetmol.domain.Address;
-import org.apache.commons.lang3.StringUtils;
+import com.targetmol.domain.account.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class AddressServcie {
 
     //按contid查询所有Address
     public List<Address> findByAll(String contid) {
-        if(StringUtils.isEmpty(contid)==true){
+        if(StringUtil.isEmpty(contid)==true){
             throw new ErpExcetpion(ExceptionEumn.CONTACTID_CANNOT_BE_NULL);
         }
         Address address=new Address();
@@ -51,11 +51,11 @@ public class AddressServcie {
 
     //判断地址参数是否齐全
     public void checkAddress(Address address){
-        if(address==null||StringUtils.isEmpty(address.getAdrcontact())
-                || StringUtils.isEmpty(address.getStreet())
-                || StringUtils.isEmpty(address.getCountry())
-                || StringUtils.isEmpty(address.getCity())
-                || StringUtils.isEmpty(address.getState())){
+        if(address==null||StringUtil.isEmpty(address.getAdrcontact())
+                || StringUtil.isEmpty(address.getStreet())
+                || StringUtil.isEmpty(address.getCountry())
+                || StringUtil.isEmpty(address.getCity())
+                || StringUtil.isEmpty(address.getState())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
     }

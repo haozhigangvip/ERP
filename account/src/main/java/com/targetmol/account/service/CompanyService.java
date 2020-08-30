@@ -7,12 +7,12 @@ import com.targetmol.account.dao.CompanyDao;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.PageResult;
-import com.targetmol.domain.Company;
-import org.apache.commons.lang3.StringUtils;
+import com.targetmol.domain.account.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -54,7 +54,7 @@ public class CompanyService {
         Example example=new Example(Company.class);
         Example.Criteria criteria1=example.createCriteria();
         Example.Criteria criteria2=example.createCriteria();
-        if(StringUtils.isNotEmpty(key)){
+        if(StringUtil.isNotEmpty(key)){
             criteria1.orLike("companyname","%"+key.trim()+"%")
                     .orEqualTo("comid",key.toUpperCase().trim());
             example.and(criteria1);
@@ -64,7 +64,7 @@ public class CompanyService {
             example.and(criteria2);
         }
         //排序
-        if(StringUtils.isNotBlank(softBy)) {
+        if(StringUtil.isNotEmpty(softBy)) {
             String orderByClause=softBy+(desc ? " DESC" : " ASC");
             example.setOrderByClause(orderByClause);
         }

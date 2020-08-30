@@ -1,26 +1,28 @@
-package com.targetmol.users.service;
+package com.targetmol.system.service;
 
 import com.github.pagehelper.PageInfo;
-import com.github.pagehelper.util.StringUtil;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.PageResult;
-import com.targetmol.domain.User;
-import com.targetmol.users.dao.UserDao;
-import org.apache.commons.lang.StringUtils;
+import com.targetmol.domain.system.User;
+import com.targetmol.system.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
-
+import tk.mybatis.mapper.util.StringUtil;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
 public class UserService {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private DepartmentService departmentService;
+
+    //查询所有用
     public PageResult<User> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer active,Boolean showsales){
         PageInfo info=new PageInfo();
 
@@ -28,17 +30,15 @@ public class UserService {
         Example.Criteria criteria1=example.createCriteria();
         Example.Criteria criteria2=example.createCriteria();
         Example.Criteria criteria3=example.createCriteria();
-        if(StringUtils.isNotEmpty(key)){
+        if(StringUtil.isNotEmpty(key)){
             criteria1.orLike("username","%"+key.trim()+"%")
                     .orLike("name","%"+key.trim()+"%")
                     .orEqualTo("uid",key.toUpperCase().trim());
             example.and(criteria1);
         }
-
         //是否激活
         switch (active){
             case 0:
-
                 break;
             case 1:
                 criteria2.orEqualTo("actived",1)
@@ -60,18 +60,17 @@ public class UserService {
             criteria3.orEqualTo("issales",1);
             example.and(criteria3);
         }
-
         //排序
-        if(StringUtils.isNotBlank(softBy)) {
+        if(StringUtil.isNotEmpty(softBy)) {
             String orderByClause=softBy+(desc ? " DESC" : " ASC");
             example.setOrderByClause(orderByClause);
         }
-
         //进行查询
         List<User> list=userDao.selectByExample(example);
+        //遍历用户集，获取部门和权限
         for (User user:list) {
             //查询部门
-
+            user.setDepartment(departmentService.findById(user.getDepartmentid()));
             //查询权限
         }
 
@@ -85,8 +84,9 @@ public class UserService {
         User result=userDao.selectByPrimaryKey(uid);
         if(result!=null){
             //查询部门
-
+            result.setDepartment(departmentService.findById(result.getDepartmentid()));
             //查询权限
+
 
         }
         return  result;
@@ -100,10 +100,14 @@ public class UserService {
         //设置用户状态，1为在职，0为离职
         user.setActived(1);
 
+
         //检查用户名是否存在
-        if(findByUsername(user).size()>0){
-            throw new ErpExcetpion(ExceptionEumn.USERNAME_ALREADY_EXISTS) ;
-        }
+         if(findByUsername(user).size()>0){
+             throw new ErpExcetpion(ExceptionEumn.USERNAME_ALREADY_EXISTS);
+         }
+
+        //检查部门是否存在
+        checkDerprtmentId(user.getDepartmentid());
 
         //保存
         if(userDao.insert(user)!=1){
@@ -114,10 +118,15 @@ public class UserService {
     }
 
 
-
+    //判断部门是否存在
+    private void  checkDerprtmentId(Integer depaid){
+        if(depaid!=null && departmentService.findById(depaid)==null){
+            throw new ErpExcetpion(ExceptionEumn.DEPARTMENTID_IS_NOT_FOUND);
+        }
+    }
 
     //判断USER数据是否齐全
-    public  void checkUserProperty(User user){
+    private  void checkUserProperty(User user){
         //判断参数是否齐全
         if(user==null|| StringUtil.isEmpty(user.getName())==true||StringUtil.isEmpty(user.getPassword())){
             throw new ErpExcetpion(ExceptionEumn.USERNAME_PASSWORD_CANNOT_BE_NULL);
@@ -125,10 +134,6 @@ public class UserService {
         if(StringUtil.isEmpty(user.getEmail())){
             throw new ErpExcetpion(ExceptionEumn.EMAIL_CANNOT_BE_NULL);
         }
-
-
-
-
     }
 
     //查询按用户名查询
@@ -140,10 +145,12 @@ public class UserService {
     //更新用户
     public User updateUser(User user) {
         checkUserProperty(user);
-        //检查用户名及邮箱是否已存在
-
+        //检查用户名是否已存在
+        if(findByUsername(user).size()>0){
+            throw new ErpExcetpion(ExceptionEumn.USERNAME_ALREADY_EXISTS);
+        }
         //检查部门是否存在
-
+        checkDerprtmentId(user.getDepartmentid());
         //保存
         if(userDao.updateByPrimaryKeySelective(user)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
@@ -195,6 +202,18 @@ public class UserService {
             throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
 
+    }
+
+    //查询指定部门用户
+    public List<User> findByDepaId(Integer depaid){
+        List<User> list=new ArrayList<User>();
+        if(depaid!=null){
+            User user=new User();
+            user.setActived(1);
+            user.setDepartmentid(depaid);
+            list=userDao.select(user);
+        }
+        return list;
     }
 }
 

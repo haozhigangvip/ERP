@@ -1,6 +1,7 @@
-package com.targetmol.domain;
+package com.targetmol.domain.system;
 
 
+import com.targetmol.domain.Department;
 import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +28,8 @@ public class User implements Serializable {
 
     @Transient
     private Role role;
+    @Transient
+    private Department department;
 
 
     public Integer getActived() {
@@ -126,5 +129,13 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

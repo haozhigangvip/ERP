@@ -1,7 +1,6 @@
 package com.targetmol.account.dao;
 
 import com.targetmol.common.mapper.BaseMapper;
-import com.targetmol.domain.Company;
 import com.targetmol.domain.Invoice;
 
 

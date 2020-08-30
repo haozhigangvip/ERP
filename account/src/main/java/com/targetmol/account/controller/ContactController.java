@@ -1,13 +1,9 @@
 package com.targetmol.account.controller;
 
 import com.targetmol.account.service.ContactService;
-import com.targetmol.common.emums.ExceptionEumn;
-import com.targetmol.common.exception.ErpExcetpion;
-import com.targetmol.common.vo.ExceptionResult;
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.common.vo.ResultMsg;
-import com.targetmol.domain.Company;
-import com.targetmol.domain.Contact;
+import com.targetmol.domain.account.Contact;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,8 +44,10 @@ public class ContactController {
         return ResponseEntity.ok(ResultMsg.success(contactService.add(contact)));
     }
     //修改联系人
-    @PutMapping()
-    public ResponseEntity<ResultMsg> updateContact(@RequestBody Contact contact){
+    @PutMapping("{autoid}")
+    public ResponseEntity<ResultMsg> updateContact(@PathVariable("autoid") Integer autoid,
+                                                   @RequestBody Contact contact){
+        contact.setAutoid(autoid);
         return ResponseEntity.ok(ResultMsg.success(contactService.update(contact)));
     }
     //删除联系人

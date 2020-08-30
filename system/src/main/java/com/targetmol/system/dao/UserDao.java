@@ -1,8 +1,7 @@
-package com.targetmol.users.dao;
+package com.targetmol.system.dao;
 
 import com.targetmol.common.mapper.BaseMapper;
-import com.targetmol.domain.Contact;
-import com.targetmol.domain.User;
+import com.targetmol.domain.system.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
 
@@ -25,7 +24,6 @@ public interface UserDao  extends BaseMapper<User> {
             {
                 sqlstr +="where username=#{username}";
             }
-
             return sqlstr;
         }
 

@@ -1,7 +1,7 @@
 package com.targetmol.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import com.targetmol.domain.account.Company;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;

@@ -1,4 +1,4 @@
-package com.targetmol.domain;
+package com.targetmol.domain.account;
 
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;

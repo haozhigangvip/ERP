@@ -10,10 +10,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Table(name = "department")
-public class Dapartment  implements Serializable {
+public class Department implements Serializable {
     @Id
     @KeySql(useGeneratedKeys = true)
-    @Column(insertable = false,updatable =false,name = "autoid")
+    @Column(insertable = false,updatable =false,name = "depaID")
     private Integer depaid;
     private Integer pid;
     private String name;
@@ -87,5 +87,19 @@ public class Dapartment  implements Serializable {
 
     public void setCreatime(Date creatime) {
         this.creatime = creatime;
+    }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "depaid=" + depaid +
+                ", pid=" + pid +
+                ", name='" + name + '\'' +
+                ", mname='" + mname + '\'' +
+                ", level=" + level +
+                ", companyid='" + companyid + '\'' +
+                ", note='" + note + '\'' +
+                ", creatime=" + creatime +
+                '}';
     }
 }

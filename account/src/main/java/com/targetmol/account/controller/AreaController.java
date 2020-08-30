@@ -2,13 +2,10 @@ package com.targetmol.account.controller;
 
 import com.targetmol.account.service.AreaService;
 import com.targetmol.common.vo.ResultMsg;
-import com.targetmol.domain.Area;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RequestMapping("/area")

@@ -1,11 +1,12 @@
 package com.targetmol.account.service;
 
 import com.targetmol.account.dao.AreaDao;
-import com.targetmol.domain.Area;
-import org.apache.commons.lang3.StringUtils;
+import com.targetmol.domain.account.Area;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class AreaService {
         Example example=new Example(Area.class);
         Example.Criteria criteria1=example.createCriteria();
         Example.Criteria criteria2=example.createCriteria();
-        if(StringUtils.isNotEmpty(key)){
+        if(StringUtil.isNotEmpty(key)){
             criteria1.orLike("name","%"+key.trim()+"%")
                     .orLike("pingyin","%"+key.toUpperCase().trim()+"%")
                     .orEqualTo("citycode",key.trim());
@@ -36,7 +37,7 @@ public class AreaService {
         Example example=new Example(Area.class);
         Example.Criteria criteria1=example.createCriteria();
         Example.Criteria criteria2=example.createCriteria();
-        if(StringUtils.isNotEmpty(key)){
+        if(StringUtil.isNotEmpty(key)){
             criteria1.orLike("name","%"+key.trim()+"%")
                     .orLike("pingyin","%"+key.toUpperCase().trim()+"%")
                     .orEqualTo("citycode",key.trim());
@@ -52,7 +53,7 @@ public class AreaService {
         Example example=new Example(Area.class);
         Example.Criteria criteria1=example.createCriteria();
         Example.Criteria criteria2=example.createCriteria();
-        if(StringUtils.isNotEmpty(key)){
+        if(StringUtil.isNotEmpty(key)){
             criteria1.orLike("name","%"+key.trim()+"%")
                     .orLike("pingyin","%"+key.toUpperCase().trim()+"%")
                     .orEqualTo("citycode",key.trim());

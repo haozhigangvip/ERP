@@ -3,7 +3,7 @@ package com.targetmol.account.controller;
 
 import com.targetmol.account.service.CompanyService;
 import com.targetmol.common.vo.ResultMsg;
-import com.targetmol.domain.Company;
+import com.targetmol.domain.account.Company;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +41,10 @@ public class CompanyController {
     }
 
     //修改company
-    @PutMapping()
-    public ResponseEntity<ResultMsg> updateCompany(@RequestBody Company company){
+    @PutMapping("{autoid}")
+    public ResponseEntity<ResultMsg> updateCompany(@PathVariable("autoid") Integer autoid,
+                                                   @RequestBody Company company){
+        company.setAutoid(autoid);
         return ResponseEntity.ok(ResultMsg.success(companyService.updateCompany(company)));
     }
 

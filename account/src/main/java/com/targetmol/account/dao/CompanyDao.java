@@ -1,7 +1,7 @@
 package com.targetmol.account.dao;
 
 import com.targetmol.common.mapper.BaseMapper;
-import com.targetmol.domain.Company;
+import com.targetmol.domain.account.Company;
 import org.apache.ibatis.annotations.Select;
 
 

@@ -29,6 +29,11 @@ public enum  ExceptionEumn {
     EMAIL_CANNOT_BE_NULL(400,"邮箱不能为空"),
     USERNAME_ALREADY_EXISTS(400,"用户名已存在"),
     USERNAMEANDPASSWORD_ISNOT_MATCH(400,"用户名和密码不匹配"),
+    DEPARTMENTID_IS_NOT_FOUND(404,"部门ID不存在"),
+    DEPARTMENTNAME_ALREADY_EXISTS(400,"部门名称已存在"),
+    FOUND_SUB_DEPARTMENT(400,"包含子部门，不能删除"),
+    FOUND_USERS(400,"包含用户,不能删除"),
+    PERMISSION_IS_NOT_FOUND(404,"权限不存在"),
     ;
     private Integer code;
     private String msg;

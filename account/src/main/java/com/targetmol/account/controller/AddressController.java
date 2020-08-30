@@ -1,17 +1,12 @@
 package com.targetmol.account.controller;
 
 import com.targetmol.account.service.AddressServcie;
-import com.targetmol.account.service.ContactService;
-import com.targetmol.common.vo.PageResult;
 import com.targetmol.common.vo.ResultMsg;
-import com.targetmol.domain.Address;
-import com.targetmol.domain.Contact;
+import com.targetmol.domain.account.Address;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RequestMapping("/address")
@@ -43,8 +38,10 @@ public class AddressController {
     }
 
     //修改地址
-    @PutMapping()
-    public ResponseEntity<ResultMsg> updateAddress(@RequestBody Address address){
+    @PutMapping("{autoid}")
+    public ResponseEntity<ResultMsg> updateAddress(@PathVariable("autoid") Integer autoid,
+                                                   @RequestBody Address address){
+        address.setAutoid(autoid);
         return ResponseEntity.ok(ResultMsg.success(addressServcie.updateAddress(address)));
     }
 

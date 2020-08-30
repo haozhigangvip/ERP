@@ -1,9 +1,9 @@
-package com.targetmol.users.controller;
+package com.targetmol.system.controller;
 
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.common.vo.ResultMsg;
-import com.targetmol.domain.User;
-import com.targetmol.users.service.UserService;
+import com.targetmol.domain.system.User;
+import com.targetmol.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,13 +42,14 @@ public class UserController {
 
 
 
-    //更新用户
-    @PutMapping
-    public ResponseEntity<ResultMsg>updateUser(@RequestBody User user){
+    //修改用户
+    @PutMapping("{uid}")
+    public ResponseEntity<ResultMsg>updateUser(@PathVariable("uid") Integer uid,@RequestBody User user){
+        user.setUid(uid);
         return ResponseEntity.ok(ResultMsg.success(userService.updateUser(user)));
     }
 
-    //修改用户激活状态
+    //修改用户激活状态及密码
     @PutMapping("{uid}")
     public ResponseEntity<ResultMsg>active(@PathVariable("uid") Integer uid,
                                            @RequestParam (value="active" ,required = false) Integer active,
@@ -59,7 +60,6 @@ public class UserController {
         if(password!=null){
             userService.updatePassword(uid,password);
         }
-
         return ResponseEntity.ok(ResultMsg.success());
     }
 

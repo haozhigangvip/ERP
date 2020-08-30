@@ -2,18 +2,16 @@ package com.targetmol.account.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.targetmol.account.dao.AddressDao;
 import com.targetmol.account.dao.ContactDao;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.PageResult;
-import com.targetmol.domain.Address;
-import com.targetmol.domain.Contact;
-import org.apache.commons.lang3.StringUtils;
+import com.targetmol.domain.account.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
 
@@ -84,7 +82,7 @@ public class ContactService {
         Example example=new Example(Contact.class);
         Example.Criteria criteria1=example.createCriteria();
         Example.Criteria criteria2=example.createCriteria();
-        if(StringUtils.isNotEmpty(key)){
+        if(StringUtil.isNotEmpty(key)){
             criteria1.orLike("name","%"+key.trim()+"%")
                     .orEqualTo("contid",key.toUpperCase().trim());
             example.and(criteria1);
@@ -94,7 +92,7 @@ public class ContactService {
             example.and(criteria2);
         }
         //排序
-        if(StringUtils.isNotBlank(softBy)==true) {
+        if(StringUtil.isNotEmpty(softBy)==true) {
             String orderByClause=softBy+(desc ? " DESC" : " ASC");
             example.setOrderByClause(orderByClause);
         }
