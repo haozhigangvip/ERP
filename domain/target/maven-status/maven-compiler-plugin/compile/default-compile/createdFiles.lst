@@ -1,0 +1,10 @@
+com\targetmol\domain\Dapartment.class
+com\targetmol\domain\Contact.class
+com\targetmol\domain\User.class
+com\targetmol\domain\Company.class
+com\targetmol\domain\Role.class
+com\targetmol\domainApplication.class
+com\targetmol\domain\Order.class
+com\targetmol\domain\Area.class
+com\targetmol\domain\Address.class
+com\targetmol\domain\Invoice.class

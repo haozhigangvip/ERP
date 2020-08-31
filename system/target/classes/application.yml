@@ -1,0 +1,29 @@
+server:
+  port: 8083
+  servlet:
+    path: /sys
+logging:
+  level:
+    com.targetmol:  info
+
+spring:
+  application:
+    name: USER-SERVICE
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://192.168.3.15:1433; DatabaseName=tsbio
+    username: tsbio
+    password: ts@801
+mybatis:
+  type-aliases-package: com.targetmol.domain #别名路径
+  configuration:
+    map-underscore-to-camel-case: true      #驼峰命名
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
