@@ -5,8 +5,12 @@ import com.github.pagehelper.PageInfo;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.PageResult;
+import com.targetmol.domain.system.Role;
 import com.targetmol.domain.system.User;
+import com.targetmol.domain.system.User_ROLE;
+import com.targetmol.system.dao.RoleDao;
 import com.targetmol.system.dao.UserDao;
+import com.targetmol.system.dao.UserRoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +26,12 @@ public class UserService {
     private UserDao userDao;
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private UserRoleDao userRoleDao;
 
     //查询所有用
     public PageResult<User> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer active,Boolean showsales){
@@ -87,8 +97,7 @@ public class UserService {
             //查询部门
             result.setDepartment(departmentService.findById(result.getDepartmentid()));
             //查询权限
-
-
+           result.setRolesId( userRoleDao.findByUid(uid));
         }
         return  result;
     }
@@ -215,6 +224,37 @@ public class UserService {
             list=userDao.select(user);
         }
         return list;
+    }
+    //分配角色
+    public void assignRoles(Integer uid, List<Integer> rolesids) {
+        //1、根据id查询用户
+        User user =findById(uid);
+        if(user==null){
+            throw new ErpExcetpion(ExceptionEumn.USERS_ISNOT_FOUND);
+        }
+
+        //2.删除user_role中间表中所有的该用户角色
+        Example example=new Example(User_ROLE.class);
+        Example.Criteria criteria=example.createCriteria();
+        criteria.andEqualTo("uid",uid);
+        example.and(criteria);
+        userRoleDao.deleteByExample(example);
+
+        //3、更新USER_ROLE中间表
+        for (Integer rid:rolesids) {
+           Role role= roleService.findById(rid);
+           if(role==null){
+               throw new ErpExcetpion(ExceptionEumn.ROLE_IS_NOT_FOUND);
+           }
+           User_ROLE user_role=new User_ROLE();
+           user_role.setRid(rid);
+           user_role.setUid(uid);
+           //保存用户角色到中间表
+           if(userRoleDao.insert(user_role)!=1){
+              throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+           }
+
+        }
     }
 }
 

@@ -5,6 +5,8 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.List;
 
 @Table(name="role")
 public class Role {
@@ -13,17 +15,27 @@ public class Role {
     @KeySql(useGeneratedKeys = true)
     @Column(insertable = false,updatable =false,name = "rid")
     private Integer rid;
-    private String rollname;
-    private String nonte;
+    private String rolename;
+    private String note;
     private String companyid;
+    @Transient
+    private List<Integer> perIds;
 
 
-    public String getRollname() {
-        return rollname;
+    public List<Integer> getPerIds() {
+        return perIds;
     }
 
-    public void setRollname(String rollname) {
-        this.rollname = rollname;
+    public void setPerIds(List<Integer> perIds) {
+        this.perIds = perIds;
+    }
+
+    public String getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
     }
 
     public String getCompanyid() {
@@ -42,11 +54,11 @@ public class Role {
         this.rid = rid;
     }
 
-    public String getNonte() {
-        return nonte;
+    public String getNote() {
+        return note;
     }
 
-    public void setNonte(String nonte) {
-        this.nonte = nonte;
+    public void setNote(String note) {
+        this.note = note;
     }
 }

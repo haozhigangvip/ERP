@@ -3,11 +3,15 @@ package com.targetmol.system.controller;
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.system.User;
+import com.targetmol.system.service.RoleService;
 import com.targetmol.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -61,6 +65,17 @@ public class UserController {
         return ResponseEntity.ok(ResultMsg.success(userService.findById(uid)));
     }
 
+    //分配角色
+    @PutMapping("assignRoles")
+    public ResponseEntity<ResultMsg>assignRoles(@RequestBody Map<String, Object> map){
+        //1.获取被分配的用户ID
+        Integer uid=  (Integer)map.get("uid");
+        //2.获取角色ID集合
+        List<Integer> rolesids=(List<Integer>)map.get("roleIds");
+        //3.调用Service完成分配角色
+        userService.assignRoles(uid,rolesids);
+        return ResponseEntity.ok(ResultMsg.success());
+    }
 
 
 }

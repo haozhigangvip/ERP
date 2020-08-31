@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @RequestMapping("/role")
 @RestController
@@ -56,6 +59,18 @@ public class RoleController {
     @DeleteMapping("{rid}")
     public ResponseEntity<ResultMsg>deleteById(@PathVariable("rid") Integer rid){
         roleService.deleteById(rid);
+        return ResponseEntity.ok(ResultMsg.success());
+    }
+
+    //分配角色
+    @PutMapping("assignPermission")
+    public ResponseEntity<ResultMsg>assignPermission(@RequestBody Map<String, Object> map){
+        //1.获取被分配的角色ID
+        Integer rid=  (Integer)map.get("rid");
+        //2.获取权限ID集合
+        List<Integer> permsids=(List<Integer>)map.get("permissionIds");
+        //3.调用Service完成分配权限
+        roleService.assignRoles(rid,permsids);
         return ResponseEntity.ok(ResultMsg.success());
     }
 

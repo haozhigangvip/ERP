@@ -6,6 +6,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Table(name="[user]")
 public class User implements Serializable {
@@ -27,7 +28,8 @@ public class User implements Serializable {
     private Integer actived;
 
     @Transient
-    private Role role;
+    private List<Integer> rolesId;
+
     @Transient
     private Department department;
 
@@ -40,12 +42,12 @@ public class User implements Serializable {
         this.actived = actived;
     }
 
-    public Role getRole() {
-        return role;
+    public List<Integer> getRolesId() {
+        return rolesId;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRolesId(List<Integer> rolesId) {
+        this.rolesId = rolesId;
     }
 
     public Integer getDepartmentid() {
