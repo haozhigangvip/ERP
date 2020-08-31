@@ -13,7 +13,7 @@ public class Permission {
     @Column(insertable = false,updatable =false,name = "id")
     private  int id;
     private String pername;  //权限名称
-    private int type;       //权限类型，1为菜单，2为功能，3为API
+    private Integer type;       //权限类型，1为菜单，2为功能，3为API
     private String code;    //权限编码，根据code比较权限
     private Integer pid;    //父ID
     private String note;    //备注
@@ -29,7 +29,9 @@ public class Permission {
         this.type=type;
         this.code=code;
     }
+    public Permission(){
 
+    }
     public int getId() {
         return id;
     }
@@ -46,11 +48,11 @@ public class Permission {
         this.pername = pername;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -77,5 +79,17 @@ public class Permission {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "id=" + id +
+                ", pername='" + pername + '\'' +
+                ", type=" + type +
+                ", code='" + code + '\'' +
+                ", pid=" + pid +
+                ", note='" + note + '\'' +
+                '}';
     }
 }
