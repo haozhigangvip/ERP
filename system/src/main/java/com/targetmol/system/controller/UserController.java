@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 @RestController
 public class UserController {
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    private UserController(UserService userService){
+        this.userService=userService;
+    }
 
     //查找所有用户
     @GetMapping()
@@ -44,24 +48,12 @@ public class UserController {
 
     //修改用户
     @PutMapping("{uid}")
-    public ResponseEntity<ResultMsg>updateUser(@PathVariable("uid") Integer uid,@RequestBody User user){
+    public ResponseEntity<ResultMsg>updateUser(@PathVariable("uid") Integer uid, @RequestBody User user){
         user.setUid(uid);
         return ResponseEntity.ok(ResultMsg.success(userService.updateUser(user)));
     }
 
-//    //修改用户激活状态及密码
-//    @PutMapping("{uid}")
-//    public ResponseEntity<ResultMsg>active(@PathVariable("uid") Integer uid,
-//                                           @RequestParam (value="active" ,required = false) Integer active,
-//                                           @RequestParam(value="password",required = false) String password){
-//        if(active!=null){
-//            userService.updateActive(uid,active);
-//        }
-//        if(password!=null){
-//            userService.updatePassword(uid,password);
-//        }
-//        return ResponseEntity.ok(ResultMsg.success());
-//    }
+
 
     //按ID查询用户
     @GetMapping("{uid}")

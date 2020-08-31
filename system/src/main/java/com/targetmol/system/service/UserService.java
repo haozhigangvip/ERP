@@ -1,5 +1,6 @@
 package com.targetmol.system.service;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
@@ -24,17 +25,17 @@ public class UserService {
 
     //查询所有用
     public PageResult<User> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer active,Boolean showsales){
-        PageInfo info=new PageInfo();
+        PageHelper.startPage(page,pageSize);
 
-        Example example=new Example(User.class);
-        Example.Criteria criteria1=example.createCriteria();
-        Example.Criteria criteria2=example.createCriteria();
-        Example.Criteria criteria3=example.createCriteria();
-        if(StringUtil.isNotEmpty(key)){
-            criteria1.orLike("username","%"+key.trim()+"%")
-                    .orLike("name","%"+key.trim()+"%")
-                    .orEqualTo("uid",key.toUpperCase().trim());
-            example.and(criteria1);
+            Example example=new Example(User.class);
+            Example.Criteria criteria1=example.createCriteria();
+            Example.Criteria criteria2=example.createCriteria();
+            Example.Criteria criteria3=example.createCriteria();
+            if(StringUtil.isNotEmpty(key)){
+                criteria1.orLike("username","%"+key.trim()+"%")
+                        .orLike("name","%"+key.trim()+"%")
+                        .orEqualTo("uid",key.toUpperCase().trim());
+                example.and(criteria1);
         }
         //是否激活
         switch (active){
