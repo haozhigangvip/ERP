@@ -6,7 +6,6 @@ import com.targetmol.common.utils.JwtUtils;
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.system.User;
-import com.targetmol.system.service.RoleService;
 import com.targetmol.system.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
@@ -113,18 +112,8 @@ public class UserController {
     //获取用户信息鉴权
     @PostMapping("/profile")
     public ResponseEntity<ResultMsg>Profile(HttpServletRequest request) throws Exception{
-        String authorization=request.getHeader("Authorization").replace("Bearer ","");
 
-        if(StringUtil.isEmpty(authorization)){
-            throw new ErpExcetpion(ExceptionEumn.PERMISSION_GRANT_FAILED);
-        }
-        String token=authorization;
-
-
-        Claims claims=jwtUtils.parseJwt(token);
-        if(claims==null){
-            throw new ErpExcetpion(ExceptionEumn.PERMISSION_GRANT_FAILED);
-        }
+        Claims claims=(Claims) request.getAttribute("user_claims");
         String uid=claims.getId();
         System.out.println(uid);
         User user=null;

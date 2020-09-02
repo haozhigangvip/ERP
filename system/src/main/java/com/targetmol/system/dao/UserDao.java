@@ -4,10 +4,11 @@ import com.targetmol.common.mapper.BaseMapper;
 import com.targetmol.domain.system.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public interface UserDao  extends BaseMapper<User> {
 
     //@Select("select * from [user] where uid<>#{uid}  and  username=#{username}")

@@ -13,7 +13,6 @@ import com.targetmol.system.dao.RolePermissionDao;
 import com.targetmol.system.dao.UserRoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 

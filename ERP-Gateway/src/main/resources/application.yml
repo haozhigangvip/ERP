@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: api-gateway
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://192.168.3.15:1433; DatabaseName=tsbio
+    username: tsbio
+    password: ts@801
 eureka:
   client:
     service-url:
@@ -19,7 +24,7 @@ zuul:
       strip-prefix: false
     user-service:
       path: /sys/**
-      serviceId: USER-SERVICE  #ID为该服务所对应的appliaction name
+      serviceId:  SYSTEM-SERVICE  #ID为该服务所对应的appliaction name
       strip-prefix: false
 
 hystrix:
@@ -40,3 +45,7 @@ management:
     web:
       exposure:
         include: "*"
+jwt:
+  config:
+    key: targetmol  #jwt 私钥
+    ttl:  3600000   #jwt 1小时失效
