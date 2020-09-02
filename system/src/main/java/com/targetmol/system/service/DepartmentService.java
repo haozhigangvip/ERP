@@ -40,7 +40,7 @@ public class DepartmentService {
     }
 
     //新增部门
-    public Department addDepartment(Department department) {
+    public void addDepartment(Department department) {
         //检查部门数据
         checkDepartmentProperty(department);
         //检查部门名称是否存在
@@ -52,7 +52,7 @@ public class DepartmentService {
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
 
-        return findById(department.getDepaid());
+        //return findById(department.getDepaid());
     }
     //查询部门名称是否重复
     private void findRepeatName(Department department){
@@ -96,7 +96,7 @@ public class DepartmentService {
     }
 
     //更新部门
-    public Department updateDepartment(Department department) {
+    public void updateDepartment(Department department) {
         //检查部门数据
         checkDepartmentProperty(department);
         //检查部门名称是否存在
@@ -108,7 +108,7 @@ public class DepartmentService {
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
 
-        return findById(department.getDepaid());
+       // return findById(department.getDepaid());
     }
 
 

@@ -81,7 +81,7 @@ public class CompanyService {
 
     //添加Company
     @Transactional
-    public Company addCompany(Company company) {
+    public void addCompany(Company company) {
         //判断是否为空
         checkCompany(company);
         //判断公司名是否存在
@@ -97,11 +97,11 @@ public class CompanyService {
         if (rs!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
-        return company;
+//        return company;
     }
 
     //修改Company
-    public Company updateCompany(Company company) {
+    public void updateCompany(Company company) {
         //检查company数据是否为空
         checkCompany(company);
         //检查company是否存在
@@ -111,7 +111,7 @@ public class CompanyService {
         if(companyDao.updateByPrimaryKeySelective(company)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
-        return companyDao.selectByPrimaryKey(company.getAutoid());
+//        return companyDao.selectByPrimaryKey(company.getAutoid());
     }
 
     //检查要保存的COMPANY

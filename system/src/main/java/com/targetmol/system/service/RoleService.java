@@ -10,12 +10,16 @@ import com.targetmol.domain.system.*;
 import com.targetmol.system.dao.PermissionDao;
 import com.targetmol.system.dao.RoleDao;
 import com.targetmol.system.dao.RolePermissionDao;
+import com.targetmol.system.dao.UserRoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RoleService {
@@ -24,8 +28,15 @@ public class RoleService {
 
     @Autowired
     private RolePermissionDao rolePermissionDao;
+
+    @Autowired
+    private UserRoleDao userRoleDao;
+
     @Autowired
     private PermissionDao permissionDao;
+
+    @Autowired
+    private PermissionService permissionService;
 
     //查询角色
     public PageResult<Role> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key) {
@@ -55,49 +66,61 @@ public class RoleService {
     }
 
     //添加角色
-    public Role addRole(Role role) {
+    public void addRole(Role role) {
         //检查role参数是否为空
         checkRole(role);
         //检查role名称是否重复
         checkRepeatRoleName(role);
         //保存
-        roleDao.insert(role);
-        return (findById(role.getRid()));
+        if(roleDao.insert(role)!=1){
+         throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+        }
+        //return (findById(role.getRid()));
     }
 
     //修改角色
-    public Role updateRole(Role role) {
+    public void updateRole(Role role) {
         //检查role参数是否为空
         checkRole(role);
         //检查role名称是否重复
         checkRepeatRoleName(role);
         //保存
-        roleDao.updateByPrimaryKeySelective(role);
-        return (findById(role.getRid()));
+        if(roleDao.updateByPrimaryKeySelective(role)!=1){
+            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+        }
+//        return (findById(role.getRid()));
     }
 
     //根据ID查询角色
-    public Role findById(Integer rid) {
+    public Role findById(Integer rid)  throws Exception{
         if(rid==null){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
         Role role=roleDao.selectByPrimaryKey(rid);
         if(role!=null){
             //查询权限集合
-            role.setPerIds(rolePermissionDao.findByRid(rid));
+           List<Integer> pids=rolePermissionDao.findByRid(rid);
+           List<Map<String,Object>> permissions= new ArrayList<Map<String, Object>>();
+            for (Integer pid:pids) {
+               permissions.add(permissionService.findById(pid));
+            }
+            role.setPermissions(permissions);
+
         }
+
         return (role);
     }
 
     //根据ID删除角色
     public void deleteById(Integer rid) {
-       Role role =findById(rid);
+       Role role =roleDao.selectByPrimaryKey(rid);
        if(role==null){
             throw new ErpExcetpion(ExceptionEumn.ROLE_IS_NOT_FOUND);
        }else{
             //查找角色是否绑定用户
-
-           //查找角色是否绑定权限
+           if(userRoleDao.countByRid(rid)>0){
+               throw new ErpExcetpion(ExceptionEumn.ROLE_IS_BOUNDBY_USERS);
+           }
 
            roleDao.delete(role);
        }
@@ -132,7 +155,7 @@ public class RoleService {
             throw  new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
         //1、根据id查询用户
-        Role role =findById(rid);
+        Role role =roleDao.selectByPrimaryKey(rid);
         if(role==null){
             throw new ErpExcetpion(ExceptionEumn.ROLE_IS_NOT_FOUND);
         }

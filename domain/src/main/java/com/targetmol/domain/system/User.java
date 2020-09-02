@@ -26,6 +26,8 @@ public class User implements Serializable {
     private Date creatime;
     private String note;
     private Integer actived;
+    @Transient
+    private List<Role> roles;
 
     @Transient
     private List<Integer> rolesId;
@@ -139,5 +141,13 @@ public class User implements Serializable {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

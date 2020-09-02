@@ -1,15 +1,22 @@
 package com.targetmol.system.controller;
 
+import com.targetmol.common.emums.ExceptionEumn;
+import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.common.utils.JwtUtils;
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.system.User;
 import com.targetmol.system.service.RoleService;
 import com.targetmol.system.service.UserService;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tk.mybatis.mapper.util.StringUtil;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +31,9 @@ public class UserController {
     private UserController(UserService userService){
         this.userService=userService;
     }
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     //查找所有用户
     @GetMapping()
@@ -45,7 +55,8 @@ public class UserController {
     //添加用户
     @PostMapping
     public  ResponseEntity<ResultMsg>addUser(@RequestBody User user) {
-        return ResponseEntity.ok(ResultMsg.success(userService.addUser(user)));
+        userService.addUser(user);
+        return ResponseEntity.ok(ResultMsg.success());
     }
 
 
@@ -54,15 +65,22 @@ public class UserController {
     @PutMapping("{uid}")
     public ResponseEntity<ResultMsg>updateUser(@PathVariable("uid") Integer uid, @RequestBody User user){
         user.setUid(uid);
-        return ResponseEntity.ok(ResultMsg.success(userService.updateUser(user)));
+        userService.updateUser(user);
+        return ResponseEntity.ok(ResultMsg.success());
     }
 
 
 
     //按ID查询用户
     @GetMapping("{uid}")
-    public  ResponseEntity<ResultMsg>findById(@PathVariable("uid") Integer uid) {
+    public  ResponseEntity<ResultMsg>findById(@PathVariable("uid") Integer uid) throws Exception{
         return ResponseEntity.ok(ResultMsg.success(userService.findById(uid)));
+    }
+    //根据ID删除用户
+    @DeleteMapping("{uid}")
+    public ResponseEntity<ResultMsg>deleteById(@PathVariable("uid")Integer uid ,@RequestParam(value = "actived",defaultValue ="0") Integer actived){
+        userService.updateActive(uid ,actived);
+        return ResponseEntity.ok(ResultMsg.success());
     }
 
     //分配角色
@@ -77,5 +95,43 @@ public class UserController {
         return ResponseEntity.ok(ResultMsg.success());
     }
 
+    //登录验证
+    @PostMapping("/login")
+    public ResponseEntity<ResultMsg>login(@RequestBody Map<String ,Object> loginMap){
+        //根据用户名及密码查询用户
+        User user=userService.login(loginMap.get("username").toString(),loginMap.get("password").toString());
+        //生成JWT信息，返回token
+        Map<String,Object> map=new HashMap<>();
+
+        map.put("departmentId",user.getDepartmentid());
+        map.put("email",user.getEmail());
+        String uid=user.getUid().toString();
+        String token=jwtUtils.createJwt(uid,user.getUsername(),map);
+        return ResponseEntity.ok(ResultMsg.success(token));
+    }
+
+    //获取用户信息鉴权
+    @PostMapping("/profile")
+    public ResponseEntity<ResultMsg>Profile(HttpServletRequest request) throws Exception{
+        String authorization=request.getHeader("Authorization").replace("Bearer ","");
+
+        if(StringUtil.isEmpty(authorization)){
+            throw new ErpExcetpion(ExceptionEumn.PERMISSION_GRANT_FAILED);
+        }
+        String token=authorization;
+
+
+        Claims claims=jwtUtils.parseJwt(token);
+        if(claims==null){
+            throw new ErpExcetpion(ExceptionEumn.PERMISSION_GRANT_FAILED);
+        }
+        String uid=claims.getId();
+        System.out.println(uid);
+        User user=null;
+        if(uid!=null){
+             user =userService.findById(Integer.parseInt(uid));
+        }
+        return  ResponseEntity.ok(ResultMsg.success(user));
+    }
 
 }

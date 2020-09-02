@@ -34,7 +34,8 @@ public class AddressController {
     //新增地址
     @PostMapping
     public ResponseEntity<ResultMsg> addAddress(@RequestBody Address address){
-        return ResponseEntity.ok(ResultMsg.success(addressServcie.addAddress(address)));
+        addressServcie.addAddress(address);
+        return ResponseEntity.ok(ResultMsg.success());
     }
 
     //修改地址

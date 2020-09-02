@@ -119,7 +119,7 @@ public class ContactService {
 
     //添加联系人
     @Transactional
-    public Contact add(Contact contact) {
+    public void add(Contact contact) {
         //设置默认值
         if(contact.getContvip()==null){
             contact.setContvip(0);
@@ -138,11 +138,11 @@ public class ContactService {
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
 
-        return contactDao.selectByPrimaryKey(contact.getAutoid());
+//        return contactDao.selectByPrimaryKey(contact.getAutoid());
     }
 
     //修改联系人
-    public Contact update(Contact contact) {
+    public void update(Contact contact) {
         //检查联系人数据是否为空
         CheckContact(contact);
         //检查联系人名称是否存在
@@ -152,7 +152,7 @@ public class ContactService {
        if(contactDao.updateByPrimaryKeySelective(contact)!=1){
            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
        }
-       return contactDao.selectByPrimaryKey(contact.getAutoid());
+//       return contactDao.selectByPrimaryKey(contact.getAutoid());
     }
 
     //检查要保存的联系人

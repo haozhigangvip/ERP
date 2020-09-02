@@ -21,6 +21,7 @@ public class DepartmentController {
             @RequestParam(value="softby",required = false) String softBy,
             @RequestParam(value="desc",defaultValue = "false") Boolean desc
     ){
+
         return ResponseEntity.ok(ResultMsg.success(departmentService.findByAll(softBy,desc)));
     }
 
@@ -29,7 +30,8 @@ public class DepartmentController {
     //添加部门
     @PostMapping
     public  ResponseEntity<ResultMsg>addDepartment(@RequestBody Department department) {
-        return ResponseEntity.ok(ResultMsg.success(departmentService.addDepartment(department)));
+        departmentService.addDepartment(department);
+        return ResponseEntity.ok(ResultMsg.success());
     }
 
 
@@ -44,7 +46,8 @@ public class DepartmentController {
     public ResponseEntity<ResultMsg>updateDepartment(@PathVariable("depaid") Integer depaid,
                                                      @RequestBody Department department){
         department.setDepaid(depaid);
-        return ResponseEntity.ok(ResultMsg.success(departmentService.updateDepartment(department)));
+        departmentService.updateDepartment(department);
+        return ResponseEntity.ok(ResultMsg.success());
     }
 
     //按ID删除部门

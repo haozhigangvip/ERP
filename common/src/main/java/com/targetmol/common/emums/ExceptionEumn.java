@@ -36,6 +36,9 @@ public enum  ExceptionEumn {
     PERMISSION_IS_NOT_FOUND(404,"权限不存在"),
     ROLENAME_ALREADY_EXISTS(400,"角色名已存在"),
     ROLE_IS_NOT_FOUND(404,"角色不存在"),
+    ROLE_IS_BOUNDBY_USERS(400,"用户已绑定该角色"),
+    PERMISSION_IS_BOUNDBY_THE_ROLE(400,"角色已绑定该权限"),
+    PERMISSION_GRANT_FAILED(400,"授权失败"),
     ;
     private Integer code;
     private String msg;

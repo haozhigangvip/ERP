@@ -7,10 +7,7 @@ import com.targetmol.common.utils.BeanMapUtils;
 import com.targetmol.common.utils.PermissionConstants;
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.domain.system.*;
-import com.targetmol.system.dao.PermissionApiDao;
-import com.targetmol.system.dao.PermissionDao;
-import com.targetmol.system.dao.PermissionMenuDao;
-import com.targetmol.system.dao.PermissionPointDao;
+import com.targetmol.system.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +27,8 @@ public class PermissionService {
     private PermissionMenuDao permissionMenuDao;
     @Autowired
     private PermissionPointDao permissionPointDao;
+    @Autowired
+    private RolePermissionDao rolePermissionDao;
 
     //添加权限
     public void addPermission(Map<String, Object> map) throws Exception {
@@ -143,6 +142,11 @@ public class PermissionService {
         if(id==null){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
+        //查找角色是否绑定权限
+        if(rolePermissionDao.countByPid(id)>0){
+            throw new ErpExcetpion(ExceptionEumn.PERMISSION_IS_BOUNDBY_THE_ROLE);
+        }
+
         //删除权限表
         Permission permission=permissionDao.selectByPrimaryKey(id);
         if(permission==null){

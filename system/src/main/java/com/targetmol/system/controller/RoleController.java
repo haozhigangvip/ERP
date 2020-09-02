@@ -35,7 +35,8 @@ public class RoleController {
     //添加角色
     @PostMapping
     public  ResponseEntity<ResultMsg>addUser(@RequestBody Role role) {
-        return ResponseEntity.ok(ResultMsg.success(roleService.addRole(role)));
+        roleService.addRole(role);
+        return ResponseEntity.ok(ResultMsg.success());
     }
 
 
@@ -44,14 +45,15 @@ public class RoleController {
     @PutMapping("{rid}")
     public ResponseEntity<ResultMsg>updateUser(@PathVariable("rid") Integer rid, @RequestBody Role role){
         role.setRid(rid);
-        return ResponseEntity.ok(ResultMsg.success(roleService.updateRole(role)));
+        roleService.updateRole(role);
+        return ResponseEntity.ok(ResultMsg.success());
     }
 
 
 
     //按ID查询角色
     @GetMapping("{rid}")
-    public  ResponseEntity<ResultMsg>findById(@PathVariable("rid") Integer rid) {
+    public  ResponseEntity<ResultMsg>findById(@PathVariable("rid") Integer rid) throws Exception{
         return ResponseEntity.ok(ResultMsg.success(roleService.findById(rid)));
     }
 

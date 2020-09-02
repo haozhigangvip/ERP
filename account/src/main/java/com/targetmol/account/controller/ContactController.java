@@ -41,14 +41,16 @@ public class ContactController {
     //新增联系人
     @PostMapping
     public ResponseEntity<ResultMsg> addContact(@RequestBody Contact contact){
-        return ResponseEntity.ok(ResultMsg.success(contactService.add(contact)));
+        contactService.add(contact);
+        return ResponseEntity.ok(ResultMsg.success());
     }
     //修改联系人
     @PutMapping("{autoid}")
     public ResponseEntity<ResultMsg> updateContact(@PathVariable("autoid") Integer autoid,
                                                    @RequestBody Contact contact){
         contact.setAutoid(autoid);
-        return ResponseEntity.ok(ResultMsg.success(contactService.update(contact)));
+        contactService.update(contact);
+        return ResponseEntity.ok(ResultMsg.success());
     }
     //删除联系人
     @DeleteMapping("{autoid}")

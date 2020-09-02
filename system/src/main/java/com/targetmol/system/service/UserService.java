@@ -24,6 +24,7 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserDao userDao;
+
     @Autowired
     private DepartmentService departmentService;
 
@@ -32,6 +33,8 @@ public class UserService {
 
     @Autowired
     private UserRoleDao userRoleDao;
+    @Autowired
+    private RoleDao roleDao;
 
     //查询所有用
     public PageResult<User> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer active,Boolean showsales){
@@ -91,24 +94,36 @@ public class UserService {
     }
 
     //按ID查询用户
-    public  User findById(Integer uid){
+    public  User findById(Integer uid) throws Exception{
         User result=userDao.selectByPrimaryKey(uid);
         if(result!=null){
             //查询部门
             result.setDepartment(departmentService.findById(result.getDepartmentid()));
             //查询权限
-           result.setRolesId( userRoleDao.findByUid(uid));
+            List<Integer> rids=userRoleDao.findByUid(uid);
+            List<Role> roles=new ArrayList<Role>();
+            for(Integer rid:rids) {
+                Role role=roleService.findById(rid);
+                if(role!=null){
+                    roles.add(role);
+                }
+            }
+           result.setRoles(roles);
+
         }
         return  result;
     }
 
     //新增用户
-    public User addUser(User user) {
+    public void addUser(User user) {
         //检查用户数据
         checkUserProperty(user);
 
         //设置用户状态，1为在职，0为离职
         user.setActived(1);
+        if(user.getIssales()==null){
+            user.setIssales(false);
+        }
 
 
         //检查用户名是否存在
@@ -124,7 +139,7 @@ public class UserService {
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
 
-        return findById(user.getUid());
+//        return findById(user.getUid());
     }
 
 
@@ -138,7 +153,7 @@ public class UserService {
     //判断USER数据是否齐全
     private  void checkUserProperty(User user){
         //判断参数是否齐全
-        if(user==null|| StringUtil.isEmpty(user.getName())==true||StringUtil.isEmpty(user.getPassword())){
+        if(user==null|| StringUtil.isEmpty(user.getUsername())==true||StringUtil.isEmpty(user.getPassword())==true){
             throw new ErpExcetpion(ExceptionEumn.USERNAME_PASSWORD_CANNOT_BE_NULL);
         }
         if(StringUtil.isEmpty(user.getEmail())){
@@ -153,19 +168,24 @@ public class UserService {
 
 
     //更新用户
-    public User updateUser(User user) {
-        checkUserProperty(user);
-        //检查用户名是否已存在
-        if(findByUsername(user).size()>0){
-            throw new ErpExcetpion(ExceptionEumn.USERNAME_ALREADY_EXISTS);
+    public void updateUser(User user) {
+        if(user.getUid()==null){
+            throw  new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
-        //检查部门是否存在
+        User suser=userDao.selectByPrimaryKey(user.getUid());
+        if(suser==null){
+            throw new ErpExcetpion(ExceptionEumn.USERS_ISNOT_FOUND);
+        }
+        //不允许修改用户名和激活标记
+        user.setUsername(null);
+        user.setActived(null);
         checkDerprtmentId(user.getDepartmentid());
+
         //保存
         if(userDao.updateByPrimaryKeySelective(user)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
-        return findById(user.getUid());
+//        return findById(user.getUid());
 
     }
 
@@ -174,7 +194,7 @@ public class UserService {
         if (uid == null || active == null){
              throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
-        User user=findById(uid);
+        User user=userDao.selectByPrimaryKey(uid);
         if(user==null){
             throw new ErpExcetpion(ExceptionEumn.USERS_ISNOT_FOUND);
         }
@@ -189,13 +209,15 @@ public class UserService {
     }
 
     //登录
-    public void login(String username,String password){
+    public User login(String username,String password){
         User user=new User();
         user.setUsername(username);
         user.setPassword(password);
-        if(userDao.selectOne(user)==null){
+        user=userDao.selectOne(user);
+        if(user==null){
             throw new ErpExcetpion(ExceptionEumn.USERNAMEANDPASSWORD_ISNOT_MATCH);
         }
+        return user;
     }
 
     //修改密码
@@ -203,7 +225,7 @@ public class UserService {
         if(uid==null || password==null){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
-        User user=findById(uid);
+        User user=userDao.selectByPrimaryKey(uid);
         if(user==null){
             throw new ErpExcetpion(ExceptionEumn.USERS_ISNOT_FOUND);
         }
@@ -228,7 +250,7 @@ public class UserService {
     //分配角色
     public void assignRoles(Integer uid, List<Integer> rolesids) {
         //1、根据id查询用户
-        User user =findById(uid);
+        User user =userDao.selectByPrimaryKey(uid);
         if(user==null){
             throw new ErpExcetpion(ExceptionEumn.USERS_ISNOT_FOUND);
         }
@@ -242,7 +264,7 @@ public class UserService {
 
         //3、更新USER_ROLE中间表
         for (Integer rid:rolesids) {
-           Role role= roleService.findById(rid);
+           Role role= roleDao.selectByPrimaryKey(rid);
            if(role==null){
                throw new ErpExcetpion(ExceptionEumn.ROLE_IS_NOT_FOUND);
            }

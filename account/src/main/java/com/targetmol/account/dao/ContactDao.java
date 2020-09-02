@@ -1,8 +1,8 @@
 package com.targetmol.account.dao;
 
 import com.targetmol.common.mapper.BaseMapper;
-import com.targetmol.domain.account.Contact;
 
+import com.targetmol.domain.account.Contact;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

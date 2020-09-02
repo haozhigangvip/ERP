@@ -22,6 +22,7 @@ public class AddressServcie {
         }
         Address address=new Address();
         address.setAdrcontact(contid);
+
         return addressDao.select(address);
     }
     //按id查询address
@@ -32,12 +33,12 @@ public class AddressServcie {
     }
 
     //添加地址
-    public Address addAddress(Address address) {
+    public void addAddress(Address address) {
         checkAddress(address);
         if(addressDao.insert(address)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
-        return findbyAutoid(address.getAutoid());
+//        return findbyAutoid(address.getAutoid());
     }
 
     //保存

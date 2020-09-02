@@ -37,7 +37,8 @@ public class CompanyController {
     //添加company
     @PostMapping
     public ResponseEntity<ResultMsg> addCompany(@RequestBody Company company){
-        return ResponseEntity.ok(ResultMsg.success(companyService.addCompany(company)));
+        companyService.addCompany(company);
+        return ResponseEntity.ok(ResultMsg.success());
     }
 
     //修改company
@@ -45,7 +46,8 @@ public class CompanyController {
     public ResponseEntity<ResultMsg> updateCompany(@PathVariable("autoid") Integer autoid,
                                                    @RequestBody Company company){
         company.setAutoid(autoid);
-        return ResponseEntity.ok(ResultMsg.success(companyService.updateCompany(company)));
+        companyService.updateCompany(company);
+        return ResponseEntity.ok(ResultMsg.success());
     }
 
     //删除company
