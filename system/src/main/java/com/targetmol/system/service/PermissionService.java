@@ -216,7 +216,7 @@ public class PermissionService {
 
 
     //根据ID查询权限
-    public Map<String ,Object> findById(Integer id) throws Exception{
+    public Map<String,Object> findById(Integer id) throws Exception{
         if(id==null){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
@@ -244,14 +244,12 @@ public class PermissionService {
              default:
                  throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
-
         Map<String,Object> map=BeanMapUtils.beanToMap(object);
-        map.put("id",permission.getId());
-        map.put("pername",permission.getPername());
+        map.put("name",permission.getPername());
         map.put("type",permission.getType());
-        map.put("pid",permission.getPid());
-        map.put("note",permission.getNote());
         map.put("code",permission.getCode());
+        map.put("description",permission.getNote());
+        map.put("pid",permission.getPid());
 
         return  map;
     }

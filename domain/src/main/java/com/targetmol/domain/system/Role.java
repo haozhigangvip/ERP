@@ -23,14 +23,14 @@ public class Role {
     private List<Integer> perIds;
 
     @Transient
-    private List<Map<String,Object>> permissions;
+    private List<Map<String ,Object>> permissions;
 
 
-    public List<Map<String, Object>> getPermissions() {
+    public List<Map<String ,Object>> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(List<Map<String, Object>> permissions) {
+    public void setPermissions(List<Map<String ,Object>> permissions) {
         this.permissions = permissions;
     }
 

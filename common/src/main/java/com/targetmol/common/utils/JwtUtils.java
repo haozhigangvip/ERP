@@ -60,12 +60,7 @@ public class JwtUtils {
     //解析Token
     public Claims parseJwt(String token){
         Claims result=null;
-        try {
-           result= Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();//设置私钥信息
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
+        result= Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();//设置私钥信息
         return result;
     }
 

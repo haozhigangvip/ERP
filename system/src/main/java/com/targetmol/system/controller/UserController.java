@@ -1,9 +1,11 @@
 package com.targetmol.system.controller;
 
+import com.targetmol.common.controller.BaseController;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.utils.JwtUtils;
 import com.targetmol.common.vo.PageResult;
+import com.targetmol.common.vo.ProfileResult;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.system.User;
 import com.targetmol.system.service.UserService;
@@ -23,7 +25,7 @@ import java.util.Map;
 @Slf4j
 @RequestMapping("/user")
 @RestController
-public class UserController {
+public class UserController extends BaseController {
     private final UserService userService;
 
     @Autowired
@@ -113,14 +115,14 @@ public class UserController {
     @PostMapping("/profile")
     public ResponseEntity<ResultMsg>Profile(HttpServletRequest request) throws Exception{
 
-        Claims claims=(Claims) request.getAttribute("user_claims");
         String uid=claims.getId();
-        System.out.println(uid);
+        System.out.println("uid:"+uid);
         User user=null;
         if(uid!=null){
              user =userService.findById(Integer.parseInt(uid));
         }
-        return  ResponseEntity.ok(ResultMsg.success(user));
+        ProfileResult result=new ProfileResult(user);
+        return  ResponseEntity.ok(ResultMsg.success(result));
     }
 
 }

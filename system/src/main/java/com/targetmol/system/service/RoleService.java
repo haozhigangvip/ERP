@@ -2,6 +2,7 @@ package com.targetmol.system.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.utils.PermissionConstants;
@@ -99,7 +100,7 @@ public class RoleService {
         if(role!=null){
             //查询权限集合
            List<Integer> pids=rolePermissionDao.findByRid(rid);
-           List<Map<String,Object>> permissions= new ArrayList<Map<String, Object>>();
+           List<Map<String,Object>> permissions=new ArrayList<Map<String, Object>>();
             for (Integer pid:pids) {
                permissions.add(permissionService.findById(pid));
             }

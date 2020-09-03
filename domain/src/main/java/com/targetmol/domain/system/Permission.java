@@ -5,6 +5,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name="permission")
 public class Permission {
@@ -32,6 +33,9 @@ public class Permission {
     public Permission(){
 
     }
+
+
+
     public int getId() {
         return id;
     }
