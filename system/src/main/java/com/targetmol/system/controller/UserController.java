@@ -112,7 +112,7 @@ public class UserController extends BaseController {
     }
 
     //获取用户信息鉴权
-    @PostMapping("/profile")
+    @GetMapping("/profile")
     public ResponseEntity<ResultMsg>Profile(HttpServletRequest request) throws Exception{
 
         String uid=claims.getId();

@@ -141,11 +141,11 @@ public class RoleService {
         Example example=new Example(Role.class);
         Example.Criteria criteria=example.createCriteria();
         criteria.andEqualTo("rolename",role.getRolename());
-        if(role.getRid()!=null){
+            if(role.getRid()!=null){
             criteria.andNotEqualTo("rid",role.getRid());
         }
         example.and(criteria);
-        if(roleDao.selectByExample(example)!=null){
+        if(roleDao.selectByExample(example).size()>0){
             throw new ErpExcetpion(ExceptionEumn.ROLENAME_ALREADY_EXISTS);
         }
     }

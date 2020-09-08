@@ -52,7 +52,7 @@ public class ContactService {
                res.setCompany(companyService.findByComId(res.getCompanyid()));
 
            }
-            res.setAddressList(addressServcie.findByAll(res.getContid()));
+            res.setAddressList(addressServcie.findByContId(res.getContid()));
         }
         return res;
     }
@@ -68,7 +68,7 @@ public class ContactService {
             if(res.getCompanyid()!=null){
                 res.setCompany(companyService.findByComId(res.getCompanyid()));
             }
-            res.setAddressList(addressServcie.findByAll(res.getContid()));
+            res.setAddressList(addressServcie.findByContId(res.getContid()));
         }
         return res;
     }

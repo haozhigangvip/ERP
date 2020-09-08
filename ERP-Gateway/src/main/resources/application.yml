@@ -56,3 +56,4 @@ data-filter:
     - /api/sys/**
   userLoginPath: #登录请求地址,可设置多个,会触发LoginAddJwtPostFilter
     - /api/sys/user/login/**
+    - /api/**

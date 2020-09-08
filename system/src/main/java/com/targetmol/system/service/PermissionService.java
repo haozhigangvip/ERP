@@ -100,6 +100,7 @@ public class PermissionService {
         switch (type){
             case PermissionConstants.PY_MENU:
                 PermissionMenu menu= BeanMapUtils.mapToBean(map,PermissionMenu.class);
+                menu.setId(null);
                 menu.setPreid(permission.getId());
                 PermissionMenu rmenu=permissionMenuDao.selectOne(menu);
                 rmenu.setMenuicon(menu.getMenuicon());
@@ -108,6 +109,7 @@ public class PermissionService {
                 break;
             case PermissionConstants.PY_POINT:
                 PermissionPoint point= BeanMapUtils.mapToBean(map,PermissionPoint.class);
+                point.setId(null);
                 point.setPreid(permission.getId());
                 PermissionPoint rpoint=permissionPointDao.selectOne(point);
                 rpoint.setPointclass(point.getPointclass());
@@ -117,6 +119,7 @@ public class PermissionService {
                 break;
             case PermissionConstants.PY_API:
                 PermissionApi api= BeanMapUtils.mapToBean(map,PermissionApi.class);
+                api.setId(null);
                 api.setPreid(permission.getId());
                 PermissionApi rapi=permissionApiDao.selectOne(api);
                 rapi.setApilevel(api.getApilevel());
@@ -248,7 +251,7 @@ public class PermissionService {
         map.put("name",permission.getPername());
         map.put("type",permission.getType());
         map.put("code",permission.getCode());
-        map.put("description",permission.getNote());
+        map.put("note",permission.getNote());
         map.put("pid",permission.getPid());
 
         return  map;

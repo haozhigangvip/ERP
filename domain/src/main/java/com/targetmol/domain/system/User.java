@@ -26,6 +26,7 @@ public class User implements Serializable {
     private Date creatime;
     private String note;
     private Integer actived;
+    private String userpic;
     @Transient
     private List<Role> roles;
 
@@ -35,6 +36,14 @@ public class User implements Serializable {
     @Transient
     private Department department;
 
+
+    public String getUserpic() {
+        return userpic;
+    }
+
+    public void setUserpic(String userpic) {
+        this.userpic = userpic;
+    }
 
     public Integer getActived() {
         return actived;

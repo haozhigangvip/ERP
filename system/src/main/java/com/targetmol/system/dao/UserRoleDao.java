@@ -11,7 +11,7 @@ public interface UserRoleDao extends BaseMapper<User_ROLE> {
     @Select("select rid from user_role where uid=#{uid}")
     List<Integer> findByUid(Integer uid);
 
-    @Select("select count(*) from user_role where rid-#{rid}")
+    @Select("select count(*) from user_role where rid=#{rid}")
     Integer countByRid(Integer rid);
 
 }

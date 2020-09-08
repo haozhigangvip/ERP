@@ -27,7 +27,7 @@ public class ContactController {
     @GetMapping
     public ResponseEntity<PageResult<Contact>> findByAll(
             @RequestParam(value="page",defaultValue = "1") Integer page,
-            @RequestParam(value="pagesize",defaultValue = "20") Integer pageSize,
+            @RequestParam(value="pagesize",defaultValue = "30") Integer pageSize,
             @RequestParam(value="softby",required = false) String softBy,
             @RequestParam(value="desc",defaultValue = "false") Boolean desc,
             @RequestParam(value="key",required = false) String key,

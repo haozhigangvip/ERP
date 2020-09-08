@@ -1,8 +1,10 @@
 package com.targetmol.account.controller;
 
 import com.targetmol.account.service.AddressServcie;
+import com.targetmol.common.vo.PageResult;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.account.Address;
+import com.targetmol.domain.account.Contact;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +24,19 @@ public class AddressController {
         return ResponseEntity.ok(ResultMsg.success(addressServcie.findbyAutoid(autoid)));
     }
 
-    //按联系人ID查询所有地址
-    @GetMapping()
-    public ResponseEntity<ResultMsg> findByAll(@RequestParam("contid") String contid){
 
-        return ResponseEntity.ok(ResultMsg.success(addressServcie.findByAll(contid)));
+    //查询联系人
+    @GetMapping
+    public ResponseEntity<PageResult<Address>> findByAll(
+            @RequestParam(value="page",defaultValue = "1") Integer page,
+            @RequestParam(value="pagesize",defaultValue = "20") Integer pageSize,
+            @RequestParam(value="softby",required = false) String softBy,
+            @RequestParam(value="desc",defaultValue = "false") Boolean desc,
+            @RequestParam(value="key",required = false) String key
+    ){
+
+        return ResponseEntity.ok(addressServcie.findByAll(page,pageSize,softBy,desc,key));
     }
-
 
 
     //新增地址
@@ -43,7 +51,8 @@ public class AddressController {
     public ResponseEntity<ResultMsg> updateAddress(@PathVariable("autoid") Integer autoid,
                                                    @RequestBody Address address){
         address.setAutoid(autoid);
-        return ResponseEntity.ok(ResultMsg.success(addressServcie.updateAddress(address)));
+        addressServcie.updateAddress(address);
+        return ResponseEntity.ok(ResultMsg.success());
     }
 
     //删除地址

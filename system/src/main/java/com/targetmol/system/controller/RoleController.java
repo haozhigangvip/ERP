@@ -58,6 +58,7 @@ public class RoleController {
         return ResponseEntity.ok(ResultMsg.success(roleService.findById(rid)));
     }
 
+
     //根据ID删除角色
     @DeleteMapping("{rid}")
     public ResponseEntity<ResultMsg>deleteById(@PathVariable("rid") Integer rid){
@@ -65,7 +66,7 @@ public class RoleController {
         return ResponseEntity.ok(ResultMsg.success());
     }
 
-    //分配角色
+    //分配权限
     @PutMapping("assignPermission")
     public ResponseEntity<ResultMsg>assignPermission(@RequestBody Map<String, Object> map){
         //1.获取被分配的角色ID

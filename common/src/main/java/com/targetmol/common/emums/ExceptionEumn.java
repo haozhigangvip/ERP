@@ -39,6 +39,7 @@ public enum  ExceptionEumn {
     ROLE_IS_BOUNDBY_USERS(400,"用户已绑定该角色"),
     PERMISSION_IS_BOUNDBY_THE_ROLE(400,"角色已绑定该权限"),
     PERMISSION_GRANT_FAILED(403,"授权失败"),
+    SALESMAN_CANNOT_BE_NULL(400,"所属销售不能为空"),
     ;
     private Integer code;
     private String msg;

@@ -84,6 +84,7 @@ public class CompanyService {
     public void addCompany(Company company) {
         //判断是否为空
         checkCompany(company);
+
         //判断公司名是否存在
         Company c1=new Company();
         c1.setCompanyname(company.getCompanyname());
@@ -92,7 +93,9 @@ public class CompanyService {
             throw new ErpExcetpion(ExceptionEumn.COMPANYNAME_ALREADY_EXISTS);
         }
         company.setCreatime( new Timestamp(new Date().getTime()));
+        company.setDeltag(0);
         //保存
+
         Integer rs=companyDao.insert(company);
         if (rs!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
@@ -121,6 +124,9 @@ public class CompanyService {
         }
         if(company.getCompanyname()==null ||company.getCompanyname()=="") {
             throw  new ErpExcetpion(ExceptionEumn.NAME_CANNOT_BE_NULL);
+        }
+        if(StringUtil.isEmpty(company.getCsalesman())==true){
+            throw new ErpExcetpion(ExceptionEumn.SALESMAN_CANNOT_BE_NULL);
         }
 
     }
