@@ -39,48 +39,49 @@ public class LoginFilter extends ZuulFilter {
     //判断过滤器是否要执行，true执行过滤器，false过滤器无效
     @Override
     public boolean shouldFilter() {
-        //共享RequestContext，上下文对象
-        RequestContext requestContext = RequestContext.getCurrentContext();
-        HttpServletRequest request = requestContext.getRequest();
-        //读取白名单
-        for (String pathPattern : dataFilterConfig.getUserLoginPath()) {
-            System.out.println(pathPattern);
-            if (PathUtil.isPathMatch(pathPattern,request.getRequestURI())) {
-                return false;
-            }
-        }
-        return true;
+//        //共享RequestContext，上下文对象
+//        RequestContext requestContext = RequestContext.getCurrentContext();
+//        HttpServletRequest request = requestContext.getRequest();
+//        //读取白名单
+//        for (String pathPattern : dataFilterConfig.getUserLoginPath()) {
+//            System.out.println(pathPattern);
+//            if (PathUtil.isPathMatch(pathPattern,request.getRequestURI())) {
+//                return false;
+//            }
+//        }
+//        return true;
+        return false;
     }
     //过滤器内容
     @Override
     public Object run() throws ZuulException {
-        RequestContext ctx = RequestContext.getCurrentContext();
-        //获取request对象
-        HttpServletRequest request = ctx.getRequest();
-        //获取response对象
-        HttpServletResponse response = ctx.getResponse();
-        try{
-            //获取请求上下文对象
-
-            String authorization=request.getHeader("Authorization");
-            System.out.println(authorization);
-            //判断请求头是否为空或者开头是否是Bearer开头
-            if(authorization!=null && authorization.startsWith("Bearer")){
-                //获取token数据
-                String token=authorization.replace("Bearer ","");
-
-                //3解析token，获取claims
-                Claims claims=jwtUtils.parseJwt(token);
-                request.setAttribute("user_claims",claims);
-                ctx.addZuulRequestHeader("AuthorizationToken",token);
-
-            }else{
-                responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
-            }
-        }catch (Exception e){
-            responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
-            return false;
-        }
+//        RequestContext ctx = RequestContext.getCurrentContext();
+//        //获取request对象
+//        HttpServletRequest request = ctx.getRequest();
+//        //获取response对象
+//        HttpServletResponse response = ctx.getResponse();
+//        try{
+//            //获取请求上下文对象
+//
+//            String authorization=request.getHeader("Authorization");
+//            System.out.println(authorization);
+//            //判断请求头是否为空或者开头是否是Bearer开头
+//            if(authorization!=null && authorization.startsWith("Bearer")){
+//                //获取token数据
+//                String token=authorization.replace("Bearer ","");
+//
+//                //3解析token，获取claims
+//                Claims claims=jwtUtils.parseJwt(token);
+//                request.setAttribute("user_claims",claims);
+//                ctx.addZuulRequestHeader("AuthorizationToken",token);
+//
+//            }else{
+//                responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
+//            }
+//        }catch (Exception e){
+//            responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
+//            return false;
+//        }
 
         return null;
 

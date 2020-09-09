@@ -9,6 +9,9 @@ spring:
     username: tsbio
     password: ts@801
 eureka:
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 4000
   client:
     service-url:
       defaultZone:  http://127.0.0.1:10086/eureka
@@ -18,7 +21,7 @@ eureka:
 zuul:
   prefix: /api  #添加路由前缀
   routes:
-    company-service:
+    account-service:
       path: /account/**
       serviceId: ACCOUNT-SERVICE  #ID为该服务所对应的appliaction name
       strip-prefix: false
@@ -26,6 +29,11 @@ zuul:
       path: /sys/**
       serviceId:  SYSTEM-SERVICE  #ID为该服务所对应的appliaction name
       strip-prefix: false
+    auth-service:
+      path: /oss/**
+      serviceId:  AUTH-SERVICE
+      strip-prefix: false
+      sensitiveHeaders:
 
 hystrix:
   command:

@@ -8,7 +8,7 @@ logging:
 
 spring:
   application:
-    name: Auth-Service
+    name: auth-service
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     url: jdbc:sqlserver://192.168.3.15:1433; DatabaseName=tsbio
@@ -34,14 +34,14 @@ auth:
   tokenValiditySeconds: 1200  #token存储到redis的过期时间
   clientId: XcWebApp
   clientSecret: XcWebApp
-  cookieDomain: java.itcast.cn
+  cookieDomain: localhost
   cookieMaxAge: -1
 encrypt:
   key-store:
-    location: classpath:/xc.keystore
-    secret: xuechengkeystore
-    alias: xckey
-    password: xuecheng
+    location: classpath:/targetmol.keystore
+    secret: ts@801
+    alias: targetmol
+    password: ts@801
 eureka:
   client:
     service-url:
