@@ -3,7 +3,7 @@ package com.targetmol.domain.account;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name="contact")
+@Table(name="contact_company")
 public class Contact_Company {
     @Id
     private Integer contactid;

@@ -56,7 +56,7 @@ public class ContactService {
         }else{
             res.setCompanys(findAllCompanyByContId(res.getContactid()));
 
-            res.setAddressList(addressServcie.findByContId(res.getContactid()));
+//            res.setAddressList(addressServcie.findByContId(res.getContactid()));
         }
         return res;
     }
@@ -77,7 +77,7 @@ public class ContactService {
 
 
     //查询所有Contact
-    public PageResult<Contact> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showDelete) {
+    public PageResult<Contact> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showUnActivated) {
         //分页
         PageHelper.startPage(page,pageSize);
         //过滤
@@ -89,8 +89,8 @@ public class ContactService {
                     .orEqualTo("contid",key.toUpperCase().trim());
             example.and(criteria1);
         }
-        if(showDelete==false){
-            criteria2.orEqualTo("deltag",0).orEqualTo("deltag" ,null);
+        if(showUnActivated==false){
+            criteria2.orEqualTo("activated",1);
             example.and(criteria2);
         }
         //排序
@@ -100,9 +100,9 @@ public class ContactService {
         }
         //进行查询
         List<Contact> list=contactDao.selectByExample(example);
-        if(list ==null ||list.size()==0){
-            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
-        }
+//        if(list ==null ||list.size()==0){
+//            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
+//        }
 //        loadCompanys(list);
         //封装到pageHelper
         PageInfo<Contact> pageInfo=new PageInfo<Contact>(list);
@@ -142,6 +142,8 @@ public class ContactService {
     public void update(Contact contact) {
         //检查联系人数据是否为空
         CheckContact(contact);
+        //设置默认值
+        contact.setActivated(1);
         //检查联系人名称是否存在
         if(contactDao.findRepeatName(contact.getContactid(),contact.getName())!=null){
             throw new ErpExcetpion(ExceptionEumn.CONTACTNAME_ALREADY_EXISTS);
@@ -150,6 +152,9 @@ public class ContactService {
        if(contactDao.updateByPrimaryKeySelective(contact)!=1){
            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
        }
+       //绑定中间表
+        updateContact_Company(contact.getContactid(),contact.getCompanys());
+
 //       return contactDao.selectByPrimaryKey(contact.getAutoid());
     }
 
@@ -161,14 +166,14 @@ public class ContactService {
         if(contact.getName()==null ||contact.getName()=="") {
             throw  new ErpExcetpion(ExceptionEumn.NAME_CANNOT_BE_NULL);
         }
-        if(contact.getContactid()==null){
-            throw new ErpExcetpion(ExceptionEumn.COMPANYID_CANNOT_BE_NULL);
-        }
+//        if(contact.getContactid()==null){
+//            throw new ErpExcetpion(ExceptionEumn.COMPANYID_CANNOT_BE_NULL);
+//        }
 
     }
 
 
-    //设置删除标记 0 可用，1 删除
+    //设置激活状态 0 冻结，1 激活
 
     public void setActived(Integer contid, int i) {
         Contact contact=    contactDao.selectByPrimaryKey(contid);
@@ -179,6 +184,7 @@ public class ContactService {
         if(contactDao.updateByPrimaryKeySelective(contact)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
         }
+
     }
 
 
@@ -196,20 +202,24 @@ public class ContactService {
         }
         return result;
     }
-
-
-    //根据联系人绑定绑定
-    public  void updateContact_Company(Integer contid,List<Company> companys){
+    //根据联系人ID清除contact_company中间表
+    public void deleteContact_Company(Integer contid){
         //根据contid 删除contact_company中间表
         if(contid!=null  ){
-            Example example=new Example(Contact.class);
+            Example example=new Example(Contact_Company.class);
             Example.Criteria criteria=example.createCriteria();
             criteria.andEqualTo("contactid",contid);
             example.and(criteria);
-            if(contactCompanyDao.deleteByExample(example)!=1){
-             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+            if(contactCompanyDao.deleteByPrimaryKey(contid)<0){
+                throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
             }
         }
+    }
+
+    //根据联系人绑定中间表
+    public  void updateContact_Company(Integer contid,List<Company> companys){
+        //清除联系人
+        deleteContact_Company(contid);
         //将新的company集合绑定至中间表
         if(companys!=null&& companys.size()>0){
             for (Company company: companys) {

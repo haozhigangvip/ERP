@@ -1,5 +1,6 @@
 package com.targetmol.domain.account;
 
+import com.targetmol.utils.UUIDGenId;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.*;
@@ -10,9 +11,8 @@ import java.util.List;
 @Table(name="contact")
 public class Contact implements Serializable {
     @Id
-    @KeySql(useGeneratedKeys = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(insertable = false, updatable = false, name = "contactid")
+    @KeySql(genId = UUIDGenId.class)
+    @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select uuid()")
     private Integer contactid;
     private String name;
     private String email;
