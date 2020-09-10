@@ -24,9 +24,9 @@ public class CompanyService {
     private CompanyDao companyDao;
 
     //按autoid查询company
-    public Company findById(Integer autoid){
+    public Company findById(Integer companyid){
 
-        Company result=companyDao.selectByPrimaryKey(autoid);
+        Company result=companyDao.selectByPrimaryKey(companyid);
         if(result==null ){
             throw new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
         }
@@ -36,9 +36,9 @@ public class CompanyService {
 
 
     //按comid查询company
-    public Company findByComId(String comid){
+    public Company findByComId(Integer comid){
         Company company=new Company();
-        company.setComid(comid);
+        company.setCompanyid(comid);
         Company result=companyDao.selectOne(company);
         if(result==null ){
             throw new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
@@ -47,7 +47,7 @@ public class CompanyService {
     }
 
     //查询所有Company
-    public PageResult<Company> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Boolean showDelete) {
+    public PageResult<Company> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer actived) {
         //分页
         PageHelper.startPage(page,pageSize);
         //过滤
@@ -59,8 +59,8 @@ public class CompanyService {
                     .orEqualTo("comid",key.toUpperCase().trim());
             example.and(criteria1);
         }
-        if(!showDelete){
-            criteria2.orEqualTo("deltag",0).orEqualTo("deltag" ,null);
+        if(actived==1){
+            criteria2.orEqualTo("activated",1);
             example.and(criteria2);
         }
         //排序
@@ -93,14 +93,13 @@ public class CompanyService {
             throw new ErpExcetpion(ExceptionEumn.COMPANYNAME_ALREADY_EXISTS);
         }
         company.setCreatime( new Timestamp(new Date().getTime()));
-        company.setDeltag(0);
+        company.setActivated(1);
         //保存
 
         Integer rs=companyDao.insert(company);
         if (rs!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
-//        return company;
     }
 
     //修改Company
@@ -108,7 +107,7 @@ public class CompanyService {
         //检查company数据是否为空
         checkCompany(company);
         //检查company是否存在
-        if(companyDao.findRepeatCompanyName(company.getAutoid(),company.getCompanyname())!=null){
+        if(companyDao.findRepeatCompanyName(company.getCompanyid(),company.getCompanyname())!=null){
             throw new ErpExcetpion(ExceptionEumn.COMPANYNAME_ALREADY_EXISTS);
         }
         if(companyDao.updateByPrimaryKeySelective(company)!=1){
@@ -125,19 +124,20 @@ public class CompanyService {
         if(company.getCompanyname()==null ||company.getCompanyname()=="") {
             throw  new ErpExcetpion(ExceptionEumn.NAME_CANNOT_BE_NULL);
         }
-        if(StringUtil.isEmpty(company.getCsalesman())==true){
+        if(company.getSaleid()==null){
             throw new ErpExcetpion(ExceptionEumn.SALESMAN_CANNOT_BE_NULL);
         }
 
     }
 
-    //设置删除标记 0 可用，1 删除
-    public void setdelbj(Integer autoid,Integer delbj) {
-        Company company=    companyDao.selectByPrimaryKey(autoid);
+
+    //冻结单位 0为冻结，1为激活
+    public void setactive(Integer companyid, int active) {
+        Company company=    companyDao.selectByPrimaryKey(companyid);
         if (company==null){
             throw  new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
         }
-        company.setDeltag(delbj);
+        company.setActivated(active);
         if(companyDao.updateByPrimaryKeySelective(company)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
         }

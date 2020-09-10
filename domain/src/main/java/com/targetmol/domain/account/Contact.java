@@ -10,52 +10,35 @@ import java.util.List;
 @Table(name="contact")
 public class Contact implements Serializable {
     @Id
-    @KeySql(useGeneratedKeys= true)
+    @KeySql(useGeneratedKeys = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(insertable = false,updatable =false,name = "autoid")
-    private Integer autoid;
-    @Column(insertable = false,updatable = false)
-    private String contid;
+    @Column(insertable = false, updatable = false, name = "contactid")
+    private Integer contactid;
     private String name;
-    private String middlename;
-    private String lastname;
-    private String firstname;
-    private String companyid;
-    private String city;
-    private String state;
-    private String country;
     private String email;
     private String phone;
     private String source;
-    private String salesman;
+    private Integer saleid;
     private String note;
-    @Column(insertable = false,updatable = false)
+    @Column(insertable = false, updatable = false)
     private Date creatime;
-    private String streetadr;
+    private String qq;
     private String weixin;
     private String lab;
     private Integer contvip;
     private String position;
-    private Integer deltag;
+    private Integer activated;
     @Transient
-    private Company company;
+    private List<Company> companys;
     @Transient
     private List<Address> addressList;
 
-    public Integer getAutoid() {
-        return autoid;
+    public Integer getContactid() {
+        return contactid;
     }
 
-    public void setAutoid(Integer autoid) {
-        this.autoid = autoid;
-    }
-
-    public String getContid() {
-        return contid;
-    }
-
-    public void setContid(String contid) {
-        this.contid = contid;
+    public void setContactid(Integer contactid) {
+        this.contactid = contactid;
     }
 
     public String getName() {
@@ -64,62 +47,6 @@ public class Contact implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getMiddlename() {
-        return middlename;
-    }
-
-    public void setMiddlename(String middlename) {
-        this.middlename = middlename;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getCompanyid() {
-        return companyid;
-    }
-
-    public void setCompanyid(String companyid) {
-        this.companyid = companyid;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public String getEmail() {
@@ -146,12 +73,12 @@ public class Contact implements Serializable {
         this.source = source;
     }
 
-    public String getSalesman() {
-        return salesman;
+    public Integer getSaleid() {
+        return saleid;
     }
 
-    public void setSalesman(String salesman) {
-        this.salesman = salesman;
+    public void setSaleid(Integer saleid) {
+        this.saleid = saleid;
     }
 
     public String getNote() {
@@ -170,12 +97,12 @@ public class Contact implements Serializable {
         this.creatime = creatime;
     }
 
-    public String getStreetadr() {
-        return streetadr;
+    public String getQq() {
+        return qq;
     }
 
-    public void setStreetadr(String streetadr) {
-        this.streetadr = streetadr;
+    public void setQq(String qq) {
+        this.qq = qq;
     }
 
     public String getWeixin() {
@@ -210,20 +137,20 @@ public class Contact implements Serializable {
         this.position = position;
     }
 
-    public Integer getDeltag() {
-        return deltag;
+    public Integer getActivated() {
+        return activated;
     }
 
-    public void setDeltag(Integer deltag) {
-        this.deltag = deltag;
+    public void setActivated(Integer activated) {
+        this.activated = activated;
     }
 
-    public Company getCompany() {
-        return company;
+    public List<Company> getCompanys() {
+        return companys;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setCompanys(List<Company> companys) {
+        this.companys = companys;
     }
 
     public List<Address> getAddressList() {

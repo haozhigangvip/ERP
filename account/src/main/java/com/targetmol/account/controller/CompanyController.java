@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.*;
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
-    //按autoid查询company
-    @GetMapping("{autoid}")
-    public ResponseEntity<ResultMsg> findByComid(@PathVariable("autoid") Integer autoid){
+    //按id查询单位
+    @GetMapping("{companyid}")
+    public ResponseEntity<ResultMsg> findByComid(@PathVariable("companyid") Integer companyid){
 
-        return ResponseEntity.ok(ResultMsg.success(companyService.findById(autoid)));
+        return ResponseEntity.ok(ResultMsg.success(companyService.findById(companyid)));
     }
-    //查询所有company
+    //查询所有单位
     @GetMapping
     public ResponseEntity<ResultMsg> findByAll(
             @RequestParam(value="page",defaultValue = "1") Integer page,
@@ -29,31 +29,31 @@ public class CompanyController {
             @RequestParam(value="softBy",required = false) String softBy,
             @RequestParam(value="desc",defaultValue = "false") Boolean desc,
             @RequestParam(value="key",required = false) String key,
-            @RequestParam(value="showDel" ,defaultValue="false") Boolean showDel
+            @RequestParam(value="actived" ,defaultValue="1") Integer actived
             ){
 
-        return ResponseEntity.ok(ResultMsg.success(companyService.findByAll(page,pageSize,softBy,desc,key,showDel)));
+        return ResponseEntity.ok(ResultMsg.success(companyService.findByAll(page,pageSize,softBy,desc,key,actived)));
     }
-    //添加company
+    //添加单位
     @PostMapping
     public ResponseEntity<ResultMsg> addCompany(@RequestBody Company company){
         companyService.addCompany(company);
         return ResponseEntity.ok(ResultMsg.success());
     }
 
-    //修改company
-    @PutMapping("{autoid}")
-    public ResponseEntity<ResultMsg> updateCompany(@PathVariable("autoid") Integer autoid,
+    //修改单位
+    @PutMapping("{companyid}")
+    public ResponseEntity<ResultMsg> updateCompany(@PathVariable("companyid") Integer companyid,
                                                    @RequestBody Company company){
-        company.setAutoid(autoid);
+        company.setCompanyid(companyid);
         companyService.updateCompany(company);
         return ResponseEntity.ok(ResultMsg.success());
     }
 
-    //删除company
-    @DeleteMapping("{autoid}")
-    public ResponseEntity<ResultMsg> deleteCompany(@PathVariable("autoid") Integer autoid){
-        companyService.setdelbj(autoid,1);
+    //冻结单位
+    @DeleteMapping("{companyid}")
+    public ResponseEntity<ResultMsg> deleteCompany(@PathVariable("companyid") Integer companyid){
+        companyService.setactive(companyid,0);
         return ResponseEntity.ok(ResultMsg.success());
     }
 

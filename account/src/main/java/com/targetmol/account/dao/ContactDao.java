@@ -10,8 +10,8 @@ import java.util.List;
 
 
 public interface ContactDao extends BaseMapper<Contact> {
-    @Select("select * from contact where autoid<>#{autoid} and name=#{name} and  companyid=#{comid}")
-    Contact  findRepeatName(@Param("autoid") Integer autoid,@Param("name") String name,@Param("comid") String comid);
+    @Select("select * from contact where autoid<>#{autoid} and name=#{name}")
+    Contact  findRepeatName(@Param("autoid") Integer autoid,@Param("name") String nam);
 
 //   //关联查询
 //    @Select("select * from contact")

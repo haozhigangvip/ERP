@@ -45,17 +45,17 @@ public class ContactController {
         return ResponseEntity.ok(ResultMsg.success());
     }
     //修改联系人
-    @PutMapping("{autoid}")
-    public ResponseEntity<ResultMsg> updateContact(@PathVariable("autoid") Integer autoid,
+    @PutMapping("{contid}")
+    public ResponseEntity<ResultMsg> updateContact(@PathVariable("contid") Integer contid,
                                                    @RequestBody Contact contact){
-        contact.setAutoid(autoid);
+        contact.setContactid(contid);
         contactService.update(contact);
         return ResponseEntity.ok(ResultMsg.success());
     }
     //删除联系人
-    @DeleteMapping("{autoid}")
-    public ResponseEntity<ResultMsg> deleteContanct(@PathVariable("autoid") Integer autoid){
-        contactService.setdelbj(autoid,1);
+    @DeleteMapping("{contid}")
+    public ResponseEntity<ResultMsg> deleteContanct(@PathVariable("contid") Integer contid){
+        contactService.setActived(contid,0);
         return ResponseEntity.ok(ResultMsg.success());
     }
 

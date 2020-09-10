@@ -12,7 +12,7 @@ spring:
   datasource:
     #driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     driver-class-name: com.mysql.jdbc.Driver
-    url: ${MYSQL_URL:jdbc:mysql://192.168.3.15:3306/tsbio?characterEncoding=utf-8}
+    url: ${MYSQL_URL:jdbc:mysql://192.168.3.15:3306/tsbio?&useSSL=false&characterEncoding=utf-8}
     username: tsbio
     password: ts@801
 mybatis:

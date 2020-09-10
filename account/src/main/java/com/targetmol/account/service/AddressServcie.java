@@ -50,10 +50,10 @@ public class AddressServcie {
         return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
     }
 
-    public List<Address> findByContId(String contID){
+    public List<Address> findByContId(Integer contID){
         Example example=new Example(Address.class);
         Example.Criteria criteria=example.createCriteria();
-        criteria.andEqualTo("adrcontact",contID.toUpperCase());
+        criteria.andEqualTo("adrcontact",contID);
         example.and(criteria);
         return addressDao.selectByExample(example);
     }

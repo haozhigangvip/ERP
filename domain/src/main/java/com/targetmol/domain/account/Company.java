@@ -1,50 +1,44 @@
 package com.targetmol.domain.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.targetmol.utils.UUIDGenId;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 
-@Table(name="[company_info]")
+@Table(name="company_info")
 @JsonIgnoreProperties(value = {"handler"})
 public class Company  implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @KeySql(useGeneratedKeys = true)
-    @Column(insertable = false,updatable =false,name = "autoid")
-    private Integer autoid;
-    @Column(insertable = false,updatable = false,name = "comid")
-    private String  comid;
+    @KeySql(genId = UUIDGenId.class)
+    @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select uuid()")
+    private Integer companyid;
     private String companyname;
-    private String comptype;
-    private String comadrid;
+    private String country;
+    private String state;
+    private String city;
+    private String street;
     private String phone;
-    private String abbre;
+    private String zipcode;
     private String note;
-    @Column(insertable = false,name = "creatime")
+    @Column(insertable = false,updatable = false)
     private Date creatime;
-    private String csalesman;
-    private Integer deltag;
+    private Integer saleid;
+    private Integer activated;
 
-    public Integer getAutoid() {
-        return autoid;
+
+    public Integer getCompanyid() {
+        return companyid;
     }
 
-    public void setAutoid(Integer autoid) {
-        this.autoid = autoid;
-    }
-
-    public String getComid() {
-        return comid;
-    }
-
-    public void setComid(String comid) {
-        this.comid = comid;
+    public void setCompanyid(Integer companyid) {
+        this.companyid = companyid;
     }
 
     public String getCompanyname() {
@@ -55,20 +49,36 @@ public class Company  implements Serializable {
         this.companyname = companyname;
     }
 
-    public String getComptype() {
-        return comptype;
+    public String getCountry() {
+        return country;
     }
 
-    public void setComptype(String comptype) {
-        this.comptype = comptype;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public String getComadrid() {
-        return comadrid;
+    public String getState() {
+        return state;
     }
 
-    public void setComadrid(String comadrid) {
-        this.comadrid = comadrid;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getPhone() {
@@ -79,20 +89,20 @@ public class Company  implements Serializable {
         this.phone = phone;
     }
 
-    public String getAbbre() {
-        return abbre;
+    public String getZipcode() {
+        return zipcode;
     }
 
-    public void setAbbre(String abbre) {
-        this.abbre = abbre;
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 
-    public String getNote() {
+    public String getNonte() {
         return note;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setNonte(String nonte) {
+        this.note = nonte;
     }
 
     public Date getCreatime() {
@@ -103,19 +113,19 @@ public class Company  implements Serializable {
         this.creatime = creatime;
     }
 
-    public String getCsalesman() {
-        return csalesman;
+    public Integer getSaleid() {
+        return saleid;
     }
 
-    public void setCsalesman(String csalesman) {
-        this.csalesman = csalesman;
+    public void setSaleid(Integer saleid) {
+        this.saleid = saleid;
     }
 
-    public Integer getDeltag() {
-        return deltag;
+    public Integer getActivated() {
+        return activated;
     }
 
-    public void setDeltag(Integer deltag) {
-        this.deltag = deltag;
+    public void setActivated(Integer activated) {
+        this.activated = activated;
     }
 }
