@@ -23,7 +23,7 @@ public class CompanyService {
     @Autowired
     private CompanyDao companyDao;
 
-    //按autoid查询company
+    //按id查询company
     public Company findById(Integer companyid){
 
         Company result=companyDao.selectByPrimaryKey(companyid);
@@ -35,16 +35,16 @@ public class CompanyService {
 
 
 
-    //按comid查询company
-    public Company findByComId(Integer comid){
-        Company company=new Company();
-        company.setCompanyid(comid);
-        Company result=companyDao.selectOne(company);
-        if(result==null ){
-            throw new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
-        }
-        return result;
-    }
+//    //按comid查询company
+//    public Company findByComId(Integer comid){
+//        Company company=new Company();
+//        company.setCompanyid(comid);
+//        Company result=companyDao.selectOne(company);
+//        if(result==null ){
+//            throw new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
+//        }
+//        return result;
+//    }
 
     //查询所有Company
     public PageResult<Company> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer actived) {

@@ -32,6 +32,17 @@ public class Contact implements Serializable {
     private List<Company> companys;
     @Transient
     private List<Address> addressList;
+    @Transient
+    private String salesname;
+
+
+    public String getSalesname() {
+        return salesname;
+    }
+
+    public void setSalesname(String salesname) {
+        this.salesname = salesname;
+    }
 
     public Integer getContactid() {
         return contactid;

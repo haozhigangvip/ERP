@@ -36,6 +36,9 @@ public class DepartmentService {
 
     //按ID查询部门
     public Department findById(Integer depaid){
+        if(depaid==null){
+            return null;
+        }
         return departmentDao.selectByPrimaryKey(depaid);
     }
 

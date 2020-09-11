@@ -18,9 +18,9 @@ public class ContactController {
     private ContactService contactService;
 
     //按ID查询联系人
-    @GetMapping("{autoid}")
-    public ResponseEntity<ResultMsg> findbyContactid(@PathVariable ("autoid") Integer autoid){
-              return ResponseEntity.ok(ResultMsg.success(contactService.findByAutoId(autoid)));
+    @GetMapping("{contid}")
+    public ResponseEntity<ResultMsg> findbyContactid(@PathVariable ("contid") Integer contid) throws Exception{
+              return ResponseEntity.ok(ResultMsg.success(contactService.findByContId(contid)));
     }
 
     //查询联系人
@@ -31,10 +31,10 @@ public class ContactController {
             @RequestParam(value="softby",required = false) String softBy,
             @RequestParam(value="desc",defaultValue = "false") Boolean desc,
             @RequestParam(value="key",required = false) String key,
-            @RequestParam(value="showdel" ,defaultValue="false") Boolean showDel
+            @RequestParam(value="showunactive" ,defaultValue="false") Boolean showunactive
     ){
 
-        return ResponseEntity.ok(contactService.findByAll(page,pageSize,softBy,desc,key,showDel));
+        return ResponseEntity.ok(contactService.findByAll(page,pageSize,softBy,desc,key,showunactive));
     }
 
 

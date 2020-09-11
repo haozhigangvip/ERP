@@ -19,10 +19,12 @@ public class AddressController {
     private AddressServcie addressServcie;
 
     //按ID查询地址
-    @GetMapping("{autoid}")
-    public ResponseEntity<ResultMsg> findbyContactid(@PathVariable("autoid") Integer autoid){
-        return ResponseEntity.ok(ResultMsg.success(addressServcie.findbyAutoid(autoid)));
+    @GetMapping("{addrid}")
+    public ResponseEntity<ResultMsg> findbyContactid(@PathVariable("addrid") Integer addrid){
+        return ResponseEntity.ok(ResultMsg.success(addressServcie.findByContId(addrid)));
     }
+
+
 
 
     //查询联系人
@@ -32,34 +34,38 @@ public class AddressController {
             @RequestParam(value="pagesize",defaultValue = "20") Integer pageSize,
             @RequestParam(value="softby",required = false) String softBy,
             @RequestParam(value="desc",defaultValue = "false") Boolean desc,
-            @RequestParam(value="key",required = false) String key
+            @RequestParam(value="key",required = false) String key,
+            @RequestParam(value="contid",required = false) Integer contid,
+            @RequestParam(value="default",required = false) Integer def
     ){
 
-        return ResponseEntity.ok(addressServcie.findByAll(page,pageSize,softBy,desc,key));
+        return ResponseEntity.ok(addressServcie.findByAll(page,pageSize,softBy,desc,key,contid,def));
     }
 
 
     //新增地址
     @PostMapping
     public ResponseEntity<ResultMsg> addAddress(@RequestBody Address address){
-        addressServcie.addAddress(address);
-        return ResponseEntity.ok(ResultMsg.success());
+
+        return ResponseEntity.ok(ResultMsg.success(addressServcie.addAddress(address)));
     }
 
     //修改地址
-    @PutMapping("{autoid}")
-    public ResponseEntity<ResultMsg> updateAddress(@PathVariable("autoid") Integer autoid,
+    @PutMapping("{addrid}")
+    public ResponseEntity<ResultMsg> updateAddress(@PathVariable("addrid") Integer addrid,
                                                    @RequestBody Address address){
-        address.setAutoid(autoid);
-        addressServcie.updateAddress(address);
-        return ResponseEntity.ok(ResultMsg.success());
+        address.setAddrid(addrid);
+
+        return ResponseEntity.ok(ResultMsg.success(addressServcie.updateAddress(address)));
     }
 
     //删除地址
-    @DeleteMapping("{autoid}")
-    public ResponseEntity<ResultMsg> deleteAddress(@PathVariable("autoid") Integer autoid){
-        addressServcie.delAddress(autoid);
+    @DeleteMapping("{addrid}")
+    public ResponseEntity<ResultMsg> deleteAddress(@PathVariable("addrid") Integer addrid){
+        addressServcie.unActiveAddress(addrid);
         return ResponseEntity.ok(ResultMsg.success());
     }
+
+
 
 }

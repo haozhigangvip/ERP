@@ -2,24 +2,32 @@ package com.targetmol.account.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.targetmol.account.client.UserFeignClent;
 import com.targetmol.account.dao.ContactCompanyDao;
 import com.targetmol.account.dao.ContactDao;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.PageResult;
+import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.account.Company;
 import com.targetmol.domain.account.Contact;
 import com.targetmol.domain.account.Contact_Company;
+import com.targetmol.domain.system.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
+@EnableFeignClients
 public class ContactService {
     @Autowired
     private ContactDao contactDao;
@@ -29,7 +37,8 @@ public class ContactService {
     private CompanyService companyService;
     @Autowired
     private ContactCompanyDao contactCompanyDao;
-
+    @Autowired
+    private UserFeignClent userFeignClent;
 //    //关联查询||特殊查询所有Contact
 //    public PageResult<Contact> getByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showDelete) {
 //        //分页
@@ -48,36 +57,33 @@ public class ContactService {
 
 
 
-    //按id查询联系人
-    public Contact findByAutoId(Integer contid){
-        Contact res=contactDao.selectByPrimaryKey(contid);
-        if(res==null ){
-            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
-        }else{
-            res.setCompanys(findAllCompanyByContId(res.getContactid()));
 
-            res.setAddressList(addressServcie.findByContId(res.getContactid()));
-        }
-        return res;
-    }
-
-    //按contid查询联系人
-    public Contact findByContId(Integer contid){
+    //按联系人ID查询联系人
+    public Contact findByContId(Integer contid) throws Exception{
         Contact cont=new Contact();
         cont.setContactid(contid);
         Contact res=contactDao.selectOne(cont);
-        if(res==null ){
-            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
-        }else{
-
+        //查询地址
+        if(res!=null ){
             res.setAddressList(addressServcie.findByContId(res.getContactid()));
         }
+        //查询联系人ID查询单位
+        List<Company> comps=findAllCompanyByContId(contid);
+        res.setCompanys(comps);
+
+        //调取用户微服务，查询销售名
+        if(res.getSaleid()!=null){
+            ResponseEntity<ResultMsg> userResult= userFeignClent.findById(res.getSaleid());
+            LinkedHashMap<String,Object> hsmp=(LinkedHashMap<String, Object>) userResult.getBody().getData();
+            res.setSalesname(hsmp.get("name").toString());
+        }
+
         return res;
     }
 
 
     //查询所有Contact
-    public PageResult<Contact> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showDelete) {
+    public PageResult<Contact> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showUnActive) {
         //分页
         PageHelper.startPage(page,pageSize);
         //过滤
@@ -89,8 +95,8 @@ public class ContactService {
                     .orEqualTo("contid",key.toUpperCase().trim());
             example.and(criteria1);
         }
-        if(showDelete==false){
-            criteria2.orEqualTo("deltag",0).orEqualTo("deltag" ,null);
+        if(showUnActive==false){
+            criteria2.orEqualTo("activated",1);
             example.and(criteria2);
         }
         //排序
@@ -117,6 +123,7 @@ public class ContactService {
         //设置默认值
         if(contact.getContvip()==null){
             contact.setContvip(0);
+            contact.setActivated(1);
         }
         //检查联系人数据是否为空
         CheckContact(contact);
@@ -191,7 +198,7 @@ public class ContactService {
             contact_company.setContactid(contId);
            List<Contact_Company> ls=contactCompanyDao.select(contact_company);
             for (Contact_Company cc:ls) {
-               result.add(companyService.findByComId(cc.getCompanyid())) ;
+               result.add(companyService.findById(cc.getCompanyid())) ;
             }
         }
         return result;
@@ -213,7 +220,7 @@ public class ContactService {
         //将新的company集合绑定至中间表
         if(companys!=null&& companys.size()>0){
             for (Company company: companys) {
-                 if(companyService.findByComId(company.getCompanyid())==null){
+                 if(companyService.findById(company.getCompanyid())==null){
                      throw new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
                  }
                 Contact_Company contact_company=new Contact_Company();

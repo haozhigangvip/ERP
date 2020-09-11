@@ -100,10 +100,12 @@ public class UserService {
             //查询部门
             result.setDepartment(departmentService.findById(result.getDepartmentid()));
             //查询权限
-            List<Integer> rids=userRoleDao.findByUid(uid);
+            User_ROLE u=new User_ROLE();
+            u.setUid(uid);
+            List<User_ROLE> rids=userRoleDao.select(u);
             List<Role> roles=new ArrayList<Role>();
-            for(Integer rid:rids) {
-                Role role=roleService.findById(rid);
+            for(User_ROLE ur1:rids) {
+                Role role=roleService.findById(ur1.getRid());
                 if(role!=null){
                     roles.add(role);
                 }
@@ -120,9 +122,9 @@ public class UserService {
         checkUserProperty(user);
 
         //设置用户状态，1为在职，0为离职
-        user.setActived(1);
-        if(user.getIssales()==null){
-            user.setIssales(false);
+        user.setActivated(1);
+        if(user.getOnsales()==null){
+            user.setOnsales(0);
         }
 
 
@@ -178,7 +180,7 @@ public class UserService {
         }
         //不允许修改用户名和激活标记
         user.setUsername(null);
-        user.setActived(null);
+        user.setActivated(null);
         checkDerprtmentId(user.getDepartmentid());
 
         //保存
@@ -201,7 +203,7 @@ public class UserService {
         if(active>1 || active<0){
             throw  new ErpExcetpion((ExceptionEumn.OBJECT_VALUE_ERROR));
         }
-        user.setActived(active);
+        user.setActivated(active);
         if(userDao.updateByPrimaryKey(user)!=1){
             throw new  ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
@@ -241,7 +243,7 @@ public class UserService {
         List<User> list=new ArrayList<User>();
         if(depaid!=null){
             User user=new User();
-            user.setActived(1);
+            user.setActivated(1);
             user.setDepartmentid(depaid);
             list=userDao.select(user);
         }
@@ -277,6 +279,14 @@ public class UserService {
            }
 
         }
+    }
+    //查找所有在职销售
+    public List<User> findAllSales() {
+        Example example=new Example(User.class);
+        example.and(example.createCriteria()
+                .andEqualTo("onsales",1)
+                .andEqualTo("activated",true));
+        return userDao.selectByExample(example);
     }
 }
 

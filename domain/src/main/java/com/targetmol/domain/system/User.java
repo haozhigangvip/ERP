@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Table(name="[user]")
+@Table(name="`user`")
 public class User implements Serializable {
     @Id
     @KeySql(useGeneratedKeys = true)
@@ -17,15 +17,18 @@ public class User implements Serializable {
     private Integer uid;
     private String username;
     private String password;
+    private String salt;
     private String name;
     private Integer departmentid;
     private String phone;
     private String email;
-    private Boolean issales;
+    @Column(name="onsales")
+    private Integer onsales;
     @Column(insertable = false)
     private Date creatime;
+    private String utype;
     private String note;
-    private Integer actived;
+    private Integer activated;
     private String userpic;
     @Transient
     private List<Role> roles;
@@ -45,12 +48,12 @@ public class User implements Serializable {
         this.userpic = userpic;
     }
 
-    public Integer getActived() {
-        return actived;
+    public Integer getActivated() {
+        return activated;
     }
 
-    public void setActived(Integer actived) {
-        this.actived = actived;
+    public void setActivated(Integer activated) {
+        this.activated = activated;
     }
 
     public List<Integer> getRolesId() {
@@ -93,13 +96,28 @@ public class User implements Serializable {
         this.password = password;
     }
 
-
-    public Boolean getIssales() {
-        return issales;
+    public String getSalt() {
+        return salt;
     }
 
-    public void setIssales(Boolean issales) {
-        this.issales = issales;
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public Integer getOnsales() {
+        return onsales;
+    }
+
+    public void setOnsales(Integer onsales) {
+        this.onsales = onsales;
+    }
+
+    public String getUtype() {
+        return utype;
+    }
+
+    public void setUtype(String utype) {
+        this.utype = utype;
     }
 
     public Date getCreatime() {

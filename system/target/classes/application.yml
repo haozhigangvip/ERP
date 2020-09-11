@@ -10,10 +10,12 @@ spring:
   application:
     name: system-service
   datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://192.168.3.15:1433; DatabaseName=tsbio
+    #driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    driver-class-name: com.mysql.jdbc.Driver
+    url: ${MYSQL_URL:jdbc:mysql://192.168.3.15:3306/tsbio?&useSSL=false&characterEncoding=utf-8}
     username: tsbio
     password: ts@801
+
 mybatis:
   type-aliases-package: com.targetmol.domain #别名路径
   configuration:
@@ -22,8 +24,11 @@ mybatis:
 
 eureka:
   client:
+    registerWithEureka: true #服务注册开关
+    fetchRegistry: true #服务发现开关
     service-url:
       defaultZone:  http://127.0.0.1:10086/eureka
+
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1

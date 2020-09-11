@@ -25,6 +25,8 @@ eureka:
   client:
     service-url:
       defaultZone:  http://127.0.0.1:10086/eureka
+    registerWithEureka: true #服务注册开关
+    fetchRegistry: true #服务发现开关
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1

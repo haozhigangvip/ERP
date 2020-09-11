@@ -16,8 +16,9 @@ public class Company  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @KeySql(genId = UUIDGenId.class)
-    @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select uuid()")
+    @KeySql(useGeneratedKeys= true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(insertable = false,updatable =false,name = "companyid")
     private Integer companyid;
     private String companyname;
     private String country;

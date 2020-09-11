@@ -4,7 +4,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.*;
 
-@Table(name="[user_role]")
+@Table(name="`user_role`")
 public class User_ROLE {
     @Id
     @KeySql(useGeneratedKeys = true)

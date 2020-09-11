@@ -1,5 +1,6 @@
 package com.targetmol.domain.account;
 
+import com.targetmol.utils.UUIDGenId;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
@@ -12,41 +13,38 @@ public class Address  implements Serializable {
     @Id
     @KeySql(useGeneratedKeys= true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(insertable = false,updatable =false,name = "autoid")
-    private Integer autoid;
-    @Column(insertable = false,updatable = false)
-    private String adrid;
+    @Column(insertable = false,updatable =false,name = "addrid")
+    private Integer addrid;
     private String attention;
-    private String Street;
-    private String Street2;
+    private String street;
+    private String street2;
     private String city;
     private String state;
     private String country;
     private String zipcode;
-    private String company;
-    private String dept;
-    private String phone;
-    private String email;
     private String label;
     @Column(insertable = false,updatable = false)
     private Date creatime;
-    private String adrcontact;
-    private Integer active;
+    private Integer contactid;
+    @Column(name = "defa")
+    private Integer def;
+    private Integer activated;
 
-    public Integer getAutoid() {
-        return autoid;
+
+    public Integer getDef() {
+        return def;
     }
 
-    public void setAutoid(Integer autoid) {
-        this.autoid = autoid;
+    public void setDef(Integer def) {
+        this.def = def;
     }
 
-    public String getAdrid() {
-        return adrid;
+    public Integer getAddrid() {
+        return addrid;
     }
 
-    public void setAdrid(String adrid) {
-        this.adrid = adrid;
+    public void setAddrid(Integer addrid) {
+        this.addrid = addrid;
     }
 
     public String getAttention() {
@@ -58,19 +56,19 @@ public class Address  implements Serializable {
     }
 
     public String getStreet() {
-        return Street;
+        return street;
     }
 
     public void setStreet(String street) {
-        Street = street;
+        this.street = street;
     }
 
     public String getStreet2() {
-        return Street2;
+        return street2;
     }
 
     public void setStreet2(String street2) {
-        Street2 = street2;
+        this.street2 = street2;
     }
 
     public String getCity() {
@@ -105,37 +103,7 @@ public class Address  implements Serializable {
         this.zipcode = zipcode;
     }
 
-    public String getCompany() {
-        return company;
-    }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getDept() {
-        return dept;
-    }
-
-    public void setDept(String dept) {
-        this.dept = dept;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getLabel() {
         return label;
@@ -153,19 +121,19 @@ public class Address  implements Serializable {
         this.creatime = creatime;
     }
 
-    public String getAdrcontact() {
-        return adrcontact;
+    public Integer getContactid() {
+        return contactid;
     }
 
-    public void setAdrcontact(String adrcontact) {
-        this.adrcontact = adrcontact;
+    public void setContactid(Integer contactid) {
+        this.contactid = contactid;
     }
 
-    public Integer getActive() {
-        return active;
+    public Integer getActivated() {
+        return activated;
     }
 
-    public void setActive(Integer active) {
-        this.active = active;
+    public void setActivated(Integer activated) {
+        this.activated = activated;
     }
 }

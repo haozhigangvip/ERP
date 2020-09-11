@@ -52,6 +52,11 @@ public class UserController extends BaseController {
     }
 
 
+    @GetMapping("sales")
+    public ResponseEntity<ResultMsg> findByAllSales(){
+        return ResponseEntity.ok(ResultMsg.success(userService.findAllSales()));
+    }
+
 
     //添加用户
     @PostMapping
@@ -77,6 +82,8 @@ public class UserController extends BaseController {
     public  ResponseEntity<ResultMsg>findById(@PathVariable("uid") Integer uid) throws Exception{
         return ResponseEntity.ok(ResultMsg.success(userService.findById(uid)));
     }
+
+
     //根据ID删除用户
     @DeleteMapping("{uid}")
     public ResponseEntity<ResultMsg>deleteById(@PathVariable("uid")Integer uid ,@RequestParam(value = "actived",defaultValue ="0") Integer actived){
@@ -85,7 +92,7 @@ public class UserController extends BaseController {
     }
 
     //分配角色
-    @PutMapping("assignRoles")
+    @PutMapping("/assignRoles")
     public ResponseEntity<ResultMsg>assignRoles(@RequestBody Map<String, Object> map){
         //1.获取被分配的用户ID
         Integer uid=  (Integer)map.get("uid");
