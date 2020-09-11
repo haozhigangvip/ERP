@@ -82,6 +82,8 @@ public class CompanyService {
     //添加Company
     @Transactional
     public void addCompany(Company company) {
+        //设置默认值
+        company.setActivated(1);
         //判断是否为空
         checkCompany(company);
 
