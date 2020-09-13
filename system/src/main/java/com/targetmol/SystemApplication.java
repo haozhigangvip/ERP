@@ -1,5 +1,6 @@
 package com.targetmol;
 
+import com.targetmol.common.filter.FeignClientFilter;
 import com.targetmol.common.utils.JwtUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,5 +17,12 @@ public class SystemApplication {
     @Bean
     public JwtUtils jwtUtils(){
         return new JwtUtils();
+    }
+
+
+    //自动将Header专递到它所调用的其它微服务中去（包括JWT令牌）
+    @Bean
+    public FeignClientFilter getFeignClientFilter(){
+        return new FeignClientFilter();
     }
 }

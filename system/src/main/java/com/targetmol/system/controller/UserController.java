@@ -13,6 +13,7 @@ import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.util.StringUtil;
 
@@ -29,7 +30,8 @@ public class UserController extends BaseController {
     private final UserService userService;
 
     @Autowired
-    private UserController(UserService userService){
+    public UserController(UserService userService){
+
         this.userService=userService;
     }
 
@@ -37,6 +39,7 @@ public class UserController extends BaseController {
     private JwtUtils jwtUtils;
 
     //查找所有用户
+//    @PreAuthorize("hasAuthority('user_list_all')")
     @GetMapping()
     public ResponseEntity<PageResult<User>> findByAll(
             @RequestParam(value="page",defaultValue = "1") Integer page,
@@ -48,11 +51,13 @@ public class UserController extends BaseController {
             @RequestParam(value="active" ,defaultValue="0") Integer active,
             @RequestParam(value="showsales" ,defaultValue="false")Boolean showsales
     ){
+
         return ResponseEntity.ok(userService.findByAll(page,pageSize,softBy,desc,key,active,showsales));
     }
 
 
-    @GetMapping("sales")
+//    @PreAuthorize("hasAuthority('user_list_sales')")
+    @GetMapping("/sales")
     public ResponseEntity<ResultMsg> findByAllSales(){
         return ResponseEntity.ok(ResultMsg.success(userService.findAllSales()));
     }
@@ -104,32 +109,25 @@ public class UserController extends BaseController {
     }
 
     //登录验证
-    @PostMapping("/login")
-    public ResponseEntity<ResultMsg>login(@RequestBody Map<String ,Object> loginMap){
-        //根据用户名及密码查询用户
-        User user=userService.login(loginMap.get("username").toString(),loginMap.get("password").toString());
-        //生成JWT信息，返回token
-        Map<String,Object> map=new HashMap<>();
-
-        map.put("departmentId",user.getDepartmentid());
-        map.put("email",user.getEmail());
-        String uid=user.getUid().toString();
-        String token=jwtUtils.createJwt(uid,user.getUsername(),map);
-        return ResponseEntity.ok(ResultMsg.success(token));
-    }
-
-    //获取用户信息鉴权
     @GetMapping("/profile")
-    public ResponseEntity<ResultMsg>Profile(HttpServletRequest request) throws Exception{
+    public ResponseEntity<ResultMsg>login(@RequestParam("username")String username){
+        //根据用户名及密码查询用户
 
-        String uid=claims.getId();
-        System.out.println("uid:"+uid);
-        User user=null;
-        if(uid!=null){
-             user =userService.findById(Integer.parseInt(uid));
-        }
-        ProfileResult result=new ProfileResult(user);
-        return  ResponseEntity.ok(ResultMsg.success(result));
+        return ResponseEntity.ok(ResultMsg.success(userService.login(username)));
     }
+
+//    //获取用户信息鉴权
+//    @GetMapping("/profile")
+//    public ResponseEntity<ResultMsg>Profile(HttpServletRequest request) throws Exception{
+//
+//        String uid=claims.getId();
+//        System.out.println("uid:"+uid);
+//        User user=null;
+//        if(uid!=null){
+//             user =userService.findById(Integer.parseInt(uid));
+//        }
+//        ProfileResult result=new ProfileResult(user);
+//        return  ResponseEntity.ok(ResultMsg.success(result));
+//    }
 
 }

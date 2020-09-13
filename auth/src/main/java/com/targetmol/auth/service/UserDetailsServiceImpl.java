@@ -1,11 +1,16 @@
 package com.targetmol.auth.service;
 
+import com.targetmol.common.client.UserFeignClent;
+import com.targetmol.common.emums.ExceptionEumn;
+import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.system.Permission;
 import com.targetmol.domain.system.XcMenu;
 import com.targetmol.domain.system.ext.XcUserExt;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +24,7 @@ import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -26,6 +32,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     ClientDetailsService clientDetailsService;
+    @Autowired
+    UserFeignClent userFeignClent;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -43,32 +51,39 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (StringUtils.isEmpty(username)) {
             return null;
         }
+        //通过用户管理模块调用获取用户信息
+        ResponseEntity rs=userFeignClent.login(username);
+        if(rs==null){
+            throw new ErpExcetpion(ExceptionEumn.LOGIN_USERNAME_IS_FAIL);
+        }
+        LinkedHashMap<String, Object> result=(LinkedHashMap<String,Object>)((ResultMsg) rs.getBody()).getData();
         XcUserExt userext = new XcUserExt();
-        userext.setUsername("itcast");
-        userext.setPassword(new BCryptPasswordEncoder().encode("123"));
+
+        userext.setUsername(result.get("username").toString());
+        userext.setPassword(result.get("password").toString());
         userext.setPermissions(new ArrayList<Permission>());
         if(userext == null){
             return null;
         }
         //取出正确密码（hash值）
         String password = userext.getPassword();
-        //这里暂时使用静态密码
-       //password ="123";
-        //用户权限，这里暂时使用静态数据，最终会从数据库读取
-        //从数据库获取权限
+
         List<Permission> permissions = userext.getPermissions();
+        if(permissions==null){
+            permissions=new ArrayList<Permission>();
+        }
         List<String> user_permission = new ArrayList<>();
         permissions.forEach(item-> user_permission.add(item.getCode()));
-//        user_permission.add("course_get_baseinfo");
-//        user_permission.add("course_find_pic");
+//        user_permission.add("company_list_all");
+//        user_permission.add("user_list_sales");
         String user_permission_string  = StringUtils.join(user_permission.toArray(), ",");
         UserJwt userDetails = new UserJwt(username,
                 password,
                 AuthorityUtils.commaSeparatedStringToAuthorityList(user_permission_string));
         if(userext.getUid()!=null){
-            userDetails.setId(String.valueOf(userext.getUid()));
+            userDetails.setUid(String.valueOf(userext.getUid()));
         }
-        userDetails.setCompanyId(userext.getCompanyId());//所属企业
+        //userDetails.setCompanyId(userext.getCompanyId());//所属企业
         userDetails.setName(userext.getName());//用户名称
         userDetails.setUserpic(userext.getUserpic());//用户头像
        /* UserDetails userDetails = new org.springframework.security.core.userdetails.User(username,

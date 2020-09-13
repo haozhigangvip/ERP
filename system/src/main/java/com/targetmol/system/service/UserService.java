@@ -101,11 +101,11 @@ public class UserService {
             result.setDepartment(departmentService.findById(result.getDepartmentid()));
             //查询权限
             User_ROLE u=new User_ROLE();
-            u.setUid(uid);
+            u.setUserId(uid);
             List<User_ROLE> rids=userRoleDao.select(u);
             List<Role> roles=new ArrayList<Role>();
             for(User_ROLE ur1:rids) {
-                Role role=roleService.findById(ur1.getRid());
+                Role role=roleService.findById(ur1.getRoleId());
                 if(role!=null){
                     roles.add(role);
                 }
@@ -211,10 +211,12 @@ public class UserService {
     }
 
     //登录
-    public User login(String username,String password){
+    public User login(String username){
+        if(StringUtil.isEmpty(username)){
+            return null;
+        }
         User user=new User();
         user.setUsername(username);
-        user.setPassword(password);
         user=userDao.selectOne(user);
         if(user==null){
             throw new ErpExcetpion(ExceptionEumn.USERNAMEANDPASSWORD_ISNOT_MATCH);
@@ -271,8 +273,8 @@ public class UserService {
                throw new ErpExcetpion(ExceptionEumn.ROLE_IS_NOT_FOUND);
            }
            User_ROLE user_role=new User_ROLE();
-           user_role.setRid(rid);
-           user_role.setUid(uid);
+           user_role.setRoleId(rid);
+           user_role.setUserId(uid);
            //保存用户角色到中间表
            if(userRoleDao.insert(user_role)!=1){
               throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);

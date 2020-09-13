@@ -12,8 +12,8 @@ import org.springframework.web.client.RestTemplate;
 import tk.mybatis.spring.annotation.MapperScan;
 
 
-//@EnableDiscoveryClient
-//@EnableFeignClients
+@EnableDiscoveryClient
+@EnableFeignClients
 @EntityScan("com.targetmol.domain")//扫描实体类
 @MapperScan(basePackages= {"com.targetmol.account.dao"})
 @SpringBootApplication

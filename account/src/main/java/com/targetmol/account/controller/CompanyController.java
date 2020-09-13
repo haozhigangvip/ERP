@@ -7,6 +7,7 @@ import com.targetmol.domain.account.Company;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -16,12 +17,14 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
     //按id查询单位
+    @PreAuthorize("hasAuthority('company_list_companyid')")
     @GetMapping("{companyid}")
     public ResponseEntity<ResultMsg> findByComid(@PathVariable("companyid") Integer companyid){
 
         return ResponseEntity.ok(ResultMsg.success(companyService.findById(companyid)));
     }
     //查询所有单位
+    @PreAuthorize("hasAuthority('company_list_all')")
     @GetMapping
     public ResponseEntity<ResultMsg> findByAll(
             @RequestParam(value="page",defaultValue = "1") Integer page,

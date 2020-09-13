@@ -61,6 +61,10 @@
             <artifactId>feign-okhttp</artifactId>
             <version>8.18.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
     </dependencies>
 
 

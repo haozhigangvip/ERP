@@ -14,11 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @Order(-1)
-class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/userlogin","/userlogout","/userjwt");
+        web.ignoring().antMatchers("/oss/login","/oss/logout","/oss/userjwt");
 
     }
     @Bean

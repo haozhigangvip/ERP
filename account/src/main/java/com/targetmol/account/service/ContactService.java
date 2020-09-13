@@ -2,9 +2,9 @@ package com.targetmol.account.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.targetmol.account.client.UserFeignClent;
 import com.targetmol.account.dao.ContactCompanyDao;
 import com.targetmol.account.dao.ContactDao;
+import com.targetmol.common.client.UserFeignClent;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.PageResult;
@@ -12,22 +12,17 @@ import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.account.Company;
 import com.targetmol.domain.account.Contact;
 import com.targetmol.domain.account.Contact_Company;
-import com.targetmol.domain.system.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
-@EnableFeignClients
 public class ContactService {
     @Autowired
     private ContactDao contactDao;
@@ -75,7 +70,10 @@ public class ContactService {
         if(res.getSaleid()!=null){
             ResponseEntity<ResultMsg> userResult= userFeignClent.findById(res.getSaleid());
             LinkedHashMap<String,Object> hsmp=(LinkedHashMap<String, Object>) userResult.getBody().getData();
-            res.setSalesname(hsmp.get("name").toString());
+           if(hsmp!=null){
+               res.setSalesname(hsmp.get("name").toString());
+
+           }
         }
 
         return res;

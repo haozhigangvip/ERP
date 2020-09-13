@@ -7,8 +7,8 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
 @MapperScan(basePackages= {"com.targetmol.account.dao"})
-@EnableFeignClients
 @EnableDiscoveryClient
+@EnableFeignClients
 public class AccountApplication {
     public static void main(String[] args) {
         SpringApplication.run(AccountApplication.class,args);
