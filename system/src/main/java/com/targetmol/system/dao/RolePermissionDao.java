@@ -10,6 +10,7 @@ import java.util.List;
 public interface RolePermissionDao  extends BaseMapper<Role_Permission> {
     @Select("select permission_id from role_permission where role_id=#{rid}")
     List<Integer> findByRid(Integer rid);
+
     @Select("select count(*) from role_permission where permission_id=#{pid}")
     Integer countByPid(Integer pid);
 }

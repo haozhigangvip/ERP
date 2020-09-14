@@ -16,9 +16,10 @@ public class Role {
     @Column(insertable = false,updatable =false,name = "rid")
     private Integer rid;
     @Column(name="role_name")
-    private String roleName;
+    private String rolename;
+
     @Column(name="role_code")
-    private String roleCode;
+    private String rolecode;
     private String note;
     @Column(insertable = false,updatable = false)
     private Date creatime;
@@ -37,20 +38,20 @@ public class Role {
         this.rid = rid;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getRolename() {
+        return rolename;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
     }
 
-    public String getRoleCode() {
-        return roleCode;
+    public String getRolecode() {
+        return rolecode;
     }
 
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
+    public void setRolecode(String rolecode) {
+        this.rolecode = rolecode;
     }
 
     public String getNote() {

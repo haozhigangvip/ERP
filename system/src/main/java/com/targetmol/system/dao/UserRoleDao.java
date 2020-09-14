@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface UserRoleDao extends BaseMapper<User_ROLE> {
-    @Select("select rid from user_role where uid=#{uid}")
+    @Select("select rid from user_role where user_id=#{uid}")
     List<User_ROLE> findByUid(Integer uid);
 
-    @Select("select count(*) from user_role where rid=#{rid}")
+    @Select("select count(*) from user_role where role_id=#{rid}")
     Integer countByRid(Integer rid);
 
 }

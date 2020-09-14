@@ -132,7 +132,7 @@ public class RoleService {
 
     //判断角色参数
     private void checkRole(Role role){
-        if(role==null|| StringUtil.isEmpty( role.getRoleName())){
+        if(role==null|| StringUtil.isEmpty( role.getRolename())){
             throw  new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
     }
@@ -142,7 +142,7 @@ public class RoleService {
 
         Example example=new Example(Role.class);
         Example.Criteria criteria=example.createCriteria();
-        criteria.andEqualTo("rolename",role.getRoleName());
+        criteria.andEqualTo("rolename",role.getRolename());
             if(role.getRid()!=null){
             criteria.andNotEqualTo("rid",role.getRid());
         }

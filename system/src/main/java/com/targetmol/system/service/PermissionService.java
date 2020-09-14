@@ -30,44 +30,29 @@ public class PermissionService {
     @Autowired
     private RolePermissionDao rolePermissionDao;
 
-//    //添加权限
-//    public void addPermission(Map<String, Object> map) throws Exception {
-//        int result=1;
-//        //判断对象是否为空
-//        if(map==null){
-//            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
-//        }
-//        //封装到实体类
-//        Permission permission= BeanMapUtils.mapToBean(map,Permission.class);
-//
-//        //保存Permission表
-//        result =result*permissionDao.insert(permission);
-//        //根据类型构造不同资源对象并保存（菜单，按钮，api)
-////        int type=permission.getType();
-////        switch (type){
-////            case PermissionConstants.PY_MENU:
-////                PermissionMenu menu=BeanMapUtils.mapToBean(map,PermissionMenu.class);
-////                menu.setPreid(permission.getId());
-////                result=result*permissionMenuDao.insert(menu);
-////                break;
-////            case PermissionConstants.   PY_POINT:
-////                PermissionPoint point=BeanMapUtils.mapToBean(map,PermissionPoint.class);
-////                point.setPreid(permission.getId());
-////                result=result*(permissionPointDao.insert(point));
-////                break;
-////            case PermissionConstants.PY_API:
-////                PermissionApi api=BeanMapUtils.mapToBean(map, PermissionApi.class);
-////                api.setPreid(permission.getId());
-////                result=result*permissionApiDao.insert(api);
-////                break;
-////            default:
-////                throw  new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
-////        }
-//        //判断保存是否成功
-//        if(result!=1){
-//            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
-//        }
-//    }
+    //添加权限
+    public void addPermission(Permission permission) throws Exception {
+        int result=1;
+        //判断对象参数是否正确
+        permission=checkPermssion(permission);
+        //检查PID是否存在
+        Permission p_permission=findById(permission.getpId());
+        if(p_permission==null){
+            throw new ErpExcetpion(ExceptionEumn.PERMESSION_PID_IS_NOT_FOUND);
+        }
+        //设置父code
+        permission.setpCode(p_permission.getCode());
+        //设置层级
+        permission.setLevel(p_permission.getLevel()+1);
+
+        //保存Permission表
+        result =result*permissionDao.insert(permission);
+
+        //判断保存是否成功
+        if(result!=1){
+            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+        }
+    }
 
 
 
@@ -218,44 +203,7 @@ public class PermissionService {
 
 
 
-//    //根据ID查询权限
-//    public Map<String,Object> findById(Integer id) throws Exception{
-//        if(id==null){
-//            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
-//        }
-//        //查询权限表
-//        Permission permission=permissionDao.selectByPrimaryKey(id);
-//        int type=permission.getType();
-//        Object object=null;
-//        //根据类型获取权限子表
-//        switch (type){
-//            case PermissionConstants.PY_MENU:
-//                PermissionMenu menu=new PermissionMenu();
-//                menu.setPreid(id);
-//                object=permissionMenuDao.selectOne(menu);
-//                break;
-//            case  PermissionConstants.PY_POINT:
-//                PermissionPoint point=new PermissionPoint();
-//                point.setPreid(id);
-//                object=permissionPointDao.selectOne(point);
-//                break;
-//            case  PermissionConstants.PY_API:
-//                PermissionApi api=new PermissionApi();
-//                api.setPreid(id);
-//                object=permissionApiDao.selectOne(api);
-//                break;
-//             default:
-//                 throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
-//        }
-//        Map<String,Object> map=BeanMapUtils.beanToMap(object);
-//        map.put("name",permission.getPername());
-//        map.put("type",permission.getType());
-//        map.put("code",permission.getCode());
-//        map.put("note",permission.getNote());
-//        map.put("pid",permission.getPid());
-//
-//        return  map;
-//    }
+
 
     //根据用户ID查询权限
     public List<Permission> getByUserId(Integer userId){
@@ -266,4 +214,25 @@ public class PermissionService {
             return null;
         }
     }
+    //根据权限ID查询权限
+    public Permission findById(Integer id){
+        return permissionDao.selectByPrimaryKey(id);
+    }
+
+    //检查权限参数
+    private Permission checkPermssion(Permission permission){
+        if(permission==null|| permission.getCode()==null||permission.getMenuName()==null||permission.getpId()==null){
+            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
+        }
+        //设置默认值
+
+        if(permission.getSort()==null){
+            permission.setSort(1);
+        }
+        if(permission.getIsMenu()==null){
+            permission.setIsMenu(0);
+        }
+        return permission;
+    }
+
 }

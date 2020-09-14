@@ -45,7 +45,8 @@ public enum  ExceptionEumn {
     LOGIN_PASSWORD_IS_NULL(400,"密码不能为空"),
     NETWOK_IS_BUSY(500,"网络繁忙，请稍后再试"),
     LOGIN_USERNAME_IS_FAIL(400,"错误的用户名"),
-    PERMESSION_DENIED(401,"权限不足")
+    PERMESSION_DENIED(401,"权限不足"),
+    PERMESSION_PID_IS_NOT_FOUND(404,"权限父ID不存在"),
     ;
     private Integer code;
     private String msg;

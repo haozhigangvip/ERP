@@ -95,7 +95,7 @@ public class UserController extends BaseController {
         //1.获取被分配的用户ID
         Integer uid=  (Integer)map.get("uid");
         //2.获取角色ID集合
-        List<Integer> rolesids=(List<Integer>)map.get("roleIds");
+        List<Integer> rolesids=(List<Integer>)map.get("roleids");
         //3.调用Service完成分配角色
         userService.assignRoles(uid,rolesids);
         return ResponseEntity.ok(ResultMsg.success());

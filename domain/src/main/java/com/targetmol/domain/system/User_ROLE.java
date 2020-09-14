@@ -13,9 +13,9 @@ public class User_ROLE {
     @Column(insertable = false,updatable =false,name = "id")
     private Integer id;
     @Column(name="user_id")
-    private Integer userId;
+    private Integer uid;
     @Column(name="role_id")
-    private Integer roleId;
+    private Integer rid;
 
     @Column(insertable = false,updatable = false)
     private Date creatime;
@@ -29,20 +29,20 @@ public class User_ROLE {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUid() {
+        return uid;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public Integer getRid() {
+        return rid;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRid(Integer rid) {
+        this.rid = rid;
     }
 
     public Date getCreatime() {

@@ -54,8 +54,8 @@ public class ResourceServerConfig  extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         //所有请求必须认证通过
        http.authorizeRequests()
-               .antMatchers("/**","**").permitAll()     //放行
-               .anyRequest().authenticated();
+               .antMatchers("/api/sys/**").permitAll()     //放行
+                .anyRequest().permitAll();
 
     }
 }

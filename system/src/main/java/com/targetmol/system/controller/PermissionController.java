@@ -4,6 +4,7 @@ import com.targetmol.common.vo.PageResult;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.system.Permission;
 //import com.targetmol.system.service.PermissionService;
+import com.targetmol.system.service.PermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +17,12 @@ import java.util.Map;
 @RestController
 public class PermissionController {
     @Autowired
-//    private PermissionService permissionService;
+    private PermissionService permissionService;
 
     //添加权限
     @PostMapping
-    public ResponseEntity<ResultMsg> addPermission(@RequestBody Map<String,Object> map) throws Exception {
-//        permissionService.addPermission(map);
+    public ResponseEntity<ResultMsg> addPermission(@RequestBody Permission permission) throws Exception {
+        permissionService.addPermission(permission);
         return ResponseEntity.ok(ResultMsg.success());
     }
 
@@ -51,7 +52,7 @@ public class PermissionController {
     //按ID查询权限
     @GetMapping("{id}")
     public ResponseEntity<ResultMsg> findById(@PathVariable("id") Integer id) throws Exception{
-//        permissionService.findById(id);
+        permissionService.findById(id);
         return ResponseEntity.ok(ResultMsg.success());
     }
 

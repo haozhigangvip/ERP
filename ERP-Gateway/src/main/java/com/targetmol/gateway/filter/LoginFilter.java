@@ -64,9 +64,8 @@ public class LoginFilter extends ZuulFilter {
         HttpServletRequest request = ctx.getRequest();
         //取cookie中的身份令牌
         String token=authService.getTokenFromCookie(request);
-        System.out.println("token:"+token);
         if(StringUtil.isEmpty(token)){
-            responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
+//            responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
             return null;
         }
         //从hearder中取access_token

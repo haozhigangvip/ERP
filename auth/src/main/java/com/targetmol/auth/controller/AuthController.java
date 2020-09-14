@@ -41,8 +41,8 @@ public class  AuthController {
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/login")
-    public ResponseEntity<ResultMsg> login(@RequestBody LoginRequest loginRequest) {
+    @GetMapping("/login")
+    public ResponseEntity<ResultMsg> login( LoginRequest loginRequest) {
         if(loginRequest == null || StringUtils.isEmpty(loginRequest.getUsername())){
             throw new ErpExcetpion(ExceptionEumn.LOGIN_USERNAME_IS_NULL);
         }

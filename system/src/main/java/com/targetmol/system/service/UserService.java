@@ -115,11 +115,11 @@ public class UserService {
             user.setDepartment(departmentService.findById(result.getDepartmentid()));
             //查询权限
             User_ROLE u=new User_ROLE();
-            u.setUserId(uid);
+            u.setUid(uid);
             List<User_ROLE> rids=userRoleDao.select(u);
             List<Role> roles=new ArrayList<Role>();
             for(User_ROLE ur1:rids) {
-                Role role=roleService.findById(ur1.getRoleId());
+                Role role=roleService.findById(ur1.getRid());
                 if(role!=null){
                     roles.add(role);
                 }
@@ -310,8 +310,8 @@ public class UserService {
                throw new ErpExcetpion(ExceptionEumn.ROLE_IS_NOT_FOUND);
            }
            User_ROLE user_role=new User_ROLE();
-           user_role.setRoleId(rid);
-           user_role.setUserId(uid);
+           user_role.setRid(rid);
+           user_role.setUid(uid);
            //保存用户角色到中间表
            if(userRoleDao.insert(user_role)!=1){
               throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
