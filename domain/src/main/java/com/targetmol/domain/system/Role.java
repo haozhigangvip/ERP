@@ -2,10 +2,7 @@ package com.targetmol.domain.system;
 
 import tk.mybatis.mapper.annotation.KeySql;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,18 +12,22 @@ public class Role {
 
     @Id
     @KeySql(useGeneratedKeys = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(insertable = false,updatable =false,name = "rid")
     private Integer rid;
+    @Column(name="role_name")
     private String roleName;
+    @Column(name="role_code")
+    private String roleCode;
     private String note;
     @Column(insertable = false,updatable = false)
     private Date creatime;
     private Integer status;
+
     @Transient
     private List<Integer> perIds;
     @Transient
     private List<Map<String ,Object>> permissions;
-
 
     public Integer getRid() {
         return rid;
@@ -42,6 +43,14 @@ public class Role {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
     public String getNote() {

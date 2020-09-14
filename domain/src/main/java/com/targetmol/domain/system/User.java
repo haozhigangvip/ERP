@@ -1,12 +1,10 @@
 package com.targetmol.domain.system;
 
 
-import com.targetmol.domain.Department;
 import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Table(name="`user`")
 public class User implements Serializable {
@@ -22,7 +20,6 @@ public class User implements Serializable {
     private Integer departmentid;
     private String phone;
     private String email;
-    @Column(name="onsales")
     private Integer onsales;
     @Column(insertable = false)
     private Date creatime;
@@ -30,16 +27,17 @@ public class User implements Serializable {
     private String note;
     private Integer activated;
     private String userpic;
-    @Transient
-    private List<Role> roles;
-
-    @Transient
-    private List<Integer> rolesId;
-
-    @Transient
-    private Department department;
+    private int groupid;
 
 
+
+
+    public int getGroupid() {
+        return groupid;
+    }
+    public void setGroupid(int groupid) {
+        this.groupid = groupid;
+    }
     public String getUserpic() {
         return userpic;
     }
@@ -56,13 +54,6 @@ public class User implements Serializable {
         this.activated = activated;
     }
 
-    public List<Integer> getRolesId() {
-        return rolesId;
-    }
-
-    public void setRolesId(List<Integer> rolesId) {
-        this.rolesId = rolesId;
-    }
 
     public Integer getDepartmentid() {
         return departmentid;
@@ -162,19 +153,5 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
 
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
 }

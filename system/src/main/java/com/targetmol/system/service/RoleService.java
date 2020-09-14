@@ -34,9 +34,9 @@ public class RoleService {
 
     @Autowired
     private PermissionDao permissionDao;
-
-    @Autowired
-    private PermissionService permissionService;
+//
+//    @Autowired
+//    private PermissionService permissionService;
 
     //查询角色
     public PageResult<Role> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key) {
@@ -96,14 +96,16 @@ public class RoleService {
         if(rid==null){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
-        Role role=roleDao.selectByPrimaryKey(rid);
+        Role role=new Role();
+        role.setRid(rid);
+        role=roleDao.selectOne(role);
         if(role!=null){
             //查询权限集合
            List<Integer> pids=rolePermissionDao.findByRid(rid);
            List<Map<String,Object>> permissions=new ArrayList<Map<String, Object>>();
-            for (Integer pid:pids) {
-               permissions.add(permissionService.findById(pid));
-            }
+//            for (Integer pid:pids) {
+//               permissions.add(permissionService.findById(pid));
+//            }
             role.setPermissions(permissions);
 
         }
@@ -175,7 +177,7 @@ public class RoleService {
                 throw new ErpExcetpion(ExceptionEumn.PERMISSION_IS_NOT_FOUND);
             }
             Role_Permission role_permission=new Role_Permission();
-            role_permission.setRid(rid);
+            role_permission.setRoleId(rid);
             role_permission.setPid(pid);
             //保存角色权限到中间表
             if(rolePermissionDao.insert(role_permission)!=1){
@@ -185,7 +187,7 @@ public class RoleService {
             List<Integer>  apiPermissions=permissionDao.findbyTypeandPid(PermissionConstants.PY_API,pid);
             for (Integer  apipid:apiPermissions) {
                 Role_Permission api_role_permission=new Role_Permission();
-                api_role_permission.setRid(rid);
+                api_role_permission.setRoleId(rid);
                 api_role_permission.setPid(apipid);
                 if(rolePermissionDao.insert(api_role_permission)!=1){
                     throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);

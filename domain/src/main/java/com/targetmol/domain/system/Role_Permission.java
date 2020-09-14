@@ -3,6 +3,7 @@ package com.targetmol.domain.system;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "role_permission")
 public class Role_Permission {
@@ -11,8 +12,12 @@ public class Role_Permission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(insertable = false,updatable =false,name = "id")
     private Integer id;
-    private Integer rid;
+    @Column(name="role_id")
+    private Integer roleId;
+    @Column(name="permission_id")
     private Integer pid;
+    @Column(insertable = false,updatable = false)
+    private Date creatime;
 
     public Integer getId() {
         return id;
@@ -22,12 +27,12 @@ public class Role_Permission {
         this.id = id;
     }
 
-    public Integer getRid() {
-        return rid;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setRid(Integer rid) {
-        this.rid = rid;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     public Integer getPid() {
@@ -36,5 +41,13 @@ public class Role_Permission {
 
     public void setPid(Integer pid) {
         this.pid = pid;
+    }
+
+    public Date getCreatime() {
+        return creatime;
+    }
+
+    public void setCreatime(Date creatime) {
+        this.creatime = creatime;
     }
 }

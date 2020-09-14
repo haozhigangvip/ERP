@@ -1,63 +1,58 @@
 package com.targetmol.domain.system;
 
+import lombok.Data;
+import lombok.ToString;
 import tk.mybatis.mapper.annotation.KeySql;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import java.util.Date;
 
-@Table(name="permission")
+/**
+ * Created by admin on 2018/3/19.
+ */
+@Data
+@ToString
+@Entity
+@Table(name="xc_menu")
 public class Permission {
+
     @Id
     @KeySql(useGeneratedKeys = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(insertable = false,updatable =false,name = "id")
-    private  int id;
-    private String pername;  //权限名称
-    private Integer type;       //权限类型，1为菜单，2为功能，3为API
-    private String code;    //权限编码，根据code比较权限
-    private Integer pid;    //父ID
-    private String note;    //备注
+    private Integer id;
+    private String code;
+    @Column(name="p_code")
+    private String pCode;
+    @Column(name="p_id")
+    private Integer pId;
+    @Column(name="menu_name")
+    private String menuName;
+    private String url;
+    @Column(name="is_menu")
+    private Integer isMenu;
+    private Integer level;
+    private Integer sort;
+    private Integer status;
+    private String icon;
+    private String note;
+    @Column(insertable = false,updatable = false,name="create_time")
+    private Date createTime;
 
-    public Permission(String pername,Integer type,String code,String note){
-        this.pername=pername;
-        this.type=type;
-        this.code=code;
-        this.note=note;
-    }
-    public Permission(String pername,Integer type,String code){
-        this.pername=pername;
-        this.type=type;
-        this.code=code;
-    }
-    public Permission(){
-
-    }
-
-
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getPername() {
-        return pername;
+    public Integer getpId() {
+        return pId;
     }
 
-    public void setPername(String pername) {
-        this.pername = pername;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
+    public void setpId(Integer pId) {
+        this.pId = pId;
     }
 
     public String getCode() {
@@ -68,14 +63,70 @@ public class Permission {
         this.code = code;
     }
 
-    public Integer getPid() {
-        return pid;
+    public String getpCode() {
+        return pCode;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setpCode(String pCode) {
+        this.pCode = pCode;
     }
 
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Integer getIsMenu() {
+        return isMenu;
+    }
+
+    public void setIsMenu(Integer isMenu) {
+        this.isMenu = isMenu;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
     public String getNote() {
         return note;
@@ -85,15 +136,11 @@ public class Permission {
         this.note = note;
     }
 
-    @Override
-    public String toString() {
-        return "Permission{" +
-                "id=" + id +
-                ", pername='" + pername + '\'' +
-                ", type=" + type +
-                ", code='" + code + '\'' +
-                ", pid=" + pid +
-                ", note='" + note + '\'' +
-                '}';
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

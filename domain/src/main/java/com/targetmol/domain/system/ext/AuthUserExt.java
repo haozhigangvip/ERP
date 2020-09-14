@@ -1,5 +1,6 @@
 package com.targetmol.domain.system.ext;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.targetmol.domain.system.Permission;
 import com.targetmol.domain.system.PermissionMenu;
 import com.targetmol.domain.system.User;
@@ -13,11 +14,12 @@ import java.util.List;
  */
 @Data
 @ToString
-public class XcUserExt extends User {
+public class AuthUserExt extends User {
 
     //权限信息
     private List<Permission> permissions;
 
     //企业信息
     private String companyId;
+
 }

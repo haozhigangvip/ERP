@@ -4,9 +4,7 @@ import com.targetmol.common.client.UserFeignClent;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.ResultMsg;
-import com.targetmol.domain.system.Permission;
-import com.targetmol.domain.system.XcMenu;
-import com.targetmol.domain.system.ext.XcUserExt;
+import com.targetmol.domain.system.ext.AuthUserExt;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +16,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -57,23 +55,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new ErpExcetpion(ExceptionEumn.LOGIN_USERNAME_IS_FAIL);
         }
         LinkedHashMap<String, Object> result=(LinkedHashMap<String,Object>)((ResultMsg) rs.getBody()).getData();
-        XcUserExt userext = new XcUserExt();
-
+        AuthUserExt userext = new AuthUserExt();
         userext.setUsername(result.get("username").toString());
         userext.setPassword(result.get("password").toString());
-        userext.setPermissions(new ArrayList<Permission>());
         if(userext == null){
             return null;
         }
         //取出正确密码（hash值）
         String password = userext.getPassword();
 
-        List<Permission> permissions = userext.getPermissions();
+        List<LinkedHashMap> permissions=(List<LinkedHashMap>) result.get("permissions");
         if(permissions==null){
-            permissions=new ArrayList<Permission>();
+            permissions=new ArrayList<>();
         }
         List<String> user_permission = new ArrayList<>();
-        permissions.forEach(item-> user_permission.add(item.getCode()));
+        for ( LinkedHashMap<String,Object> item:permissions){
+            String code=(String)item.get("code");
+            if(StringUtil.isEmpty(code)==false){
+                user_permission.add(code);
+            }
+        }
 //        user_permission.add("company_list_all");
 //        user_permission.add("user_list_sales");
         String user_permission_string  = StringUtils.join(user_permission.toArray(), ",");

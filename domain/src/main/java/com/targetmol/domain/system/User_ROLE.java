@@ -12,8 +12,11 @@ public class User_ROLE {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(insertable = false,updatable =false,name = "id")
     private Integer id;
+    @Column(name="user_id")
     private Integer userId;
+    @Column(name="role_id")
     private Integer roleId;
+
     @Column(insertable = false,updatable = false)
     private Date creatime;
     private String creator;

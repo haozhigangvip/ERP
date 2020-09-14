@@ -19,7 +19,7 @@ public class Oauth2Util {
         }
         //取出头信息
         String authorization = request.getHeader("Authorization");
-        if (StringUtils.isEmpty(authorization) || authorization.indexOf("Bearer") < 0) {
+        if (StringUtils.isEmpty(authorization) || authorization.indexOf("Bearer ") < 0) {
             return null;
         }
         //从Bearer 后边开始取出token

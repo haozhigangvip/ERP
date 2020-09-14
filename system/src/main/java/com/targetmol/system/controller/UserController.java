@@ -1,24 +1,17 @@
 package com.targetmol.system.controller;
 
 import com.targetmol.common.controller.BaseController;
-import com.targetmol.common.emums.ExceptionEumn;
-import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.utils.JwtUtils;
 import com.targetmol.common.vo.PageResult;
-import com.targetmol.common.vo.ProfileResult;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.system.User;
+import com.targetmol.domain.system.ext.UserExt;
 import com.targetmol.system.service.UserService;
-import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import tk.mybatis.mapper.util.StringUtil;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +34,7 @@ public class UserController extends BaseController {
     //查找所有用户
 //    @PreAuthorize("hasAuthority('user_list_all')")
     @GetMapping()
-    public ResponseEntity<PageResult<User>> findByAll(
+    public ResponseEntity<PageResult<UserExt>> findByAll(
             @RequestParam(value="page",defaultValue = "1") Integer page,
             @RequestParam(value="pagesize",defaultValue = "30") Integer pageSize,
             @RequestParam(value="softby",required = false) String softBy,
@@ -116,18 +109,6 @@ public class UserController extends BaseController {
         return ResponseEntity.ok(ResultMsg.success(userService.login(username)));
     }
 
-//    //获取用户信息鉴权
-//    @GetMapping("/profile")
-//    public ResponseEntity<ResultMsg>Profile(HttpServletRequest request) throws Exception{
-//
-//        String uid=claims.getId();
-//        System.out.println("uid:"+uid);
-//        User user=null;
-//        if(uid!=null){
-//             user =userService.findById(Integer.parseInt(uid));
-//        }
-//        ProfileResult result=new ProfileResult(user);
-//        return  ResponseEntity.ok(ResultMsg.success(result));
-//    }
+
 
 }

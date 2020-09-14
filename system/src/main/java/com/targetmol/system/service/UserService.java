@@ -8,10 +8,14 @@ import com.targetmol.common.vo.PageResult;
 import com.targetmol.domain.system.Role;
 import com.targetmol.domain.system.User;
 import com.targetmol.domain.system.User_ROLE;
+import com.targetmol.domain.system.ext.AuthUserExt;
+import com.targetmol.domain.system.ext.UserExt;
 import com.targetmol.system.dao.RoleDao;
 import com.targetmol.system.dao.UserDao;
 import com.targetmol.system.dao.UserRoleDao;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
@@ -36,8 +40,11 @@ public class UserService {
     @Autowired
     private RoleDao roleDao;
 
+    @Autowired
+    private PermissionService permissionService;
+
     //查询所有用
-    public PageResult<User> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer active,Boolean showsales){
+    public PageResult<UserExt> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer active,Boolean showsales){
         PageHelper.startPage(page,pageSize);
 
             Example example=new Example(User.class);
@@ -81,24 +88,31 @@ public class UserService {
         }
         //进行查询
         List<User> list=userDao.selectByExample(example);
-        //遍历用户集，获取部门和权限
+        List<UserExt> nlist=new ArrayList<UserExt>();
+        //遍历用户集，获取部门
         for (User user:list) {
             //查询部门
-            user.setDepartment(departmentService.findById(user.getDepartmentid()));
-            //查询权限
+            UserExt userExt=new UserExt();
+            BeanUtils.copyProperties(user,userExt);
+            userExt.setPassword(null);
+            userExt.setDepartment(departmentService.findById(user.getDepartmentid()));
+            nlist.add(userExt);
         }
 
         //封装到pageHelper
-        PageInfo<User> pageInfo=new PageInfo<User>(list);
-        return new PageResult<User>(pageInfo.getTotal(),pageInfo.getPages(), list);
+
+        PageInfo<UserExt> pageInfo=new PageInfo<UserExt>(nlist);
+        return new PageResult<UserExt>(pageInfo.getTotal(),pageInfo.getPages(), nlist);
     }
 
     //按ID查询用户
     public  User findById(Integer uid) throws Exception{
         User result=userDao.selectByPrimaryKey(uid);
+        UserExt user=new UserExt();
         if(result!=null){
+            BeanUtils.copyProperties(result,user);
             //查询部门
-            result.setDepartment(departmentService.findById(result.getDepartmentid()));
+            user.setDepartment(departmentService.findById(result.getDepartmentid()));
             //查询权限
             User_ROLE u=new User_ROLE();
             u.setUserId(uid);
@@ -110,10 +124,10 @@ public class UserService {
                     roles.add(role);
                 }
             }
-           result.setRoles(roles);
+            user.setRoles(roles);
 
         }
-        return  result;
+        return  user;
     }
 
     //新增用户
@@ -135,7 +149,10 @@ public class UserService {
 
         //检查部门是否存在
         checkDerprtmentId(user.getDepartmentid());
-
+        //加密密码
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+        String npassword=bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(npassword);
         //保存
         if(userDao.insert(user)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
@@ -171,13 +188,26 @@ public class UserService {
 
     //更新用户
     public void updateUser(User user) {
-        if(user.getUid()==null){
-            throw  new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
-        }
-        User suser=userDao.selectByPrimaryKey(user.getUid());
-        if(suser==null){
+
+        //检查用户数据
+        checkUserProperty(user);
+
+        if(userDao.selectByPrimaryKey(user.getUid())==null){
             throw new ErpExcetpion(ExceptionEumn.USERS_ISNOT_FOUND);
         }
+
+
+        //检查部门是否存在
+        checkDerprtmentId(user.getDepartmentid());
+
+        //加密密码
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+        String npassword=bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(npassword);
+
+
+
+
         //不允许修改用户名和激活标记
         user.setUsername(null);
         user.setActivated(null);
@@ -211,17 +241,23 @@ public class UserService {
     }
 
     //登录
-    public User login(String username){
+    public AuthUserExt login(String username){
         if(StringUtil.isEmpty(username)){
             return null;
         }
+        //查询用户
         User user=new User();
         user.setUsername(username);
         user=userDao.selectOne(user);
         if(user==null){
             throw new ErpExcetpion(ExceptionEumn.USERNAMEANDPASSWORD_ISNOT_MATCH);
         }
-        return user;
+        AuthUserExt resultUser=new AuthUserExt();
+        BeanUtils.copyProperties(user,resultUser);
+        //查询权限
+        resultUser.setPermissions(permissionService.getByUserId(user.getUid()));
+
+        return resultUser;
     }
 
     //修改密码
@@ -230,6 +266,7 @@ public class UserService {
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
         User user=userDao.selectByPrimaryKey(uid);
+
         if(user==null){
             throw new ErpExcetpion(ExceptionEumn.USERS_ISNOT_FOUND);
         }
@@ -283,12 +320,13 @@ public class UserService {
         }
     }
     //查找所有在职销售
-    public List<User> findAllSales() {
+    public List<String > findAllSales() {
         Example example=new Example(User.class);
         example.and(example.createCriteria()
                 .andEqualTo("onsales",1)
                 .andEqualTo("activated",true));
-        return userDao.selectByExample(example);
+
+        return userDao.getSales();
     }
 }
 

@@ -18,6 +18,7 @@ import tk.mybatis.mapper.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,7 +27,7 @@ import java.util.Map;
  **/
 @RestController
 @RequestMapping("/")
-public class AuthController {
+public class  AuthController {
 
     @Value("${auth.clientId}")
     String clientId;
@@ -60,8 +61,10 @@ public class AuthController {
         String access_token = erpAuthToken.getAccess_token();
         //将令牌存储到cookie
         this.saveCookie(access_token);
-
-        return ResponseEntity.ok(ResultMsg.success(access_token));
+        Map<String,String> mp=new HashMap<>();
+        mp.put("access_token",erpAuthToken.getAccess_token());
+        mp.put("jwt_token",erpAuthToken.getJwt_token());
+        return ResponseEntity.ok(ResultMsg.success(mp));
     }
 
     //将令牌存储到cookie
