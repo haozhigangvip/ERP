@@ -3,8 +3,6 @@ package com.targetmol.system.service;
 import com.github.pagehelper.PageInfo;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
-import com.targetmol.common.utils.BeanMapUtils;
-import com.targetmol.common.utils.PermissionConstants;
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.domain.system.*;
 import com.targetmol.system.dao.*;
@@ -12,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
@@ -168,36 +166,28 @@ public class PermissionService {
 //
 //
 //
-//    //查询权限
-//    public PageResult<Permission> findByAll(Integer type,Integer pid) {
-//        Example example = new Example(Permission.class);
-//        Example.Criteria criteria = example.createCriteria();
-//        //判断类型，0菜单+按钮，1菜单，2按钮，3API接口
-//        switch (type){
-//            case 0:
-//                criteria.orEqualTo("type",1).orEqualTo("type",2);
-//                break;
-//            case 1:
-//                criteria.andEqualTo("type",1);
-//                break;
-//            case 2:
-//                criteria.andEqualTo("type",2);
-//                break;
-//            case 3:
-//                criteria.andEqualTo("type",3);
-//                break;
-//            default:
-//                throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
-//        }
+//    //查询所有权限
+//    public PageResult<Permission> findByAll() {
+//        //获取最大级别
+//        Integer levels=permissionDao.getMaxLevel();
 //
-//        example.and(criteria);
-//        //判断父ID是否为空
-//        if(pid!=null){
-//            criteria.andEqualTo("pid",pid);
-//        }
-//        //进行查询
-//        List<Permission> list=permissionDao.selectByExample(example);
-//        PageInfo<Permission> pageInfo=new PageInfo<>(list);
+//        List<Permission>result=permissionDao.findByLevel(0);
+////        for (int i = 1; i <= levels; i++) {
+////            for (Permission item:result ){
+////
+////            }
+////        }
+////
+////        Example example = new Example(Permission.class);
+////        Example.Criteria criteria = example.createCriteria();
+////        example.and(criteria);
+////        //判断父ID是否为空
+////        if(pid!=null){
+////            criteria.andEqualTo("pid",pid);
+////        }
+////        //进行查询
+////        List<Permission> list=permissionDao.selectByExample(example);
+////        PageInfo<Permission> pageInfo=new PageInfo<>(list);
 //        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
 //    }
 
@@ -214,6 +204,8 @@ public class PermissionService {
             return null;
         }
     }
+
+
     //根据权限ID查询权限
     public Permission findById(Integer id){
         return permissionDao.selectByPrimaryKey(id);
@@ -221,7 +213,7 @@ public class PermissionService {
 
     //检查权限参数
     private Permission checkPermssion(Permission permission){
-        if(permission==null|| permission.getCode()==null||permission.getMenuName()==null||permission.getpId()==null){
+        if(permission==null|| permission.getCode()==null||permission.getMenuName()==null||permission.getpId()==null|| StringUtil.isEmpty(permission.getType())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
         //设置默认值
@@ -229,9 +221,7 @@ public class PermissionService {
         if(permission.getSort()==null){
             permission.setSort(1);
         }
-        if(permission.getIsMenu()==null){
-            permission.setIsMenu(0);
-        }
+
         return permission;
     }
 

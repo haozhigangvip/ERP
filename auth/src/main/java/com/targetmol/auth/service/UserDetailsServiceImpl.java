@@ -84,7 +84,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(userext.getUid()!=null){
             userDetails.setUid(String.valueOf(userext.getUid()));
         }
-        //userDetails.setCompanyId(userext.getCompanyId());//所属企业
+        //userDetails.setCompanyId(userext.getCompanyId());//所属企业3
         userDetails.setName(userext.getName());//用户名称
         userDetails.setUserpic(userext.getUserpic());//用户头像
        /* UserDetails userDetails = new org.springframework.security.core.userdetails.User(username,

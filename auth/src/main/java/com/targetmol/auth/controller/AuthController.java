@@ -41,8 +41,8 @@ public class  AuthController {
     @Autowired
     private AuthService authService;
 
-    @GetMapping("/login")
-    public ResponseEntity<ResultMsg> login( LoginRequest loginRequest) {
+    @PostMapping("/login")
+    public ResponseEntity<ResultMsg> login(@RequestBody LoginRequest loginRequest) {
         if(loginRequest == null || StringUtils.isEmpty(loginRequest.getUsername())){
             throw new ErpExcetpion(ExceptionEumn.LOGIN_USERNAME_IS_NULL);
         }
@@ -73,8 +73,8 @@ public class  AuthController {
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         //HttpServletResponse response,String domain,String path, String name, String value, int maxAge,boolean httpOnly
         CookieUtil.addCookie(response,cookieDomain,"/","uid",token,cookieMaxAge,false);
-
     }
+
     //从cookie中删除token
     private void clearCookie(String token){
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
@@ -107,7 +107,10 @@ public class  AuthController {
             ErpAuthToken erpAuthToken=authService.getUserToken(uid);
             if(erpAuthToken!=null){
                 jwt_token=erpAuthToken.getJwt_token();
+                //重新更新cookie
+                saveCookie(uid);
             }
+
         }
         //将JWT令牌返回给用户
         return ResponseEntity.ok(ResultMsg.success(jwt_token));

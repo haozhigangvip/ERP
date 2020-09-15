@@ -87,6 +87,12 @@ public class AuthService {
         //转成对象
         try {
             ErpAuthToken authToken = JSON.parseObject(value, ErpAuthToken.class);
+            //用户身份令牌
+
+            //存储到redis中的内容
+            String jsonString = JSON.toJSONString(authToken);
+            this.saveToken(token, jsonString, tokenValiditySeconds);
+            //返回JWT令牌
             return authToken;
         } catch (Exception e) {
             e.printStackTrace();

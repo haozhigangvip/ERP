@@ -6,6 +6,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by admin on 2018/3/19.
@@ -29,8 +30,8 @@ public class Permission {
     @Column(name="menu_name")
     private String menuName;
     private String url;
-    @Column(name="is_menu")
-    private Integer isMenu;
+    @Column(name="type")
+    private String type;        //menu, button,api
     private Integer level;
     private Integer sort;
     private Integer status;
@@ -38,6 +39,18 @@ public class Permission {
     private String note;
     @Column(insertable = false,updatable = false,name="create_time")
     private Date createTime;
+
+    @Transient
+    private List<Permission> permissions;
+
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
+    }
 
     public Integer getId() {
         return id;
@@ -88,12 +101,12 @@ public class Permission {
         this.url = url;
     }
 
-    public Integer getIsMenu() {
-        return isMenu;
+    public String getType() {
+        return type;
     }
 
-    public void setIsMenu(Integer isMenu) {
-        this.isMenu = isMenu;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Integer getLevel() {

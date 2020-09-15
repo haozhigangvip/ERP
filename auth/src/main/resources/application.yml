@@ -35,7 +35,7 @@ auth:
   tokenValiditySeconds: 1800  #token存储到redis的过期时间
   clientId: XcWebApp
   clientSecret: XcWebApp
-  cookieDomain: 192.168.200.199
+  cookieDomain: 192.168.3.245
   cookieMaxAge: 1800    #cookie存活时间 -1表示关闭浏览器就释放cookie
 encrypt:
   key-store:

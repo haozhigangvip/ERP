@@ -10,12 +10,17 @@ import org.springframework.web.filter.CorsFilter;
 public class GlobalCrosConfig{
     @Bean
     public CorsFilter corsFilter(){
+
         //1.添加CORS配置信息
         CorsConfiguration config=new CorsConfiguration();
         //1.1 允许的域，不要写*，否则cookie无法使用
+
         config.addAllowedOrigin("http://127.0.0.1");
         config.addAllowedOrigin("http://localhost");
+        config.addAllowedOrigin("http://localhost:8099");
         config.addAllowedOrigin("http://192.168.3.245");
+        config.addAllowedOrigin("http://192.168.3.245:8080");
+        config.addAllowedOrigin("http://192.168.200.199:8099");
         config.addAllowedOrigin("http://192.168.200.199");
 
 
