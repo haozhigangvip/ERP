@@ -7,6 +7,7 @@ import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.system.ext.AuthUserExt;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -55,14 +56,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new ErpExcetpion(ExceptionEumn.LOGIN_USERNAME_IS_FAIL);
         }
         LinkedHashMap<String, Object> result=(LinkedHashMap<String,Object>)((ResultMsg) rs.getBody()).getData();
-        AuthUserExt userext = new AuthUserExt();
-        userext.setUsername(result.get("username").toString());
-        userext.setPassword(result.get("password").toString());
-        if(userext == null){
+        AuthUserExt usertext = new AuthUserExt();
+        usertext.setUsername(result.get("username").toString());
+        usertext.setName(result.get("name").toString());
+        usertext.setPassword(result.get("password").toString());
+        usertext.setUid((Integer)result.get("uid"));
+        usertext.setUserpic((String)result.get("userpic"));
+        if(usertext == null){
             return null;
         }
         //取出正确密码（hash值）
-        String password = userext.getPassword();
+        String password = usertext.getPassword();
 
         List<LinkedHashMap> permissions=(List<LinkedHashMap>) result.get("permissions");
         if(permissions==null){
@@ -78,19 +82,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //        user_permission.add("company_list_all");
 //        user_permission.add("user_list_sales");
         String user_permission_string  = StringUtils.join(user_permission.toArray(), ",");
-        UserJwt userDetails = new UserJwt(username,
-                password,
-                AuthorityUtils.commaSeparatedStringToAuthorityList(user_permission_string));
-        if(userext.getUid()!=null){
-            userDetails.setUid(String.valueOf(userext.getUid()));
+        UserJwt userDetails = new UserJwt(username,password,AuthorityUtils.commaSeparatedStringToAuthorityList(user_permission_string));
+        if(usertext.getUid()!=null){
+            userDetails.setUid((usertext.getUid()));
         }
         //userDetails.setCompanyId(userext.getCompanyId());//所属企业3
-        userDetails.setName(userext.getName());//用户名称
-        userDetails.setUserpic(userext.getUserpic());//用户头像
+        userDetails.setName(usertext.getName());//用户名称
+        userDetails.setUserpic(usertext.getUserpic());//用户头像
+        userDetails.setUid(usertext.getUid());
+
        /* UserDetails userDetails = new org.springframework.security.core.userdetails.User(username,
                 password,
                 AuthorityUtils.commaSeparatedStringToAuthorityList(""));*/
-//                AuthorityUtils.createAuthorityList("course_get_baseinfo","course_get_list"));
+//       AuthorityUtils.createAuthorityList("course_get_baseinfo","course_get_list"));
         return userDetails;
     }
 }

@@ -5,6 +5,7 @@ import com.targetmol.domain.system.Permission;
 import com.targetmol.domain.system.PermissionMenu;
 import com.targetmol.domain.system.User;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.List;
@@ -16,10 +17,12 @@ import java.util.List;
 @ToString
 public class AuthUserExt extends User {
 
+
     //权限信息
     private List<Permission> permissions;
 
     //企业信息
     private String companyId;
+
 
 }

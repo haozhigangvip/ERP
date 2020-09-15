@@ -38,7 +38,7 @@ public enum  ExceptionEumn {
     ROLE_IS_NOT_FOUND(404,"角色不存在"),
     ROLE_IS_BOUNDBY_USERS(400,"用户已绑定该角色"),
     PERMISSION_IS_BOUNDBY_THE_ROLE(400,"角色已绑定该权限"),
-    PERMISSION_GRANT_FAILED(403,"授权失败"),
+    PERMISSION_GRANT_FAILED(403,"授权失效"),
     SALESMAN_CANNOT_BE_NULL(400,"所属销售不能为空"),
     FAIIL_TO_APPLY_FOR_TOKEN(400,"申请令牌失败"),
     LOGIN_USERNAME_IS_NULL(400,"用户名不能为空"),

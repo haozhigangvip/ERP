@@ -1,6 +1,7 @@
 package com.targetmol.auth.service;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -11,7 +12,7 @@ import java.util.Collection;
 @ToString
 public class UserJwt extends User {
 
-    private String uid;
+    private Integer uid;
     private String name;
     private String userpic;
     private String utype;

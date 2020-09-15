@@ -1,16 +1,24 @@
 package com.targetmol.auth.controller;
 
 import com.targetmol.auth.service.AuthService;
+import com.targetmol.auth.service.UserJwt;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.utils.CookieUtil;
+import com.targetmol.common.utils.JsonUtils;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.auth.ErpAuthToken;
 import com.targetmol.domain.auth.LoginRequest;
+import com.targetmol.domain.system.ext.AuthUser;
+import com.targetmol.domain.system.ext.AuthUserExt;
+import com.targetmol.domain.system.ext.UserExt;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.jwt.Jwt;
+import org.springframework.security.jwt.JwtHelper;
+import org.springframework.security.jwt.crypto.sign.RsaVerifier;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -64,7 +72,7 @@ public class  AuthController {
         Map<String,String> mp=new HashMap<>();
         mp.put("access_token",erpAuthToken.getAccess_token());
         mp.put("jwt_token",erpAuthToken.getJwt_token());
-        return ResponseEntity.ok(ResultMsg.success(mp));
+        return ResponseEntity.ok(ResultMsg.success(erpAuthToken.getAccess_token()));
     }
 
     //将令牌存储到cookie
@@ -97,10 +105,17 @@ public class  AuthController {
     }
 
     //获取JWT令牌
-    @GetMapping("/userjwt")
-    public ResponseEntity<ResultMsg> getUserJwt(){
+    @PostMapping("/userjwt")
+    public ResponseEntity<ResultMsg> getUserJwt(@RequestBody Map<String,String > mp){
         //取出cookie中的身份令牌
-        String uid=getTokenFormCookie();
+        String uid=null;
+        if(mp!=null){
+            uid= mp.get("access_token");
+        }
+        if(uid==null){
+            uid=getTokenFormCookie();
+        }
+
         String jwt_token =null;
         if(StringUtil.isEmpty(uid)==false){
             //拿身份令牌从redis中取出jwt令牌
@@ -110,10 +125,33 @@ public class  AuthController {
                 //重新更新cookie
                 saveCookie(uid);
             }
-
-        }
+           }
         //将JWT令牌返回给用户
-        return ResponseEntity.ok(ResultMsg.success(jwt_token));
+//        return ResponseEntity.ok(ResultMsg.success(jwt_token));
+        //通过JWT_TOKEN获取用户信息
+        Jwt jwt= getUserInfo(jwt_token);
+        String claims = jwt.getClaims();
+        AuthUser user= JsonUtils.parse(claims, AuthUser.class);
+        user.setJwtToken(jwt_token);
+        return ResponseEntity.ok(ResultMsg.success(user));
+
+    }
+
+    private Jwt getUserInfo(String jwt_token){
+        String publickey="-----BEGIN PUBLIC KEY-----\n" +
+                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhViTZjVzOIDNpApClDcK\n" +
+                "+/sBmDLteiiLXVK1E7aMsHaj0fed/KVjTSq24oKPvvvffQ6HC1Q7i3d49oJ9cEp5\n" +
+                "aBz3hSVHnCkbWOYWZgDHPozEOv4tBBNqJevjBuCz7+Tm0TrjLXxHabPZjxKjrMf9\n" +
+                "j3QVLZNGVCFP+HjxiJIx0ZU7gKMGtPuSXFgxDw0Syv6lVT2ECvthoabSHeETTFSX\n" +
+                "KfztOIu5zCB5eKlzSuOCxLvXh+C7S6ePDv/j9PdJ8hmOwWiOLNffmP8I3xQ7WBDU\n" +
+                "2c19yiSECZn+8vHtkGq2SoPl//mHoL95aQYk7sa+g/4Bo0JU6M/nKxLsWnIbhreL\n" +
+                "+wIDAQAB\n" +
+                "-----END PUBLIC KEY-----" ;
+        if(StringUtil.isEmpty(jwt_token)){
+            throw new ErpExcetpion(ExceptionEumn.PERMISSION_GRANT_FAILED);
+        }
+        Jwt jwt=  JwtHelper.decodeAndVerify(jwt_token, new RsaVerifier(publickey));
+        return jwt ;
     }
 
     //取出cookie中的身份令牌
