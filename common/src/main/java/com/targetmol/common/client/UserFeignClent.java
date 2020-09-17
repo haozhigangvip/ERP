@@ -10,7 +10,7 @@ import java.util.Map;
 
 @FeignClient(value="SYSTEM-SERVICE",path = "/sys/user")
 public interface UserFeignClent {
-    @GetMapping("/sys/user/{uid}")
+    @GetMapping("{uid}")
     public  ResponseEntity<ResultMsg>findById(@PathVariable("uid") Integer uid) throws Exception ;
 
     @GetMapping("/profile")

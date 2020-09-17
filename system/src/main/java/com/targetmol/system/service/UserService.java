@@ -134,13 +134,11 @@ public class UserService {
     public void addUser(User user) {
         //检查用户数据
         checkUserProperty(user);
-
         //设置用户状态，1为在职，0为离职
         user.setActivated(1);
         if(user.getOnsales()==null){
             user.setOnsales(0);
         }
-
 
         //检查用户名是否存在
          if(findByUsername(user).size()>0){
@@ -157,7 +155,6 @@ public class UserService {
         if(userDao.insert(user)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
-
 //        return findById(user.getUid());
     }
 
@@ -196,7 +193,6 @@ public class UserService {
             throw new ErpExcetpion(ExceptionEumn.USERS_ISNOT_FOUND);
         }
 
-
         //检查部门是否存在
         checkDerprtmentId(user.getDepartmentid());
 
@@ -204,8 +200,6 @@ public class UserService {
         BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
         String npassword=bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(npassword);
-
-
 
 
         //不允许修改用户名和激活标记

@@ -1,5 +1,6 @@
 package com.targetmol.gateway.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
@@ -7,13 +8,14 @@ import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.utils.JsonUtils;
 import com.targetmol.common.utils.JwtUtils;
 import com.targetmol.common.vo.ExceptionResult;
+import com.targetmol.domain.auth.ErpAuthToken;
+import com.targetmol.domain.system.ext.AuthUser;
 import com.targetmol.gateway.config.DataFilterConfig;
 import com.targetmol.gateway.service.AuthService;
 import com.targetmol.gateway.utils.PathUtil;
-import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import tk.mybatis.mapper.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,8 @@ import java.nio.charset.StandardCharsets;
 
 @Component
 public class LoginFilter extends ZuulFilter {
+    @Value("${auth.tokenValiditySeconds}")
+    int tokenValiditySeconds;
     @Autowired
     private JwtUtils jwtUtils;
     @Autowired
@@ -62,26 +66,35 @@ public class LoginFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         //获取request对象
         HttpServletRequest request = ctx.getRequest();
-        //取cookie中的身份令牌
-        String token=authService.getTokenFromCookie(request);
-        if(StringUtil.isEmpty(token)){
-            responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
-            return null;
-        }
-        //从hearder中取access_token
+//        //取cookie中的身份令牌
+//        String token=authService.getTokenFromCookie(request);
+//        if(StringUtil.isEmpty(token)){
+//            responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
+//            return null;
+//        }
+        //从hearder中取jwt_token
         String userJwt=authService.getJwtHeard(request);
         if(StringUtil.isEmpty(userJwt)){
-//            responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
+            responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
             return null;
         }
-        //从redis取出JWT令牌
-        String redisJwt=authService.getRedisJwt(token);
-        if(StringUtil.isEmpty(redisJwt)||!userJwt.equals(redisJwt)){
+
+         AuthUser user=jwtUtils.getUserInfo(userJwt);
+        if(user==null){
             responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
             return null;
         }
 
 
+        //从redis取出JWT令牌
+        ErpAuthToken erpAuthToken=authService.getRedisInfo(user.getJti());
+        if(erpAuthToken==null ||StringUtil.isEmpty(erpAuthToken.getJwt_token())||!userJwt.equals(erpAuthToken.getJwt_token())){
+            responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
+            return null;
+        }
+        //再次保存到Redis中，重新刷新过期时间
+        String jsonString = JSON.toJSONString(erpAuthToken);
+        authService.saveToken(user.getJti(),jsonString,tokenValiditySeconds);
         return null;
     }
 

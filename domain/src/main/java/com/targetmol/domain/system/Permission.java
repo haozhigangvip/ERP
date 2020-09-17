@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @ToString
 @Entity
-@Table(name="xc_menu")
+@Table(name="permission")
 public class Permission {
 
     @Id
@@ -23,7 +23,7 @@ public class Permission {
     @Column(insertable = false,updatable =false,name = "id")
     private Integer id;
     private String code;
-    @Column(name="p_code")
+    @Column(name="pcode")
     private String pCode;
     @Column(name="p_id")
     private Integer pId;
@@ -39,8 +39,6 @@ public class Permission {
     private String note;
     @Column(insertable = false,updatable = false,name="create_time")
     private Date createTime;
-
-    @Transient
     private List<Permission> permissions;
 
 

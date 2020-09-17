@@ -14,12 +14,12 @@ public class AuthUser {
     private String userpic;
     private String[] scope;
     private String jwtToken;
+    private String jti;
+
     @JsonIgnore
     private String utype;
     @JsonIgnore
     private Integer exp;
-    @JsonIgnore
-    private String jti;
     @JsonIgnore
     private String client_id;
 

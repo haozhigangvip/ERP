@@ -23,7 +23,7 @@ public interface ContactDao extends BaseMapper<Contact> {
     //
     @SelectProvider(type=contactDaoProvider.class,method = "findAllByAnyPara")
     List<Contact> findAllByAnyPara(
-            @Param("key") String key,@Param("showdelete") Boolean showdelete,
+            @Param("key") String key,@Param("activated") Boolean showdelete,
             @Param("softby") String softby,@Param("desc") Boolean desc);
 
     class contactDaoProvider{

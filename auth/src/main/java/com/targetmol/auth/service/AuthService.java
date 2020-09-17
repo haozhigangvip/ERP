@@ -19,7 +19,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
+import tk.mybatis.mapper.util.StringUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
@@ -42,6 +44,19 @@ public class AuthService {
 
     @Autowired
     RestTemplate restTemplate;
+
+    //从头部获取JWT信息
+    public String getJwtHeard(HttpServletRequest request){
+        //取出头信息
+        String auth=request.getHeader("Authorization");
+        if(StringUtil.isEmpty(auth)==false && auth.startsWith("Bearer ")){
+            auth=auth.replace("Bearer ","");
+            return auth;
+        }
+        return null;
+
+    }
+
     //用户认证申请令牌，将令牌存储到redis
     public ErpAuthToken login(String username, String password, String clientId, String clientSecret) {
 

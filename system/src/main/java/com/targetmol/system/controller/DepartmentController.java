@@ -21,7 +21,6 @@ public class DepartmentController {
             @RequestParam(value="softby",required = false) String softBy,
             @RequestParam(value="desc",defaultValue = "false") Boolean desc
     ){
-
         return ResponseEntity.ok(ResultMsg.success(departmentService.findByAll(softBy,desc)));
     }
 

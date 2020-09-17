@@ -19,7 +19,7 @@ public class FeignClientFilter  implements RequestInterceptor {
             HttpServletRequest request=servletRequestAttributes.getRequest();
             Enumeration<String> headersNames = request.getHeaderNames();
             if(headersNames!=null){
-                while (headersNames.hasMoreElements()){
+                 while (headersNames.hasMoreElements()){
                     String headersName=headersNames.nextElement();
                     String headerValue=request.getHeader(headersName);
                     //将header(JWT令牌）向下传递

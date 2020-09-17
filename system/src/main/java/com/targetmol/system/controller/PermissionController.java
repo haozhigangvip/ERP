@@ -1,16 +1,14 @@
 package com.targetmol.system.controller;
 
-import com.targetmol.common.vo.PageResult;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.system.Permission;
-//import com.targetmol.system.service.PermissionService;
 import com.targetmol.system.service.PermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
 
 @Slf4j
 @RequestMapping("/permission")
@@ -29,24 +27,22 @@ public class PermissionController {
     //修改权限
     @PutMapping("{id}")
     public ResponseEntity<ResultMsg> updatePermission(@PathVariable(value="id") Integer id,
-                                                      @RequestBody Map<String,Object> map) throws Exception {
-        map.put("id",id);
-//        permissionService.updatePermission(map);
+                                                      @RequestBody Permission permission) throws Exception {
+        permission.setId(id);
+        permissionService.updatePermission(permission);
         return ResponseEntity.ok(ResultMsg.success());
     }
     //删除权限
     @DeleteMapping("{id}")
     public ResponseEntity<ResultMsg> deletePermission(@PathVariable(value="id") Integer id){
-//        permissionService.deletePermission(id);
+         permissionService.deletePermission(id);
         return ResponseEntity.ok(ResultMsg.success());
     }
     //查询所有权限表
     @GetMapping
-    public ResponseEntity<PageResult<Permission>> findByAll(@RequestParam(value = "type",required = false,defaultValue = "0") Integer type,
-                                                            @RequestParam(value="pid" ,required = false) Integer pid)
+    public ResponseEntity<List<Permission>> findByAll()
     {
-//        permissionService.findByAll(type,pid);
-        return ResponseEntity.ok(new PageResult<>());
+        return ResponseEntity.ok(permissionService.findByAll());
     }
 
     //按ID查询权限

@@ -52,10 +52,6 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1
-jwt:
-  config:
-    key: targetmol  #jwt 私钥
-    ttl:  3600000   #jwt 1小时失效.
 ribbon:
   ConnectionTimeout: 5000   #ribbon连接超时时长1000毫秒
   ReadTimeout: 6000  #ribbon读取超时时长 6000毫秒

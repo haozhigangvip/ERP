@@ -184,7 +184,7 @@ public class RoleService {
                 throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
             }
             //自动将对应权限的API权限绑定到中间表
-            List<Integer>  apiPermissions=permissionDao.findbyTypeandPid(PermissionConstants.PY_API,pid);
+            List<Integer>  apiPermissions=permissionDao.findbyPid(pid);
             for (Integer  apipid:apiPermissions) {
                 Role_Permission api_role_permission=new Role_Permission();
                 api_role_permission.setRoleId(rid);

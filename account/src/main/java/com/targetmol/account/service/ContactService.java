@@ -68,20 +68,24 @@ public class ContactService {
 
         //调取用户微服务，查询销售名
         if(res.getSaleid()!=null){
-            ResponseEntity<ResultMsg> userResult= userFeignClent.findById(res.getSaleid());
-            LinkedHashMap<String,Object> hsmp=(LinkedHashMap<String, Object>) userResult.getBody().getData();
-           if(hsmp!=null){
-               res.setSalesname(hsmp.get("name").toString());
-
-           }
+           res.setSalesname(getSalesName(res.getSaleid()));
         }
 
         return res;
     }
 
+    //调用微服务获取销售人员名
+    private String getSalesName(Integer uid) throws Exception{
+        ResponseEntity<ResultMsg> userResult= userFeignClent.findById(uid);
+        LinkedHashMap<String,Object> hsmp=(LinkedHashMap<String, Object>) userResult.getBody().getData();
+        if(hsmp!=null){
+            return (String)hsmp.get("name");
+        }
+        return null;
+    }
 
     //查询所有Contact
-    public PageResult<Contact> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showUnActive) {
+    public PageResult<Contact> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showUnActive) throws Exception {
         //分页
         PageHelper.startPage(page,pageSize);
         //过滤
@@ -109,8 +113,15 @@ public class ContactService {
         }
 //        loadCompanys(list);
         //封装到pageHelper
-        PageInfo<Contact> pageInfo=new PageInfo<Contact>(list);
-        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
+        List<Contact> result=new ArrayList<Contact>();
+        for (Contact item:list) {
+            if(item.getSaleid()!=null){
+                item.setSalesname(getSalesName(item.getSaleid()));
+            }
+            result.add(item);
+       }
+        PageInfo<Contact> pageInfo=new PageInfo<Contact>(result);
+        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), result);
     }
 
 

@@ -25,14 +25,14 @@ public class ContactController {
 
     //查询联系人
     @GetMapping
-    public ResponseEntity<PageResult<Contact>> findByAll(
+    public ResponseEntity<PageResult<Contact>> findByAll (
             @RequestParam(value="page",defaultValue = "1") Integer page,
             @RequestParam(value="pagesize",defaultValue = "30") Integer pageSize,
             @RequestParam(value="softby",required = false) String softBy,
             @RequestParam(value="desc",defaultValue = "false") Boolean desc,
             @RequestParam(value="key",required = false) String key,
             @RequestParam(value="showunactive" ,defaultValue="false") Boolean showunactive
-    ){
+    ) throws Exception{
 
         return ResponseEntity.ok(contactService.findByAll(page,pageSize,softBy,desc,key,showunactive));
     }
@@ -54,7 +54,8 @@ public class ContactController {
     }
     //删除联系人
     @DeleteMapping("{contid}")
-    public ResponseEntity<ResultMsg> deleteContanct(@PathVariable("contid") Integer contid){
+    public ResponseEntity<ResultMsg> deleteContanct(@PathVariable("contid") Integer  contid){
+
         contactService.setActived(contid,0);
         return ResponseEntity.ok(ResultMsg.success());
     }

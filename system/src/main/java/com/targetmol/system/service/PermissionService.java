@@ -9,9 +9,9 @@ import com.targetmol.system.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +27,7 @@ public class PermissionService {
     private PermissionPointDao permissionPointDao;
     @Autowired
     private RolePermissionDao rolePermissionDao;
+
 
     //添加权限
     public void addPermission(Permission permission) throws Exception {
@@ -54,145 +55,108 @@ public class PermissionService {
 
 
 
-//    //修改权限
-//    public void updatePermission(Map<String, Object> map) throws Exception{
-//        int result=1;
-//        //判断对象是否为空
-//        if(map==null){
-//            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
-//        }
-//        //将Map封装成permission
-//        Permission per=BeanMapUtils.mapToBean(map,Permission.class);
-//        //通过传递的权限ID查询权限是否存在
-//
-//        Permission permission=permissionDao.selectByPrimaryKey(per.getId());
-//        if(permission==null){
-//            throw new ErpExcetpion(ExceptionEumn.PERMISSION_IS_NOT_FOUND);
-//        }
-//        //传递值赋给Permission
-//        permission.setCode(per.getCode());
-//        permission.setNote(per.getNote());
-//        permission.setPername(per.getPername());
-//        permission.set(per.getpId());
-//        permission.setType(per.getType());
-//        //保存permission
-//        result=result*permissionDao.updateByPrimaryKeySelective(permission);
-//
-//        //根据不同类型保存不同资源
-//        int type =per.getType();
-//        switch (type){
-//            case PermissionConstants.PY_MENU:
-//                PermissionMenu menu= BeanMapUtils.mapToBean(map,PermissionMenu.class);
-//                menu.setId(null);
-//                menu.setPreid(permission.getId());
-//                PermissionMenu rmenu=permissionMenuDao.selectOne(menu);
-//                rmenu.setMenuicon(menu.getMenuicon());
-//                rmenu.setMenuorder(menu.getMenuorder());
-//                result=result*permissionMenuDao.updateByPrimaryKeySelective(rmenu);
-//                break;
-//            case PermissionConstants.PY_POINT:
-//                PermissionPoint point= BeanMapUtils.mapToBean(map,PermissionPoint.class);
-//                point.setId(null);
-//                point.setPreid(permission.getId());
-//                PermissionPoint rpoint=permissionPointDao.selectOne(point);
-//                rpoint.setPointclass(point.getPointclass());
-//                rpoint.setPointicon(point.getPointicon());
-//                rpoint.setPointstatus(point.getPointstatus());
-//                result=result*permissionPointDao.updateByPrimaryKeySelective(rpoint);
-//                break;
-//            case PermissionConstants.PY_API:
-//                PermissionApi api= BeanMapUtils.mapToBean(map,PermissionApi.class);
-//                api.setId(null);
-//                api.setPreid(permission.getId());
-//                PermissionApi rapi=permissionApiDao.selectOne(api);
-//                rapi.setApilevel(api.getApilevel());
-//                rapi.setApimethod(api.getApimethod());
-//                rapi.setApiurl(api.getApiurl());
-//                result=result*permissionApiDao.updateByPrimaryKeySelective(rapi);
-//                break;
-//            default:
-//                throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
-//        }
-//
-//        //判断保存是否成功
-//        if(result!=1){
-//            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
-//        }
-//
-//    }
-//
-//
-//    //删除权限
-//    public void deletePermission(Integer id) {
-//       Integer result=1;
-//        if(id==null){
-//            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
-//        }
-//        //查找角色是否绑定权限
-//        if(rolePermissionDao.countByPid(id)>0){
-//            throw new ErpExcetpion(ExceptionEumn.PERMISSION_IS_BOUNDBY_THE_ROLE);
-//        }
-//
-//        //删除权限表
-//        Permission permission=permissionDao.selectByPrimaryKey(id);
-//        if(permission==null){
-//            throw new ErpExcetpion(ExceptionEumn.PERMISSION_IS_NOT_FOUND);
-//        }
-//        result=result*permissionDao.deleteByPrimaryKey(id);
-//        //根据类型删除子权限表
-//        Integer type=permission.getType();
-//        switch (type){
-//            case PermissionConstants.PY_MENU:
-//                PermissionMenu menu=new PermissionMenu();
-//                menu.setPreid(id);
-//                result=result*permissionMenuDao.delete(menu);
-//                break;
-//            case PermissionConstants.PY_POINT:
-//                PermissionPoint point=new PermissionPoint();
-//                point.setPreid(id);
-//                result=result*permissionPointDao.delete(point);
-//                break;
-//            case PermissionConstants.PY_API:
-//                PermissionApi api=new PermissionApi();
-//                api.setPreid(id);
-//                result=result*permissionApiDao.delete(api);
-//                break;
-//        }
-//
-//        if(result!=1){
-//            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
-//        }
-//    }
-//
-//
-//
-//    //查询所有权限
-//    public PageResult<Permission> findByAll() {
-//        //获取最大级别
-//        Integer levels=permissionDao.getMaxLevel();
-//
-//        List<Permission>result=permissionDao.findByLevel(0);
-////        for (int i = 1; i <= levels; i++) {
-////            for (Permission item:result ){
-////
-////            }
-////        }
-////
-////        Example example = new Example(Permission.class);
-////        Example.Criteria criteria = example.createCriteria();
-////        example.and(criteria);
-////        //判断父ID是否为空
-////        if(pid!=null){
-////            criteria.andEqualTo("pid",pid);
-////        }
-////        //进行查询
-////        List<Permission> list=permissionDao.selectByExample(example);
-////        PageInfo<Permission> pageInfo=new PageInfo<>(list);
-//        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
-//    }
+    //修改权限
+    public void updatePermission(Permission permission) throws Exception{
+        int result=1;
+        //判断对象是否为空
+        permission=checkPermssion(permission);
 
+        //通过传递的权限ID查询权限是否存在
 
+        Permission data=permissionDao.selectByPrimaryKey(permission.getpId());
+        if(data==null){
+            throw new ErpExcetpion(ExceptionEumn.PERMISSION_IS_NOT_FOUND);
+        }
+        //传递值赋给Permission
+        data.setPermissions(permission.getPermissions());
+        data.setpCode(permission.getpCode());
+        data.setSort(permission.getSort());
+        data.setIcon(permission.getIcon());
+        data.setMenuName(permission.getMenuName());
+        data.setNote(permission.getNote());
+        data.setType(permission.getType());
+        data.setUrl(permission.getUrl());
+        data.setStatus(permission.getStatus());
+        //保存permission
+        result=result*permissionDao.updateByPrimaryKeySelective(data);
 
+        //判断保存是否成功
+        if(result!=1){
+            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+        }
+
+    }
+//
+//
+    //删除权限
+    public void deletePermission(Integer id) {
+       Integer result=1;
+        if(id==null){
+            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
+        }
+
+        //判断权限是否存在
+        Permission permission=permissionDao.selectByPrimaryKey(id);
+        if(permission==null){
+            throw new ErpExcetpion(ExceptionEumn.PERMISSION_IS_NOT_FOUND);
+        }
+
+        //查询权限是否有下级权限
+        List<Integer> lst=permissionDao.findbyPid(id);
+        if(lst!=null && lst.size()>0){
+            throw new ErpExcetpion(ExceptionEumn.SUB_PERMISSION_ALREADY_EXISTS);
+        }
+
+        //查找角色是否绑定权限
+        if(rolePermissionDao.countByPid(id)>0){
+            throw new ErpExcetpion(ExceptionEumn.PERMISSION_IS_BOUNDBY_THE_ROLE);
+        }
+        //删除权限
+        result=permissionDao.deleteByPrimaryKey(id);
+
+        if(result!=1){
+            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
+        }
+    }
+//
+//
+//
+    //查询所有权限
+    public List<Permission> findByAll() {
+        //搜索所有权限
+        List<Permission> data=permissionDao.selectAll();
+        List<Permission> lst=new ArrayList<>();
+        for (Permission permissionExt:data){
+            if(permissionExt.getLevel()!=null && permissionExt.getLevel()==0){
+                lst.add(permissionExt);
+            }
+        }
+        for(Permission item:lst){
+            item.setPermissions(getChilde(item.getId(),data));
+        }
+        PageInfo<Permission> pageInfo=new PageInfo<>(lst);
+        return lst;
+    }
+
+    private List<Permission>getChilde(Integer id,List<Permission> rootList){
+        //子菜单
+        List<Permission> childList=new ArrayList<>();
+        if(rootList==null||rootList.size()<=0){
+            return null;
+        }
+        for(Permission item:rootList){
+            if(item!=null&&item.getpId()!=null &&item.getpId().equals(id)){
+                childList.add(item);
+            }
+        }
+        for(Permission item:childList){
+            item.setPermissions(getChilde(item.getId(),rootList));
+        }
+        if(childList.size()==0){
+            return null;
+        }
+        return childList;
+    }
 
 
     //根据用户ID查询权限

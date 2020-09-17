@@ -91,6 +91,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         userDetails.setUserpic(usertext.getUserpic());//用户头像
         userDetails.setUid(usertext.getUid());
 
+
+
        /* UserDetails userDetails = new org.springframework.security.core.userdetails.User(username,
                 password,
                 AuthorityUtils.commaSeparatedStringToAuthorityList(""));*/
