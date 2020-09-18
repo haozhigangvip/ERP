@@ -1,9 +1,12 @@
 package com.targetmol.auth.service;
 
 import com.alibaba.fastjson.JSON;
+import com.targetmol.common.client.UserFeignClent;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.common.filter.FeignClientFilter;
 import com.targetmol.domain.auth.ErpAuthToken;
+import com.targetmol.domain.system.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -44,6 +47,9 @@ public class AuthService {
 
     @Autowired
     RestTemplate restTemplate;
+
+    @Autowired
+    private UserFeignClent userClient;
 
     //从头部获取JWT信息
     public String getJwtHeard(HttpServletRequest request){
@@ -179,4 +185,33 @@ public class AuthService {
         byte[] encode = Base64Utils.encode(string.getBytes());
         return "Basic "+new String(encode);
     }
+
+    //钉钉免登
+    public Boolean autoLoginByDD(String code) {
+        //获取钉钉accessToken
+        String corpId="dingfbc7fad2d294d37e";
+        String urlDomain="https://oapi.dingtalk.com/";
+        String appKey="dingaqxyes7ba9dcou5j";
+        String appSecret="YX4o7hOPm_9K8XZdfCPcb2X7zCw2IzyWVNpeXcID6v8u_bt5FHW-H2T48kxFfpxH";
+        String url=urlDomain+"gettoken?appkey="+appKey+"&appsecret="+appSecret;
+        Map<String,Object> result=restTemplate.getForObject(url,Map.class);
+        if(result==null || (Integer)result.get("errcode")!=0){
+            return false;
+        }
+        //获取钉钉ID
+        String access_token=(String)result.get("access_token");
+        url=urlDomain+"user/getuserinfo?access_token="+access_token+"&code="+code;
+        result=restTemplate.getForObject(url,Map.class);
+        if(result==null || (Integer)result.get("errcode")!=0){
+            return false;
+        }
+        String userId=(String)result.get("userid");
+        //通过钉钉ID查询用户
+//       Use  user= userClient.findByDdId(userId);
+
+
+        return true;
+    }
+
+
 }

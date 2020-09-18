@@ -1,6 +1,7 @@
 package com.targetmol.common.client;
 
 import com.targetmol.common.vo.ResultMsg;
+import com.targetmol.domain.system.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,4 +16,7 @@ public interface UserFeignClent {
 
     @GetMapping("/profile")
     public ResponseEntity<ResultMsg>login(@RequestParam("username") String username);
+
+    @PostMapping("findByddID")
+    public User findByDdId(@RequestParam("ddId") String  ddid);
 }

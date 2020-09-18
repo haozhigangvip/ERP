@@ -1,34 +1,29 @@
 package com.targetmol.auth.controller;
 
-import com.google.common.util.concurrent.ExecutionError;
+import com.dingtalk.api.DefaultDingTalkClient;
+import com.dingtalk.api.DingTalkClient;
+import com.dingtalk.api.request.OapiUserGetuserinfoRequest;
+import com.dingtalk.api.response.OapiUserGetuserinfoResponse;
 import com.targetmol.auth.service.AuthService;
-import com.targetmol.auth.service.UserJwt;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.utils.CookieUtil;
-import com.targetmol.common.utils.JsonUtils;
 import com.targetmol.common.utils.JwtUtils;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.auth.ErpAuthToken;
 import com.targetmol.domain.auth.LoginRequest;
 import com.targetmol.domain.system.ext.AuthUser;
-import com.targetmol.domain.system.ext.AuthUserExt;
-import com.targetmol.domain.system.ext.UserExt;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.jwt.Jwt;
-import org.springframework.security.jwt.JwtHelper;
-import org.springframework.security.jwt.crypto.sign.RsaVerifier;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import tk.mybatis.mapper.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +48,8 @@ public class  AuthController {
     private AuthService authService;
     @Autowired
     private JwtUtils jwtUtils;
+    @Autowired
+    private RestTemplate restTemplate;
 
     @PostMapping("/login")
     public ResponseEntity<ResultMsg> login(@RequestBody LoginRequest loginRequest) {
@@ -79,6 +76,15 @@ public class  AuthController {
         mp.put("jwt_token",erpAuthToken.getJwt_token());
         return ResponseEntity.ok(ResultMsg.success(mp));
     }
+
+    @GetMapping("/autologin/dingTalk")
+    public ResponseEntity<ResultMsg> login(@RequestParam("code") String code) {
+
+        authService.autoLoginByDD(code);
+
+        return ResponseEntity.ok(ResultMsg.success());
+    }
+
 
     //将令牌存储到cookie
     private void saveCookie(String token){

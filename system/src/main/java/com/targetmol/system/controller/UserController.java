@@ -80,6 +80,11 @@ public class UserController extends BaseController {
     public  ResponseEntity<ResultMsg>findById(@PathVariable("uid") Integer uid) throws Exception{
         return ResponseEntity.ok(ResultMsg.success(userService.findById(uid)));
     }
+    //根据钉钉ID查询用户
+    @PostMapping("findByddID")
+    public User findByDdId(@RequestParam("ddId") String  ddid){
+        return userService.findByDdId(ddid);
+    }
 
 
     //根据ID删除用户

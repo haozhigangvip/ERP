@@ -22,6 +22,7 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -314,13 +315,18 @@ public class UserService {
         }
     }
     //查找所有在职销售
-    public List<String > findAllSales() {
-        Example example=new Example(User.class);
-        example.and(example.createCriteria()
-                .andEqualTo("onsales",1)
-                .andEqualTo("activated",true));
+    public List<Map<String,Object>> findAllSales() {
 
         return userDao.getSales();
+    }
+
+    public User findByDdId(String ddid) {
+        Example example=new Example(User.class);
+        example.and(example.createCriteria()
+                .andEqualTo("ddid",ddid)
+                .andEqualTo("activated",true));
+        User user=  userDao.selectOneByExample(example);
+        return user;
     }
 }
 

@@ -19,7 +19,6 @@ public class Department implements Serializable {
     private String name;
     private String mname;
     private Integer level;
-    private String companyid;
     private String note;
     @Column(insertable = false)
     private Date creatime;
@@ -73,13 +72,7 @@ public class Department implements Serializable {
         this.level = level;
     }
 
-    public String getCompanyid() {
-        return companyid;
-    }
 
-    public void setCompanyid(String companyid) {
-        this.companyid = companyid;
-    }
 
     public Date getCreatime() {
         return creatime;
@@ -89,17 +82,5 @@ public class Department implements Serializable {
         this.creatime = creatime;
     }
 
-    @Override
-    public String toString() {
-        return "Department{" +
-                "depaid=" + depaid +
-                ", pid=" + pid +
-                ", name='" + name + '\'' +
-                ", mname='" + mname + '\'' +
-                ", level=" + level +
-                ", companyid='" + companyid + '\'' +
-                ", note='" + note + '\'' +
-                ", creatime=" + creatime +
-                '}';
-    }
+
 }

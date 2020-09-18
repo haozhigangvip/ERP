@@ -60,7 +60,7 @@ public class ResourceServerConfig  extends ResourceServerConfigurerAdapter {
         //所有请求必须认证通过
        http.authorizeRequests()
                .antMatchers("/api/sys/user/profile/**","/sys/user/profile/**").permitAll()     //放行
-                .anyRequest().authenticated().and().cors();
+                .anyRequest().permitAll().and().cors();
 
     }
 }

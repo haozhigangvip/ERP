@@ -73,6 +73,15 @@ public class ContactService {
 
         return res;
     }
+    //调用微服务获取销售人员名
+    private String getUserByddId(String ddid) throws Exception{
+        ResponseEntity<ResultMsg> userResult= userFeignClent.findById(1);
+        LinkedHashMap<String,Object> hsmp=(LinkedHashMap<String, Object>) userResult.getBody().getData();
+        if(hsmp!=null){
+            return (String)hsmp.get("name");
+        }
+        return null;
+    }
 
     //调用微服务获取销售人员名
     private String getSalesName(Integer uid) throws Exception{
@@ -177,9 +186,9 @@ public class ContactService {
         if(contact.getName()==null ||contact.getName()=="") {
             throw  new ErpExcetpion(ExceptionEumn.NAME_CANNOT_BE_NULL);
         }
-        if(contact.getContactid()==null){
-            throw new ErpExcetpion(ExceptionEumn.COMPANYID_CANNOT_BE_NULL);
-        }
+//        if(contact.getContactid()==null){
+//            throw new ErpExcetpion(ExceptionEumn.COMPANYID_CANNOT_BE_NULL);
+//        }
 
     }
 
@@ -222,10 +231,11 @@ public class ContactService {
             Example.Criteria criteria=example.createCriteria();
             criteria.andEqualTo("contactid",contid);
             example.and(criteria);
-            if(contactCompanyDao.deleteByExample(example)!=1){
+            if(contactCompanyDao.deleteByExample(example)<0){
              throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
             }
         }
+
         //将新的company集合绑定至中间表
         if(companys!=null&& companys.size()>0){
             for (Company company: companys) {
