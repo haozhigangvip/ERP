@@ -1,5 +1,6 @@
 package com.targetmol.domain.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.targetmol.utils.UUIDGenId;
 import tk.mybatis.mapper.annotation.KeySql;
 
@@ -9,40 +10,38 @@ import java.util.Date;
 import java.util.List;
 
 @Table(name="contact")
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
+
 public class Contact implements Serializable {
     @Id
-    @KeySql(genId = UUIDGenId.class)
-    @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select uuid()")
+    @KeySql(useGeneratedKeys= true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(insertable = false,updatable =false,name = "contactid")
     private Integer contactid;
     private String name;
     private String email;
     private String phone;
     private String source;
-    private Integer saleid;
+    @Column(name="note")
     private String note;
     @Column(insertable = false, updatable = false)
     private Date creatime;
     private String qq;
     private String weixin;
     private String lab;
+    @Column(name="contvip")
     private Integer contvip;
     private String position;
     private Integer activated;
+    @Column(name="saleid")
+    private Integer saleid;
+
     @Transient
     private List<Company> companys;
     @Transient
     private List<Address> addressList;
     @Transient
     private String salesname;
-
-
-    public String getSalesname() {
-        return salesname;
-    }
-
-    public void setSalesname(String salesname) {
-        this.salesname = salesname;
-    }
 
     public Integer getContactid() {
         return contactid;
@@ -82,14 +81,6 @@ public class Contact implements Serializable {
 
     public void setSource(String source) {
         this.source = source;
-    }
-
-    public Integer getSaleid() {
-        return saleid;
-    }
-
-    public void setSaleid(Integer saleid) {
-        this.saleid = saleid;
     }
 
     public String getNote() {
@@ -156,6 +147,14 @@ public class Contact implements Serializable {
         this.activated = activated;
     }
 
+    public Integer getSaleid() {
+        return saleid;
+    }
+
+    public void setSaleid(Integer saleid) {
+        this.saleid = saleid;
+    }
+
     public List<Company> getCompanys() {
         return companys;
     }
@@ -170,5 +169,13 @@ public class Contact implements Serializable {
 
     public void setAddressList(List<Address> addressList) {
         this.addressList = addressList;
+    }
+
+    public String getSalesname() {
+        return salesname;
+    }
+
+    public void setSalesname(String salesname) {
+        this.salesname = salesname;
     }
 }

@@ -82,8 +82,8 @@ public class UserController extends BaseController {
     }
     //根据钉钉ID查询用户
     @PostMapping("findByddID")
-    public User findByDdId(@RequestParam("ddId") String  ddid){
-        return userService.findByDdId(ddid);
+    public User findByDdId(@RequestParam("ddId") String  ddid,@RequestParam("code") String code){
+        return userService.findByDdId(ddid,code);
     }
 
 
@@ -113,7 +113,11 @@ public class UserController extends BaseController {
 
         return ResponseEntity.ok(ResultMsg.success(userService.login(username)));
     }
-
+    @GetMapping("refreshCode")
+    public ResponseEntity<ResultMsg> refreshCode(@RequestParam("username") String username) {
+        userService.refreshCode(username);
+        return ResponseEntity.ok(ResultMsg.success());
+    }
 
 
 }

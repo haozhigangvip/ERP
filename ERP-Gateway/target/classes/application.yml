@@ -77,4 +77,5 @@ data-filter:
   userLoginPath: #登录请求地址,可设置多个,会触发LoginAddJwtPostFilter
     - /api/oss/login/**
     - /api/oss/logout/**
-    - /api/oss/userjwt
+    - /api/oss/ujwt
+    - /api/**

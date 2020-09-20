@@ -7,6 +7,7 @@ import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.filter.FeignClientFilter;
 import com.targetmol.domain.auth.ErpAuthToken;
 import com.targetmol.domain.system.User;
+import org.omg.PortableInterceptor.USER_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -64,10 +65,11 @@ public class AuthService {
     }
 
     //用户认证申请令牌，将令牌存储到redis
-    public ErpAuthToken login(String username, String password, String clientId, String clientSecret) {
+    public ErpAuthToken login(String username, String password, String clientId, String clientSecret,String code ) {
 
         //请求spring security申请令牌
-        ErpAuthToken erpAuthToken = this.applyToken(username, password, clientId, clientSecret);
+        ErpAuthToken erpAuthToken = this.applyToken(username, password, clientId, clientSecret,code);
+
         if(erpAuthToken == null){
             throw  new ErpExcetpion(ExceptionEumn.USERNAMEANDPASSWORD_ISNOT_MATCH);
         }
@@ -124,7 +126,12 @@ public class AuthService {
 
 
     //申请令牌
-    private ErpAuthToken applyToken(String username, String password, String clientId, String clientSecret){
+    private ErpAuthToken applyToken(String username, String password, String clientId, String clientSecret,String code){
+
+        if(code==null){
+            userClient.refreshCode(username);
+        }
+
         //从eureka中获取认证服务的地址（因为spring security在认证服务中）
         //从eureka中获取认证服务的一个实例的地址
         ServiceInstance serviceInstance = loadBalancerClient.choose("AUTH-SERVICE");
@@ -187,7 +194,7 @@ public class AuthService {
     }
 
     //钉钉免登
-    public Boolean autoLoginByDD(String code) {
+    public User autoLoginByDD(String code) {
         //获取钉钉accessToken
         String corpId="dingfbc7fad2d294d37e";
         String urlDomain="https://oapi.dingtalk.com/";
@@ -196,21 +203,19 @@ public class AuthService {
         String url=urlDomain+"gettoken?appkey="+appKey+"&appsecret="+appSecret;
         Map<String,Object> result=restTemplate.getForObject(url,Map.class);
         if(result==null || (Integer)result.get("errcode")!=0){
-            return false;
+            return null;
         }
         //获取钉钉ID
         String access_token=(String)result.get("access_token");
         url=urlDomain+"user/getuserinfo?access_token="+access_token+"&code="+code;
         result=restTemplate.getForObject(url,Map.class);
         if(result==null || (Integer)result.get("errcode")!=0){
-            return false;
+            return null;
         }
         String userId=(String)result.get("userid");
         //通过钉钉ID查询用户
-//       Use  user= userClient.findByDdId(userId);
-
-
-        return true;
+       User  user= userClient.findByDdId(userId,code);
+        return user;
     }
 
 

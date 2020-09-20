@@ -18,5 +18,7 @@ public interface UserFeignClent {
     public ResponseEntity<ResultMsg>login(@RequestParam("username") String username);
 
     @PostMapping("findByddID")
-    public User findByDdId(@RequestParam("ddId") String  ddid);
+    public User findByDdId(@RequestParam("ddId") String  ddid,@RequestParam("code") String code);
+    @GetMapping("refreshCode")
+    public ResponseEntity<ResultMsg> refreshCode(@RequestParam("username") String username) ;
 }

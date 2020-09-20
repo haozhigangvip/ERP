@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.common.utils.BCryptUtil;
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.domain.system.Role;
 import com.targetmol.domain.system.User;
@@ -320,13 +321,28 @@ public class UserService {
         return userDao.getSales();
     }
 
-    public User findByDdId(String ddid) {
+    public User findByDdId(String ddid,String code) {
         Example example=new Example(User.class);
         example.and(example.createCriteria()
                 .andEqualTo("ddid",ddid)
                 .andEqualTo("activated",true));
         User user=  userDao.selectOneByExample(example);
+        if(user!=null){
+            user.setDcode(BCryptUtil.encode(code));
+            userDao.updateByPrimaryKey(user);
+        }
         return user;
+    }
+    //动态根据用户名将密码传递给dcode
+    public void refreshCode(String username) {
+        User u1=new User();
+        u1.setUsername(username);
+        User user=userDao.selectOne(u1);
+        if(user!=null){
+            user.setDcode(user.getPassword());
+            userDao.updateByPrimaryKeySelective(user);
+        }
+
     }
 }
 

@@ -59,7 +59,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         AuthUserExt usertext = new AuthUserExt();
         usertext.setUsername(result.get("username").toString());
         usertext.setName(result.get("name").toString());
-        usertext.setPassword(result.get("password").toString());
+        usertext.setPassword(result.get("dcode").toString());
         usertext.setUid((Integer)result.get("uid"));
         usertext.setUserpic((String)result.get("userpic"));
         if(usertext == null){

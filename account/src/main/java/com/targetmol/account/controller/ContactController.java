@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Slf4j
 @RequestMapping("/contact")
@@ -25,7 +27,7 @@ public class ContactController {
 
     //查询联系人
     @GetMapping
-    public ResponseEntity<PageResult<Contact>> findByAll (
+    public PageResult<Contact> findByAll (
             @RequestParam(value="page",defaultValue = "1") Integer page,
             @RequestParam(value="pagesize",defaultValue = "30") Integer pageSize,
             @RequestParam(value="softby",required = false) String softBy,
@@ -33,8 +35,8 @@ public class ContactController {
             @RequestParam(value="key",required = false) String key,
             @RequestParam(value="showunactive" ,defaultValue="false") Boolean showunactive
     ) throws Exception{
-
-        return ResponseEntity.ok(contactService.findByAll(page,pageSize,softBy,desc,key,showunactive));
+        PageResult conts=contactService.findByAll(page,pageSize,softBy,desc,key,showunactive);
+        return conts;
     }
 
 

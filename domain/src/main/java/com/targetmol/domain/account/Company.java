@@ -1,5 +1,6 @@
 package com.targetmol.domain.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.targetmol.utils.UUIDGenId;
 import lombok.Data;
@@ -8,6 +9,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 @Table(name="company_info")
@@ -32,7 +34,42 @@ public class Company  implements Serializable {
     private Date creatime;
     private Integer saleid;
     private Integer activated;
+    @JsonIgnore
+    private Integer def;
 
+
+    private List<Contact> contacts;
+
+
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+
+    public Integer getDef() {
+        return def;
+    }
+
+    public void setDef(Integer def) {
+        this.def = def;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
 
     public Integer getCompanyid() {
         return companyid;

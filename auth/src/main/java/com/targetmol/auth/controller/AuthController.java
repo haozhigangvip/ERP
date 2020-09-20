@@ -1,17 +1,16 @@
 package com.targetmol.auth.controller;
 
-import com.dingtalk.api.DefaultDingTalkClient;
-import com.dingtalk.api.DingTalkClient;
-import com.dingtalk.api.request.OapiUserGetuserinfoRequest;
-import com.dingtalk.api.response.OapiUserGetuserinfoResponse;
+
 import com.targetmol.auth.service.AuthService;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.common.utils.BCryptUtil;
 import com.targetmol.common.utils.CookieUtil;
 import com.targetmol.common.utils.JwtUtils;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.auth.ErpAuthToken;
 import com.targetmol.domain.auth.LoginRequest;
+import com.targetmol.domain.system.User;
 import com.targetmol.domain.system.ext.AuthUser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +64,7 @@ public class  AuthController {
         String password = loginRequest.getPassword();
 
         //申请令牌
-        ErpAuthToken erpAuthToken =  authService.login(username,password,clientId,clientSecret);
+        ErpAuthToken erpAuthToken =  authService.login(username,password,clientId,clientSecret,null);
 
         //用户身份令牌
         String access_token = erpAuthToken.getAccess_token();
@@ -78,11 +77,23 @@ public class  AuthController {
     }
 
     @GetMapping("/autologin/dingTalk")
-    public ResponseEntity<ResultMsg> login(@RequestParam("code") String code) {
+    public ResponseEntity<ResultMsg> autologin(@RequestParam("code") String code) {
 
-        authService.autoLoginByDD(code);
+        User user=authService.autoLoginByDD(code);
+        if(user==null){
+            throw new ErpExcetpion(ExceptionEumn.AUTO_LOGIN_FAILD);
+        }
+        //申请令牌
+        ErpAuthToken erpAuthToken =  authService.login(user.getUsername(),code,clientId,clientSecret,code);
 
-        return ResponseEntity.ok(ResultMsg.success());
+        //用户身份令牌
+        String access_token = erpAuthToken.getAccess_token();
+        //将令牌存储到cookie
+        this.saveCookie(access_token);
+        Map<String,String> mp=new HashMap<>();
+        mp.put("access_token",erpAuthToken.getAccess_token());
+        mp.put("jwt_token",erpAuthToken.getJwt_token());
+        return ResponseEntity.ok(ResultMsg.success(mp));
     }
 
 

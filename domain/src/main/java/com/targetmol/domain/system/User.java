@@ -28,7 +28,25 @@ public class User implements Serializable {
     private Integer activated;
     private String userpic;
     private int groupid;
+    private String ddid;
+    private String dcode;
 
+
+    public String getDcode() {
+        return dcode;
+    }
+
+    public void setDcode(String dcode) {
+        this.dcode = dcode;
+    }
+
+    public String getDdid() {
+        return ddid;
+    }
+
+    public void setDdid(String ddid) {
+        this.ddid = ddid;
+    }
 
 
 

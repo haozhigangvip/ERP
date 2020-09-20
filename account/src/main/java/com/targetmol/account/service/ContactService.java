@@ -21,6 +21,7 @@ import tk.mybatis.mapper.util.StringUtil;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ContactService {
@@ -63,74 +64,62 @@ public class ContactService {
             res.setAddressList(addressServcie.findByContId(res.getContactid()));
         }
         //查询联系人ID查询单位
-        List<Company> comps=findAllCompanyByContId(contid);
-        res.setCompanys(comps);
+        res.setCompanys(companyService.findAllCompanyByContId(res.getContactid()));
 
-        //调取用户微服务，查询销售名
+        //查询销售员名字
         if(res.getSaleid()!=null){
-           res.setSalesname(getSalesName(res.getSaleid()));
+            res.setSalesname(contactDao.getUserNameByUid(res.getSaleid()));
         }
 
         return res;
     }
-    //调用微服务获取销售人员名
-    private String getUserByddId(String ddid) throws Exception{
-        ResponseEntity<ResultMsg> userResult= userFeignClent.findById(1);
-        LinkedHashMap<String,Object> hsmp=(LinkedHashMap<String, Object>) userResult.getBody().getData();
-        if(hsmp!=null){
-            return (String)hsmp.get("name");
-        }
-        return null;
-    }
 
-    //调用微服务获取销售人员名
-    private String getSalesName(Integer uid) throws Exception{
-        ResponseEntity<ResultMsg> userResult= userFeignClent.findById(uid);
-        LinkedHashMap<String,Object> hsmp=(LinkedHashMap<String, Object>) userResult.getBody().getData();
-        if(hsmp!=null){
-            return (String)hsmp.get("name");
-        }
-        return null;
-    }
+
+
 
     //查询所有Contact
     public PageResult<Contact> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showUnActive) throws Exception {
         //分页
         PageHelper.startPage(page,pageSize);
         //过滤
-        Example example=new Example(Contact.class);
-        Example.Criteria criteria1=example.createCriteria();
-        Example.Criteria criteria2=example.createCriteria();
-        if(StringUtil.isNotEmpty(key)){
-            criteria1.orLike("name","%"+key.trim()+"%")
-                    .orEqualTo("contid",key.toUpperCase().trim());
-            example.and(criteria1);
-        }
-        if(showUnActive==false){
-            criteria2.orEqualTo("activated",1);
-            example.and(criteria2);
-        }
-        //排序
-        if(StringUtil.isNotEmpty(softBy)==true) {
-            String orderByClause=softBy+(desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
-        //进行查询
-        List<Contact> list=contactDao.selectByExample(example);
-        if(list ==null ||list.size()==0){
-            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
-        }
+//        Example example=new Example(Contact.class);
+//        Example.Criteria criteria1=example.createCriteria();
+//        Example.Criteria criteria2=example.createCriteria();
+//        if(StringUtil.isNotEmpty(key)){
+//            criteria1.orLike("name","%"+key.trim()+"%")
+//                    .orEqualTo("contid",key.toUpperCase().trim());
+//            example.and(criteria1);
+//        }
+//        if(showUnActive==false){
+//            criteria2.orEqualTo("activated",1);
+//            example.and(criteria2);
+//        }
+//        //排序
+//        if(StringUtil.isNotEmpty(softBy)==true) {
+//            String orderByClause=softBy+(desc ? " DESC" : " ASC");
+//            example.setOrderByClause(orderByClause);
+//        }
+//        //进行查询
+//        List<Contact> list=contactDao.selectByExample(example);
+//        if(list ==null ||list.size()==0){
+//            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
+//        }
+        List<Contact> result=contactDao.findAllByAnyPara(key,showUnActive,softBy,desc);
 //        loadCompanys(list);
         //封装到pageHelper
-        List<Contact> result=new ArrayList<Contact>();
-        for (Contact item:list) {
-            if(item.getSaleid()!=null){
-                item.setSalesname(getSalesName(item.getSaleid()));
-            }
-            result.add(item);
-       }
+//        List<Contact> result=new ArrayList<Contact>();
+//        for (Contact item:list) {
+//            if(item.getSaleid()!=null){
+//                item.setSalesname(getSalesName(item.getSaleid()));
+//            }
+//            item.setCompanys(findAllCompanyByContId(item.getContactid()));
+//
+//            result.add(item);
+//       }
+
         PageInfo<Contact> pageInfo=new PageInfo<Contact>(result);
-        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), result);
+        return new PageResult<Contact>(pageInfo.getTotal(),pageInfo.getPages(), result);
+//        return result;
     }
 
 
@@ -156,6 +145,9 @@ public class ContactService {
         if(contactDao.insert(contact)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
+
+        List<Contact_Company> contact_companies=new ArrayList<>();
+
         //绑定中间表
         updateContact_Company(contact.getContactid(),contact.getCompanys());
 
@@ -207,23 +199,9 @@ public class ContactService {
     }
 
 
-    //根据联系人查询公司集合
-    public List<Company> findAllCompanyByContId(Integer contId){
-        List<Company> result=new ArrayList<Company>();
-
-        if(contId!=null){
-            Contact_Company contact_company=new Contact_Company();
-            contact_company.setContactid(contId);
-           List<Contact_Company> ls=contactCompanyDao.select(contact_company);
-            for (Contact_Company cc:ls) {
-               result.add(companyService.findById(cc.getCompanyid())) ;
-            }
-        }
-        return result;
-    }
 
 
-    //根据联系人绑定绑定
+    //根据联系人绑定公司
     public  void updateContact_Company(Integer contid,List<Company> companys){
         //根据contid 删除contact_company中间表
         if(contid!=null  ){
@@ -235,7 +213,6 @@ public class ContactService {
              throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
             }
         }
-
         //将新的company集合绑定至中间表
         if(companys!=null&& companys.size()>0){
             for (Company company: companys) {
@@ -243,8 +220,9 @@ public class ContactService {
                      throw new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
                  }
                 Contact_Company contact_company=new Contact_Company();
-                contact_company.setContactid(contid);
+                 contact_company.setContactid(contid);
                 contact_company.setCompanyid(company.getCompanyid());
+                contact_company.setDef(company.getDef());
                 if(contactCompanyDao.insert(contact_company)!=1){
                     throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
                 }

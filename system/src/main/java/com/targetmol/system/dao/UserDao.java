@@ -18,7 +18,9 @@ public interface UserDao  extends BaseMapper<User> {
     @SelectProvider(type=userDaoProvider.class,method = "findUserbyUsername")
     List<User> findUserbyUsername(@Param("uid") Integer uid, @Param("username") String username);
 
-   @Select("select uid,name from user where activated=1 and onsales=1")
+
+
+    @Select("select uid,name from user where activated=1 and onsales=1")
     List<Map<String,Object>> getSales();
 
 
