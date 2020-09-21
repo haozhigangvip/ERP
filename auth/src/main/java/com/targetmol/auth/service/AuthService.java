@@ -214,7 +214,7 @@ public class AuthService {
         }
         String userId=(String)result.get("userid");
         //通过钉钉ID查询用户
-       User  user= userClient.findByDdId(userId,code);
+           User  user= userClient.findByDdId(userId,code);
         return user;
     }
 

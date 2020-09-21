@@ -90,9 +90,11 @@ public class  AuthController {
         String access_token = erpAuthToken.getAccess_token();
         //将令牌存储到cookie
         this.saveCookie(access_token);
-        Map<String,String> mp=new HashMap<>();
+        Map<String,Object> mp=new HashMap<>();
+
         mp.put("access_token",erpAuthToken.getAccess_token());
         mp.put("jwt_token",erpAuthToken.getJwt_token());
+
         return ResponseEntity.ok(ResultMsg.success(mp));
     }
 

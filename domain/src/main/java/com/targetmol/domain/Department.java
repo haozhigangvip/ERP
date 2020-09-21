@@ -20,9 +20,18 @@ public class Department implements Serializable {
     private String mname;
     private Integer level;
     private String note;
+    private Integer sort;
     @Column(insertable = false)
     private Date creatime;
 
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
 
     public String getNote() {
         return note;

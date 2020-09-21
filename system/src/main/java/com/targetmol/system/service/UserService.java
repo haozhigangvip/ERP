@@ -325,7 +325,7 @@ public class UserService {
         Example example=new Example(User.class);
         example.and(example.createCriteria()
                 .andEqualTo("ddid",ddid)
-                .andEqualTo("activated",true));
+                    .andEqualTo("activated",true));
         User user=  userDao.selectOneByExample(example);
         if(user!=null){
             user.setDcode(BCryptUtil.encode(code));
