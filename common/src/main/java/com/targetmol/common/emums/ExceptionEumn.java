@@ -49,6 +49,13 @@ public enum  ExceptionEumn {
     PERMESSION_PID_IS_NOT_FOUND(404,"权限父ID不存在"),
     SUB_PERMISSION_ALREADY_EXISTS(400,"该权限存在子权限，不能删除"),
     AUTO_LOGIN_FAILD(401,"自动登录失败"),
+    GROUPID_IS_NULL(400,"组ID不能为空"),
+    GROUPNAME_IS_NULL(400,"组名不能为空"),
+    GROUP_IS_NOT_FOUND(404,"组不存在"),
+    FIND_SUB_GROUP(400,"该组存在子组，不能删除"),
+    GROUPNAME_ALREADY_EXISTS(400,"组名已存在，保存失败"),
+    GROUP_PID_IS_NOT_FOUND(400,"父ID不存在，保存失败"),
+    BIND_GROUP_FAILD(400,"绑定组失败"),
     ;
     private Integer code;
     private String msg;

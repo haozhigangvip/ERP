@@ -1,5 +1,6 @@
 package com.targetmol.system.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.targetmol.common.emums.ExceptionEumn;
@@ -47,7 +48,7 @@ public class UserService {
 
     //查询所有用
     public PageResult<UserExt> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer active,Boolean showsales){
-        PageHelper.startPage(page,pageSize);
+        Page pg=PageHelper.startPage(page,pageSize);
 
             Example example=new Example(User.class);
             Example.Criteria criteria1=example.createCriteria();
@@ -100,11 +101,10 @@ public class UserService {
             userExt.setDepartment(departmentService.findById(user.getDepartmentid()));
             nlist.add(userExt);
         }
-
+        Integer totalSize=nlist.size();
         //封装到pageHelper
-
-        PageInfo<UserExt> pageInfo=new PageInfo<UserExt>(nlist);
-        return new PageResult<UserExt>(pageInfo.getTotal(),pageInfo.getPages(), nlist);
+        PageInfo<UserExt> pageInfo=new PageInfo<>(pg.getResult());
+        return new PageResult<UserExt>((long)pageInfo.getPageNum(),pageInfo.getPages(), nlist);
     }
 
     //按ID查询用户
