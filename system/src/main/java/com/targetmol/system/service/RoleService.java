@@ -1,5 +1,6 @@
 package com.targetmol.system.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
@@ -40,7 +41,7 @@ public class RoleService {
 
     //查询角色
     public PageResult<Role> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key) {
-        PageHelper.startPage(page,pageSize);
+        Page pg=PageHelper.startPage(page,pageSize);
 
         Example example=new Example(Role.class);
         Example.Criteria criteria1=example.createCriteria();
@@ -60,7 +61,7 @@ public class RoleService {
         List<Role> list=roleDao.selectByExample(example);
 
         //封装到pageHelper
-        PageInfo<Role> pageInfo=new PageInfo<Role>(list);
+        PageInfo<Role> pageInfo=new PageInfo<Role>(pg.getResult());
         return new PageResult<Role>(pageInfo.getTotal(),pageInfo.getPages(), list);
 
     }

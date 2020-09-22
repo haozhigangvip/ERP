@@ -1,6 +1,7 @@
 package com.targetmol.account.service;
 
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.targetmol.account.dao.CompanyDao;
@@ -50,7 +51,7 @@ public class CompanyService {
     //查询所有Company
     public PageResult<Company> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer actived) {
         //分页
-        PageHelper.startPage(page,pageSize);
+        Page pg=PageHelper.startPage(page,pageSize);
         //过滤
         Example example=new Example(Company.class);
         Example.Criteria criteria1=example.createCriteria();
@@ -75,7 +76,7 @@ public class CompanyService {
             throw new ErpExcetpion(ExceptionEumn.COMPANYS_ISNOT_FOUND);
         }
         //封装到pageHelper
-        PageInfo<Company> pageInfo=new PageInfo<>(list);
+        PageInfo<Company> pageInfo=new PageInfo<>(pg.getResult());
         return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
     }
 

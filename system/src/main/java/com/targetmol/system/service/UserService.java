@@ -101,10 +101,9 @@ public class UserService {
             userExt.setDepartment(departmentService.findById(user.getDepartmentid()));
             nlist.add(userExt);
         }
-        Integer totalSize=nlist.size();
         //封装到pageHelper
         PageInfo<UserExt> pageInfo=new PageInfo<>(pg.getResult());
-        return new PageResult<UserExt>((long)pageInfo.getPageNum(),pageInfo.getPages(), nlist);
+        return new PageResult<UserExt>(pageInfo.getTotal(),pageInfo.getPages(), nlist);
     }
 
     //按ID查询用户

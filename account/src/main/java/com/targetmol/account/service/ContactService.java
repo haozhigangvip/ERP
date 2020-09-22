@@ -1,5 +1,6 @@
 package com.targetmol.account.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.targetmol.account.dao.ContactCompanyDao;
@@ -80,7 +81,7 @@ public class ContactService {
     //查询所有Contact
     public PageResult<Contact> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showUnActive) throws Exception {
         //分页
-        PageHelper.startPage(page,pageSize);
+        Page pg=PageHelper.startPage(page,pageSize);
         //过滤
 //        Example example=new Example(Contact.class);
 //        Example.Criteria criteria1=example.createCriteria();
@@ -117,7 +118,7 @@ public class ContactService {
 //            result.add(item);
 //       }
 
-        PageInfo<Contact> pageInfo=new PageInfo<Contact>(result);
+        PageInfo<Contact> pageInfo=new PageInfo<Contact>(pg.getResult());
         return new PageResult<Contact>(pageInfo.getTotal(),pageInfo.getPages(), result);
 //        return result;
     }

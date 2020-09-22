@@ -2,6 +2,7 @@ package com.targetmol.system.service;
 
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.domain.system.Permission;
 import com.targetmol.domain.system.PermissionGroup;
 import com.targetmol.domain.system.PermissionGroupItem;
 import com.targetmol.domain.system.ext.PermissionGroupUser;
@@ -125,27 +126,59 @@ public class PermissionGroupService {
     }
 
     //查询当前用户ID下的所有子用户ID
-    public List<Integer> findAllSubUidByUid(Integer uid){
+    public List<PermissionGroupUser> findAllSubUidByUid(Integer uid){
         if(uid!=null){
             //获取改用户所属组
-            PermissionGroupItem pi=new PermissionGroupItem();
-            pi.setUid(uid);
-            List<PermissionGroupItem> uids =permissionGroupItemDao.select(pi);
-            for (PermissionGroupItem item:uids) {
-                //根据父ID遍历子组
-                
+            List<PermissionGroupItem> uids =permissionGroupItemDao.findByUid(uid);
+            List<PermissionGroupItem> new_uids=new ArrayList<>();
+            //只诗选最上层或同层该用户，下层该用户剔除
+            if(uids!=null && uids.size()>=1){
+                Integer pid_0=99;
+                for (PermissionGroupItem item:uids) {
+                    if(item.getPid()<=pid_0){
+                        new_uids.add(item);
+                        pid_0=item.getPid();
+                    }
+                }
 
+            }
+        List<PermissionGroupUser> data=new ArrayList<>();
+        for (PermissionGroupItem item:new_uids) {
+                //根据用户对应的GID遍历子组
+                List<PermissionGroupUser> glist=permissionGroupItemDao.findSubUserByPid(item.getGid());
+                List<PermissionGroupUser>result=getSubList(glist,item.getGid());
+                if(result!=null && result.size()>0){
+                    data.addAll(result);
+                }
 
                 //获取用户
             }
 
-
+        return data;
 
         }
         return null;
     }
 
+    private List<PermissionGroupUser> getSubList(List<PermissionGroupUser> lst,Integer pid){
+        if(lst==null||lst.size()<=0){
+            return null;
+        }
+        List<PermissionGroupUser> result=new ArrayList<>();
+        result.addAll(lst);
+        for (PermissionGroupUser item:lst){
+            List<PermissionGroupUser> sublist=permissionGroupItemDao.findSubUserByPid(item.getGroupId());
+            List<PermissionGroupUser> rt=getSubList(sublist,item.getGroupId());
+            if(rt!=null&& rt.size()>0){
+                result.addAll(rt);
+            }
 
+        }
+        if(lst==null||lst.size()<=0){
+            return null;
+        }
+        return result;
+    }
 
 
 
@@ -210,7 +243,7 @@ public class PermissionGroupService {
             //保存绑定吧
             PermissionGroupItem newData=new PermissionGroupItem();
             newData.setGid(permissionGroup.getId());
-            newData.setPid(permissionGroup.getPid());
+            newData.setPid(permissionGroup.getPid()==null?0:permissionGroup.getPid());
             newData.setUid(uid);
             if(permissionGroupItemDao.insert(newData)!=1){
                 throw new ErpExcetpion(ExceptionEumn.BIND_GROUP_FAILD);

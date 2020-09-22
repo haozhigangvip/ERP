@@ -1,5 +1,6 @@
 package com.targetmol.account.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.targetmol.account.dao.AddressDao;
@@ -22,7 +23,7 @@ public class AddressServcie {
 
     public PageResult<Address> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer contid,Integer def) {
         //分页
-        PageHelper.startPage(page,pageSize);
+        Page pg=PageHelper.startPage(page,pageSize);
         //过滤
         Example example=new Example(Address.class);
         Example.Criteria criteria1=example.createCriteria();
@@ -54,7 +55,7 @@ public class AddressServcie {
 //            throw new ErpExcetpion(ExceptionEumn.ADDRESS_ISNOT_FOUND);
 //        }
         //封装到pageHelper
-        PageInfo<Address> pageInfo=new PageInfo<Address>(list);
+        PageInfo<Address> pageInfo=new PageInfo<Address>(pg.getResult());
         return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
     }
 

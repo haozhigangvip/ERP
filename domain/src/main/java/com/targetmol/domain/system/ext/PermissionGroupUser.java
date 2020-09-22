@@ -1,9 +1,13 @@
 package com.targetmol.domain.system.ext;
 
+import java.util.List;
+
 public class PermissionGroupUser {
     private Integer groupId;
     private Integer userId;
     private String name;
+
+
 
     public Integer getGroupId() {
         return groupId;
@@ -28,4 +32,5 @@ public class PermissionGroupUser {
     public void setName(String name) {
         this.name = name;
     }
+
 }

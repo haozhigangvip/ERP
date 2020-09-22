@@ -37,4 +37,5 @@ public interface UserDao  extends BaseMapper<User> {
         }
 
     }
+
 }

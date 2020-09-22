@@ -134,7 +134,6 @@ public class PermissionService {
         for(Permission item:lst){
             item.setPermissions(getChilde(item.getId(),data));
         }
-        PageInfo<Permission> pageInfo=new PageInfo<>(lst);
         return lst;
     }
 
