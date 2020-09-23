@@ -54,7 +54,7 @@ public class PermissionGroupService {
         }
         //判断该组下面是否有子组
         List<PermissionGroup>lst=findByPid(id);
-        if(lst!=null || lst.size()>0){
+        if(lst!=null && lst.size()>0){
             throw new ErpExcetpion(ExceptionEumn.FIND_SUB_GROUP);
         }
         if(permissionGroupDao.delete(permissionGroup)<0){
@@ -117,10 +117,7 @@ public class PermissionGroupService {
     public List<PermissionGroupUser> findAllByGid(Integer gid){
        
         if(gid!=null){
-            PermissionGroupItem item=new PermissionGroupItem();
-            item.setGid(gid);
-            List<PermissionGroupItem> lst=permissionGroupItemDao.select(item);
-
+            return permissionGroupItemDao.findSubUserByGid(gid);
         }
         return null;
     }
@@ -131,6 +128,8 @@ public class PermissionGroupService {
             //获取改用户所属组
             List<PermissionGroupItem> uids =permissionGroupItemDao.findByUid(uid);
             List<PermissionGroupItem> new_uids=new ArrayList<>();
+            List<Integer> pids=new ArrayList<>();
+
             //只诗选最上层或同层该用户，下层该用户剔除
             if(uids!=null && uids.size()>=1){
                 Integer pid_0=99;
@@ -145,32 +144,38 @@ public class PermissionGroupService {
         List<PermissionGroupUser> data=new ArrayList<>();
         for (PermissionGroupItem item:new_uids) {
                 //根据用户对应的GID遍历子组
-                List<PermissionGroupUser> glist=permissionGroupItemDao.findSubUserByPid(item.getGid());
-                List<PermissionGroupUser>result=getSubList(glist,item.getGid());
-                if(result!=null && result.size()>0){
-                    data.addAll(result);
+                if(pids.indexOf(item.getGid())<0){
+                    pids.add(item.getGid());
+                    List<PermissionGroupUser> glist=permissionGroupItemDao.findSubUserByPid(item.getGid());
+                    List<PermissionGroupUser>result=getSubList(glist,item.getGid(),pids);
+                    if(result!=null && result.size()>0){
+                        data.addAll(result);
+                    }
                 }
 
-                //获取用户
-            }
+         }
 
         return data;
-
         }
         return null;
     }
-
-    private List<PermissionGroupUser> getSubList(List<PermissionGroupUser> lst,Integer pid){
+    //子查询
+    private List<PermissionGroupUser> getSubList(List<PermissionGroupUser> lst,Integer pid,List<Integer> pids){
         if(lst==null||lst.size()<=0){
             return null;
         }
+
         List<PermissionGroupUser> result=new ArrayList<>();
         result.addAll(lst);
         for (PermissionGroupUser item:lst){
-            List<PermissionGroupUser> sublist=permissionGroupItemDao.findSubUserByPid(item.getGroupId());
-            List<PermissionGroupUser> rt=getSubList(sublist,item.getGroupId());
-            if(rt!=null&& rt.size()>0){
-                result.addAll(rt);
+            if(pids.indexOf(item.getGroupId())<0){
+                pids.add(item.getGroupId());
+                List<PermissionGroupUser> sublist=permissionGroupItemDao.findSubUserByPid(item.getGroupId());
+                List<PermissionGroupUser> rt=getSubList(sublist,item.getGroupId(),pids);
+                if(rt!=null&& rt.size()>0){
+                    result.addAll(rt);
+                }
+
             }
 
         }
@@ -197,7 +202,7 @@ public class PermissionGroupService {
             criteria1.andNotEqualTo("id",permissionGroup.getId());
         }
         example.and(criteria1);
-       if(permissionGroupDao.selectByExample(example)!=null){
+       if(permissionGroupDao.selectByExample(example).size()>0){
            throw new ErpExcetpion(ExceptionEumn.GROUPNAME_ALREADY_EXISTS);
        }
        //检查PID是否存在
@@ -217,8 +222,8 @@ public class PermissionGroupService {
     }
 
     //绑定用户
-    public void bindUsers(Integer gid, Integer[] uids) {
-        if(gid==null || uids==null||uids.length<=0){
+    public void bindUsers(Integer gid,List<Integer> uids) {
+        if(gid==null || uids==null||uids.size()<=0){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -28,7 +29,7 @@ public class PemissionGroupController {
     @PutMapping("binduser")
     public  ResponseEntity<ResultMsg>bindUsers(@RequestBody Map<String,Object>mp){
         Integer gid=(Integer)mp.get("groupid");
-        Integer[] uids=(Integer[])mp.get("uids");
+        List<Integer> uids=(List<Integer>)mp.get("uids");
         permissionGroupService.bindUsers(gid,uids);
         return ResponseEntity.ok(ResultMsg.success());
     }
@@ -51,7 +52,7 @@ public class PemissionGroupController {
     }
 
     //根据组ID查询绑定的用户
-    @GetMapping("{id}")
+    @GetMapping("{gid}")
     public ResponseEntity<ResultMsg>findUserByGid(@PathVariable Integer gid){
         return ResponseEntity.ok(ResultMsg.success(permissionGroupService.findAllByGid(gid)));
     }

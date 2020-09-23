@@ -14,4 +14,6 @@ public interface PermissionGroupItemDao extends BaseMapper<PermissionGroupItem> 
 
     @Select("select a.gid as groupid ,a.uid as userid,b.name from permission_group_item as a left join `user` as b on a.uid=b.uid where a.pid=#{pid}")
     List<PermissionGroupUser> findSubUserByPid(Integer pid);
-}
+
+    @Select("select a.gid as groupid ,a.uid as userid,b.name from permission_group_item as a left join `user` as b on a.uid=b.uid where a.gid=#{gid}")
+    List<PermissionGroupUser> findSubUserByGid(Integer gid);}
