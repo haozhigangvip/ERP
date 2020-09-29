@@ -49,11 +49,14 @@ public class RoleService {
                     .orEqualTo("rid",key.toUpperCase().trim());
             example.and(criteria1);
         }
+
+
         //排序
         if(StringUtil.isNotEmpty(softBy)) {
             String orderByClause=softBy+(desc ? " DESC" : " ASC");
             example.setOrderByClause(orderByClause);
         }
+
 
         //进行查询
         List<Role> list=roleDao.selectByExample(example);
