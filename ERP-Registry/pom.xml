@@ -26,7 +26,7 @@
                 <configuration>
                     <imageName>192.168.3.13:5050/${project.artifactId}:${project.version}</imageName>
                     <serverId>my-docker-registry</serverId>
-                    <baseImage>jdk1.8</baseImage>
+                    <baseImage>memiiso/centos8-java8</baseImage>
                     <entryPoint>["java","-jar","/${project.build.finalName}.jar" ]</entryPoint>
                     <resources>
                         <resource>
