@@ -40,12 +40,14 @@ public class ContactController {
     }
 
 
+
     //新增联系人
     @PostMapping
     public ResponseEntity<ResultMsg> addContact(@RequestBody Contact contact){
         contactService.add(contact);
         return ResponseEntity.ok(ResultMsg.success());
     }
+
     //修改联系人
     @PutMapping("{contid}")
     public ResponseEntity<ResultMsg> updateContact(@PathVariable("contid") Integer contid,
@@ -54,6 +56,7 @@ public class ContactController {
         contactService.update(contact);
         return ResponseEntity.ok(ResultMsg.success());
     }
+
     //删除联系人
     @DeleteMapping("{contid}")
     public ResponseEntity<ResultMsg> deleteContanct(@PathVariable("contid") Integer  contid){
@@ -61,5 +64,7 @@ public class ContactController {
         contactService.setActived(contid,0);
         return ResponseEntity.ok(ResultMsg.success());
     }
+
+
 
 }

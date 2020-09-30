@@ -37,16 +37,6 @@ public class CompanyService {
         return companyDao.searchByContactId(contactid);
     }
 
-//    //按comid查询company
-//    public Company findByComId(Integer comid){
-//        Company company=new Company();
-//        company.setCompanyid(comid);
-//        Company result=companyDao.selectOne(company);
-//        if(result==null ){
-//            throw new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
-//        }
-//        return result;
-//    }
 
     //查询所有Company
     public PageResult<Company> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer actived) {
@@ -133,7 +123,13 @@ public class CompanyService {
         }
 
     }
-
+    //根据contid查找默认单位
+    public  Company searchByContactIdDef(Integer  contid){
+        if(contid!=null){
+            return companyDao.searchByContactIdDef(contid);
+        }
+        return null;
+    }
 
     //冻结单位 0为冻结，1为激活
     public void setactive(Integer companyid, int active) {

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
-
+import java.util.Map;
 
 
 public interface ContactDao extends BaseMapper<Contact> {
@@ -60,4 +60,8 @@ public interface ContactDao extends BaseMapper<Contact> {
     //根据用户ID查询用户名
     @Select("select name from user where  uid=#{uid}")
     String getUserNameByUid(@Param("uid") Integer uid);
+
+    //根据contiID查找默认联系人名字及公司名
+    @Select("select a.contactid,a.name as contactname,b.companyid,b.companyname from contact as a left join (select * from company_info where companyid in(select * from contact_company where contactid=#{contid})) and def=1 as b where contactid=#{id} ")
+    Map<String,String> getConNameCompanyName(Integer contid);
 }

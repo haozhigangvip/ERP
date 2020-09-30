@@ -19,10 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 @Service
 public class ContactService {
@@ -198,7 +196,22 @@ public class ContactService {
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
         }
     }
+    public Map<String,String> findNameBycontId(Integer contid){
+        Map<String,String> mp=new HashMap<>();
+        if(contid!=null){
+                Contact cont=contactDao.selectByPrimaryKey(contid);
+               if(cont!=null){
+                    mp.put("contactName",cont.getName());
+               }
+               Company company=companyService.searchByContactIdDef(contid);
+               if(company!=null){
+                   mp.put("companyName",company.getCompanyname());
+               }
 
+        }
+
+        return mp;
+    }
 
 
 

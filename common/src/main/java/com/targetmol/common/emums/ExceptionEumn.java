@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public enum  ExceptionEumn {
+
     NAME_CANNOT_BE_NULL(400,"名字不能为空"),
     USERNAME_CANNOT_BE_NULL(400,"用户名不能为空"),
     COMPANYID_CANNOT_BE_NULL(400,"公司ID不能为空"),
@@ -56,7 +57,10 @@ public enum  ExceptionEumn {
     GROUPNAME_ALREADY_EXISTS(400,"组名已存在，保存失败"),
     GROUP_PID_IS_NOT_FOUND(400,"父ID不存在，保存失败"),
     BIND_GROUP_FAILD(400,"绑定组失败"),
+    CUST_VISIT_REPORT_ID_IS_NOT_FOUND(404,"报告ID不存在"),
     ;
+
     private Integer code;
     private String msg;
+
 }
