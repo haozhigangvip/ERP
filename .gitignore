@@ -9,3 +9,12 @@
 *.iml
 out
 gen
+ERP-Gateway/target/
+ERP-Registry/target/
+account/target/
+auth/src/test/java/com/targetmol/auth/
+auth/target/
+common/target/
+config
+domain/target/
+system/target/
