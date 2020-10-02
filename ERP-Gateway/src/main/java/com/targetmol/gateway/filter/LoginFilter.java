@@ -65,12 +65,7 @@ public class LoginFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         //获取request对象
         HttpServletRequest request = ctx.getRequest();
-//        //取cookie中的身份令牌
-//        String token=authService.getTokenFromCookie(request);
-//        if(StringUtil.isEmpty(token)){
-//            responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
-//            return null;
-//        }
+
         //从hearder中取jwt_token
         String userJwt=authService.getJwtHeard(request);
         if(StringUtil.isEmpty(userJwt)){
