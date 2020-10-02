@@ -13,6 +13,7 @@
         <dependency>
             <groupId>com.targetmol.parent</groupId>
             <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!--zuul-->
