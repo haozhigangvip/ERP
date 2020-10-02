@@ -69,7 +69,7 @@
                     <entryPoint>["java","-jar","/${project.build.finalName}-exec.jar" ]</entryPoint>
                     <resources>
                         <resource>
-                            <targetPath>/ERP</targetPath>
+                            <targetPath>/</targetPath>
                             <directory>${project.build.directory}</directory>
                             <include>${project.build.finalName}-exec.jar</include>
                         </resource>
