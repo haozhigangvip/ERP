@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.util.StringUtil;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -46,7 +47,7 @@ public class CustVisitReportService {
         newReport.setContid(custVisitReport.getContid());
         newReport.setVisitdate(custVisitReport.getVisitdate());
         //保存
-        if(custVisitReportDao.insert(newReport)!=1){
+        if(custVisitReportDao.updateByPrimaryKeySelective(newReport)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
     }
@@ -54,9 +55,16 @@ public class CustVisitReportService {
     //删除拜访报告
     public void deleteCustVisitReport(Integer id) {
         if(id!=null){
-            custVisitReportDao.deleteByPrimaryKey(id);
+            if(custVisitReportDao.deleteByPrimaryKey(id)<1){
+                throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
+            }
+        }else{
+            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
     }
+
+
+
     //根据拜访报告ID查询拜访报告
     public CustVisitReport findCustVisitReportById(Integer id) {
         if(id!=null){
@@ -75,37 +83,16 @@ public class CustVisitReportService {
     }
 
 
-    public PageResult findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Integer contid) {
-//        //分页
-//        Page pg= PageHelper.startPage(page,pageSize);
-//        //过滤
-//        Example example=new Example(Company.class);
-//        Example.Criteria criteria1=example.createCriteria();
-//        Example.Criteria criteria2=example.createCriteria();
-//        if(StringUtil.isNotEmpty(key)){
-//            criteria1.orLike("companyname","%"+key.trim()+"%")
-//                    .orEqualTo("comid",key.toUpperCase().trim());
-//            example.and(criteria1);
-//        }
-//
-//        //排序
-//        if(StringUtil.isNotEmpty(softBy)) {
-//            String orderByClause=softBy+(desc ? " DESC" : " ASC");
-//            example.setOrderByClause(orderByClause);
-//        }
-//        //进行查询
-//        List<Company> list=companyDao.selectByExample(example);
-//        if(list ==null ||list.size()==0){
-//            throw new ErpExcetpion(ExceptionEumn.COMPANYS_ISNOT_FOUND);
-//        }
-//        //封装到pageHelper
-//        PageInfo<Company> pageInfo=new PageInfo<>(pg.getResult());
-//        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
-//
+    public PageResult findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, Integer contid,String startDate,String endDate) {
+        //分页
+        Page pg= PageHelper.startPage(page,pageSize);
 
+        //进行查询
+        List<CustVisitReport> list=custVisitReportDao.findAll(softBy,desc,contid,startDate,endDate);
 
-
-        return  null;
+        //封装到pageHelper
+        PageInfo<CustVisitReport> pageInfo=new PageInfo<>(pg.getResult());
+        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
     }
 
 
@@ -114,6 +101,9 @@ public class CustVisitReportService {
         //判断必填项是否齐全
         if(custVisitReport==null|| StringUtil.isEmpty(custVisitReport.getContent())||custVisitReport.getSaleid()==null||custVisitReport.getVisitdate()==null){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
+        }
+        if(contactDao.selectByPrimaryKey(custVisitReport.getContid())==null){
+            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
         }
     }
 

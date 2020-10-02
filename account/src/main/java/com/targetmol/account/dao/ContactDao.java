@@ -62,6 +62,6 @@ public interface ContactDao extends BaseMapper<Contact> {
     String getUserNameByUid(@Param("uid") Integer uid);
 
     //根据contiID查找默认联系人名字及公司名
-    @Select("select a.contactid,a.name as contactname,b.companyid,b.companyname from contact as a left join (select * from company_info where companyid in(select * from contact_company where contactid=#{contid})) and def=1 as b where contactid=#{id} ")
+    @Select("select a.contactid,a.name as contactname,d.companyid,d.companyname from contact as a LEFT JOIN(select b.contactid,b.companyid,c.companyname from contact_company as b LEFT JOIN company_info as c on b.companyid=c.companyid where b.def=1) as d on a.contactid=d.contactid where a.contactid=#{contid}")
     Map<String,String> getConNameCompanyName(Integer contid);
 }

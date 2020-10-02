@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@RequestMapping("/contact")
+@RequestMapping("/visitreport")
 @RestController
 public class CustVisitReportController {
     @Autowired
@@ -52,10 +52,11 @@ public class CustVisitReportController {
             @RequestParam(value="pagesize",defaultValue = "30") Integer pageSize,
             @RequestParam(value="softby",required = false) String softBy,
             @RequestParam(value="desc",defaultValue = "false") Boolean desc,
-            @RequestParam(value="key",required = false) String key,
-            @RequestParam(value="contid" ,defaultValue="false") Integer contid
+            @RequestParam(value="contid" ,required=false) Integer contid,
+            @RequestParam(value="startdate",required = false) String startDate,
+            @RequestParam(value="enddate",required = false)String endDate
     ) throws Exception{
-        PageResult conts=custVisitReportService.findByAll(page,pageSize,softBy,desc,key,contid);
+        PageResult conts=custVisitReportService.findByAll(page,pageSize,softBy,desc,contid,startDate,endDate);
         return conts;
     }
 

@@ -21,6 +21,9 @@ public class CustVisitReport implements Serializable {
     private Integer contid;
 
     @Transient
+    private  String saleName;
+
+    @Transient
     private String contactName;
 
     @Transient
@@ -89,5 +92,13 @@ public class CustVisitReport implements Serializable {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getSaleName() {
+        return saleName;
+    }
+
+    public void setSaleName(String saleName) {
+        this.saleName = saleName;
     }
 }
