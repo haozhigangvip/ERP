@@ -1,6 +1,7 @@
 package com.targetmol.auth.service;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,7 @@ import java.util.Collection;
 
 @Data
 @ToString
+@EqualsAndHashCode(callSuper = false)
 public class UserJwt extends User {
 
     private Integer uid;
