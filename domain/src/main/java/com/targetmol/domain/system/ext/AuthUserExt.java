@@ -5,6 +5,7 @@ import com.targetmol.domain.system.Permission;
 import com.targetmol.domain.system.PermissionMenu;
 import com.targetmol.domain.system.User;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -15,6 +16,7 @@ import java.util.List;
  */
 @Data
 @ToString
+@EqualsAndHashCode(callSuper = false)
 public class AuthUserExt extends User {
 
 

@@ -2,6 +2,7 @@ package com.targetmol.domain.system.ext;
 
 import com.targetmol.domain.system.PermissionMenu;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  */
 @Data
 @ToString
+@EqualsAndHashCode(callSuper = false)
 public class XcMenuExt extends PermissionMenu {
 
     List<CategoryNode> children;

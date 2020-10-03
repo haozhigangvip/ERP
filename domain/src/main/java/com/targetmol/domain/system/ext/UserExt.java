@@ -6,6 +6,7 @@ import com.targetmol.domain.system.Permission;
 import com.targetmol.domain.system.Role;
 import com.targetmol.domain.system.User;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  */
 @Data
 @ToString
+@EqualsAndHashCode(callSuper = false)
 public class UserExt extends User {
     private String password;
     private Department department;
