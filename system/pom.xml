@@ -80,7 +80,8 @@
                 <version>0.4.13</version>
                 <configuration>
                     <imageName>192.168.3.13:5000/${project.artifactId}:${project.version}</imageName>
-                    <baseImage>jdk1.8</baseImage>
+                    <serverId>my-docker-gateway</serverId>
+                    <baseImage>memiiso/centos8-java8</baseImage>
                     <entryPoint>["java","-jar","/${project.build.finalName}.jar"]</entryPoint>
                     <resources>
                         <resource>
