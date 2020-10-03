@@ -1,11 +1,9 @@
 package com.targetmol.account.dao;
 
-import com.targetmol.common.mapper.BaseMapper;
+import com.targetmol.parent.common.mapper.BaseMapper;
 import com.targetmol.domain.account.Company;
-import com.targetmol.domain.account.Contact;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

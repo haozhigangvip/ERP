@@ -1,6 +1,6 @@
 package com.targetmol.system.controller;
 
-import com.targetmol.common.vo.ResultMsg;
+import com.targetmol.parent.common.vo.ResultMsg;
 import com.targetmol.domain.system.Permission;
 import com.targetmol.system.service.PermissionService;
 import lombok.extern.slf4j.Slf4j;

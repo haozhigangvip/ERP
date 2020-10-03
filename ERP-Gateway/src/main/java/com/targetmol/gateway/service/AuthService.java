@@ -1,7 +1,7 @@
 package com.targetmol.gateway.service;
 
-import com.targetmol.common.utils.CookieUtil;
-import com.targetmol.common.utils.JsonUtils;
+import com.targetmol.parent.common.utils.CookieUtil;
+import com.targetmol.parent.common.utils.JsonUtils;
 import com.targetmol.domain.auth.ErpAuthToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;

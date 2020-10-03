@@ -1,7 +1,7 @@
 package com.targetmol.system.controller;
 
-import com.targetmol.common.vo.PageResult;
-import com.targetmol.common.vo.ResultMsg;
+import com.targetmol.parent.common.vo.PageResult;
+import com.targetmol.parent.common.vo.ResultMsg;
 import com.targetmol.domain.system.Role;
 import com.targetmol.system.service.RoleService;
 import lombok.extern.slf4j.Slf4j;

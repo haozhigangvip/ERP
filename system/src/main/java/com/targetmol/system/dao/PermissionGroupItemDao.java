@@ -1,7 +1,6 @@
 package com.targetmol.system.dao;
 
-import com.targetmol.common.mapper.BaseMapper;
-import com.targetmol.domain.system.PermissionGroup;
+import com.targetmol.parent.common.mapper.BaseMapper;
 import com.targetmol.domain.system.PermissionGroupItem;
 import com.targetmol.domain.system.ext.PermissionGroupUser;
 import org.apache.ibatis.annotations.Select;

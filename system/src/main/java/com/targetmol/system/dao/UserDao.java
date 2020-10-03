@@ -1,8 +1,7 @@
 package com.targetmol.system.dao;
 
-import com.targetmol.common.mapper.BaseMapper;
+import com.targetmol.parent.common.mapper.BaseMapper;
 import com.targetmol.domain.system.User;
-import com.targetmol.domain.system.ext.UserExt;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;

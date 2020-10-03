@@ -1,6 +1,6 @@
 package com.targetmol.system.dao;
 
-import com.targetmol.common.mapper.BaseMapper;
+import com.targetmol.parent.common.mapper.BaseMapper;
 import com.targetmol.domain.system.Role_Permission;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;

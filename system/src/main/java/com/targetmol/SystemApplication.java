@@ -1,14 +1,12 @@
 package com.targetmol;
 
-import com.targetmol.common.filter.FeignClientFilter;
-import com.targetmol.common.utils.JwtUtils;
+import com.targetmol.parent.common.filter.FeignClientFilter;
+import com.targetmol.parent.common.utils.JwtUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication

@@ -1,13 +1,11 @@
 package com.targetmol.auth.service;
 
 import com.alibaba.fastjson.JSON;
-import com.targetmol.common.client.UserFeignClent;
-import com.targetmol.common.emums.ExceptionEumn;
-import com.targetmol.common.exception.ErpExcetpion;
-import com.targetmol.common.filter.FeignClientFilter;
+import com.targetmol.parent.common.client.UserFeignClent;
+import com.targetmol.parent.common.emums.ExceptionEumn;
+import com.targetmol.parent.common.exception.ErpExcetpion;
 import com.targetmol.domain.auth.ErpAuthToken;
 import com.targetmol.domain.system.User;
-import org.omg.PortableInterceptor.USER_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;

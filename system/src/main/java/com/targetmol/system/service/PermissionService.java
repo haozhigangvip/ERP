@@ -1,9 +1,7 @@
 package com.targetmol.system.service;
 
-import com.github.pagehelper.PageInfo;
-import com.targetmol.common.emums.ExceptionEumn;
-import com.targetmol.common.exception.ErpExcetpion;
-import com.targetmol.common.vo.PageResult;
+import com.targetmol.parent.common.emums.ExceptionEumn;
+import com.targetmol.parent.common.exception.ErpExcetpion;
 import com.targetmol.domain.system.*;
 import com.targetmol.system.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
