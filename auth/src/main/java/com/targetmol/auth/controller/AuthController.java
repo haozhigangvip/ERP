@@ -2,11 +2,11 @@ package com.targetmol.auth.controller;
 
 
 import com.targetmol.auth.service.AuthService;
-import com.targetmol.parent.common.emums.ExceptionEumn;
-import com.targetmol.parent.common.exception.ErpExcetpion;
-import com.targetmol.parent.common.utils.CookieUtil;
-import com.targetmol.parent.common.utils.JwtUtils;
-import com.targetmol.parent.common.vo.ResultMsg;
+import com.targetmol.common.emums.ExceptionEumn;
+import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.common.utils.CookieUtil;
+import com.targetmol.common.utils.JwtUtils;
+import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.auth.ErpAuthToken;
 import com.targetmol.domain.auth.LoginRequest;
 import com.targetmol.domain.system.User;

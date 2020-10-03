@@ -1,8 +1,8 @@
 package com.targetmol.account.controller;
 
 import com.targetmol.account.service.ContactService;
-import com.targetmol.parent.common.vo.PageResult;
-import com.targetmol.parent.common.vo.ResultMsg;
+import com.targetmol.common.vo.PageResult;
+import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.account.Contact;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.targetmol.system.dao;
 
-import com.targetmol.parent.common.mapper.BaseMapper;
+import com.targetmol.common.mapper.BaseMapper;
 import com.targetmol.domain.system.PermissionPoint;
 import org.springframework.stereotype.Repository;
 

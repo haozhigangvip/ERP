@@ -1,9 +1,9 @@
 package com.targetmol.system.controller;
 
-import com.targetmol.parent.common.controller.BaseController;
-import com.targetmol.parent.common.utils.JwtUtils;
-import com.targetmol.parent.common.vo.PageResult;
-import com.targetmol.parent.common.vo.ResultMsg;
+import com.targetmol.common.controller.BaseController;
+import com.targetmol.common.utils.JwtUtils;
+import com.targetmol.common.vo.PageResult;
+import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.system.User;
 import com.targetmol.domain.system.ext.UserExt;
 import com.targetmol.system.service.UserService;

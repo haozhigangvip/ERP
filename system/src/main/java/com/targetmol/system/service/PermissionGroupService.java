@@ -1,7 +1,7 @@
 package com.targetmol.system.service;
 
-import com.targetmol.parent.common.emums.ExceptionEumn;
-import com.targetmol.parent.common.exception.ErpExcetpion;
+import com.targetmol.common.emums.ExceptionEumn;
+import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.domain.system.PermissionGroup;
 import com.targetmol.domain.system.PermissionGroupItem;
 import com.targetmol.domain.system.ext.PermissionGroupUser;

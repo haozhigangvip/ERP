@@ -2,9 +2,9 @@ package com.targetmol.account.exception;
 
 
 import com.google.common.collect.ImmutableMap;
-import com.targetmol.parent.common.emums.ExceptionEumn;
-import com.targetmol.parent.common.exception.ErpExcetpion;
-import com.targetmol.parent.common.vo.ResultMsg;
+import com.targetmol.common.emums.ExceptionEumn;
+import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.common.vo.ResultMsg;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

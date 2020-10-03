@@ -1,9 +1,9 @@
 package com.targetmol.auth.service;
 
-import com.targetmol.parent.common.client.UserFeignClent;
-import com.targetmol.parent.common.emums.ExceptionEumn;
-import com.targetmol.parent.common.exception.ErpExcetpion;
-import com.targetmol.parent.common.vo.ResultMsg;
+import com.targetmol.common.client.UserFeignClent;
+import com.targetmol.common.emums.ExceptionEumn;
+import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.system.ext.AuthUserExt;
 
 import org.apache.commons.lang3.StringUtils;

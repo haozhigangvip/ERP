@@ -1,6 +1,6 @@
 package com.targetmol.account.dao;
 
-import com.targetmol.parent.common.mapper.BaseMapper;
+import com.targetmol.common.mapper.BaseMapper;
 import com.targetmol.domain.account.CustVisitReport;
 import org.apache.ibatis.annotations.*;
 import tk.mybatis.mapper.util.StringUtil;
