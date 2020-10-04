@@ -76,7 +76,7 @@
                 <configuration>
                     <imageName>192.168.3.13:5000/${project.artifactId}:${project.version}</imageName>
                     <serverId>my-docker-system</serverId>
-                    <baseImage>corvis/java8</baseImage>
+                    <baseImage>eurolinux/centos-8</baseImage>
                     <entryPoint>["java","-jar","/${project.build.finalName}-exec.jar"]</entryPoint>
                     <resources>
                         <resource>
