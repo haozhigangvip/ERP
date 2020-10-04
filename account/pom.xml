@@ -16,11 +16,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!--SqlServer-->
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <version>8.2.0.jre8</version>
-        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

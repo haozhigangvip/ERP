@@ -77,45 +77,11 @@ public class ContactService {
     public PageResult<Contact> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showUnActive) throws Exception {
         //分页
         Page pg=PageHelper.startPage(page,pageSize);
-        //过滤
-//        Example example=new Example(Contact.class);
-//        Example.Criteria criteria1=example.createCriteria();
-//        Example.Criteria criteria2=example.createCriteria();
-//        if(StringUtil.isNotEmpty(key)){
-//            criteria1.orLike("name","%"+key.trim()+"%")
-//                    .orEqualTo("contid",key.toUpperCase().trim());
-//            example.and(criteria1);
-//        }
-//        if(showUnActive==false){
-//            criteria2.orEqualTo("activated",1);
-//            example.and(criteria2);
-//        }
-//        //排序
-//        if(StringUtil.isNotEmpty(softBy)==true) {
-//            String orderByClause=softBy+(desc ? " DESC" : " ASC");
-//            example.setOrderByClause(orderByClause);
-//        }
-//        //进行查询
-//        List<Contact> list=contactDao.selectByExample(example);
-//        if(list ==null ||list.size()==0){
-//            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
-//        }
+
         List<Contact> result=contactDao.findAllByAnyPara(key,showUnActive,softBy,desc);
-//        loadCompanys(list);
-        //封装到pageHelper
-//        List<Contact> result=new ArrayList<Contact>();
-//        for (Contact item:list) {
-//            if(item.getSaleid()!=null){
-//                item.setSalesname(getSalesName(item.getSaleid()));
-//            }
-//            item.setCompanys(findAllCompanyByContId(item.getContactid()));
-//
-//            result.add(item);
-//       }
 
         PageInfo<Contact> pageInfo=new PageInfo<Contact>(pg.getResult());
         return new PageResult<Contact>(pageInfo.getTotal(),pageInfo.getPages(), result);
-//        return result;
     }
 
 

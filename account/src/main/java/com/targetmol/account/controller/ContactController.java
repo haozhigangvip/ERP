@@ -33,7 +33,7 @@ public class ContactController {
             @RequestParam(value="key",required = false) String key,
             @RequestParam(value="showunactive" ,defaultValue="false") Boolean showunactive
     ) throws Exception{
-        PageResult conts=contactService.findByAll(page,pageSize,softBy,desc,key,showunactive);
+        PageResult<Contact> conts=contactService.findByAll(page,pageSize,softBy,desc,key,showunactive);
         return conts;
     }
 

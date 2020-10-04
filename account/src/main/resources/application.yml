@@ -11,7 +11,7 @@ spring:
     name: account-service
   datasource:
     #driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${MYSQL_URL:jdbc:mysql://192.168.3.15:3306/tsbio?&useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai}
     username: tsbio
     password: ts@801

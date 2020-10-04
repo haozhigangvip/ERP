@@ -5,6 +5,7 @@ import com.targetmol.common.mapper.BaseMapper;
 import com.targetmol.domain.account.Contact;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -19,13 +20,8 @@ public interface ContactDao extends BaseMapper<Contact> {
     @SelectProvider(type=contactDaoProvider.class,method = "findAllByAnyPara")
     @Results({
             @Result(id=true,column = "contactid",property = "contactid"),
-            @Result(property = "saleid",column = "saleid"),
-            @Result(property = "note",column = "note"),
-            @Result(property = "contvip",column = "contvip"),
             @Result(property = "companys",column = "contactid",many =
                      @Many(select = "com.targetmol.account.dao.CompanyDao.searchByContactIdDef",fetchType = FetchType.LAZY)),
-            @Result(property = "salesname",column = "saleid",one = @One(select = "com.targetmol.account.dao.ContactDao.getUserNameByUid"))
-
     })
     List<Contact> findAllByAnyPara(
             @Param("key") String key,@Param("showUnActived") Boolean showUnActived,
@@ -33,21 +29,21 @@ public interface ContactDao extends BaseMapper<Contact> {
 
     class contactDaoProvider{
         public String findAllByAnyPara(String key,Boolean showUnActived,String softby,Boolean desc){
-            String sqlstr="select * from contact ";
+            String sqlstr="select a.*,b.name as salesname from contact as a left join `user` as b on a.saleid=b.uid  ";
             if(key!=null){
-                sqlstr +="where (contactid like CONCAT('%',#{key},'%') or name like CONCAT('%',#{key},'%'))";
+                sqlstr +="where (a.contactid like CONCAT('%',#{key},'%') or a.name like CONCAT('%',#{key},'%'))";
             }
               if(showUnActived==null||showUnActived==false){
-                if( key!=null){
-                    sqlstr +=" and (activated<>0)";
+                if(StringUtil.isEmpty(key)==false){
+                    sqlstr +=" and (a.activated<>0)";
                 }else{
-                    sqlstr +="where (activated<>0)";
+                    sqlstr +=" where (a.activated<>0)";
                 }
             }
             if(softby!=null){
-                 sqlstr+=" order by " + softby+( desc?" DESC":" ASC");
+                 sqlstr+=" order by a." + softby+( desc?" DESC":" ASC");
             }
-
+            System.out.println(sqlstr);
             return sqlstr;
         }
 

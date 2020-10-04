@@ -28,7 +28,7 @@ public interface CompanyDao extends BaseMapper<Company> {
     List<Company> searchByContactId(Integer contactid);
 
 
-    @Select("select * from company_info where companyid as a in (select companyid from contact_company where contactid=#{contactid} and def=1) order by creatime desc")
+    @Select("select * from company_info as a where companyid  in (select companyid from contact_company where contactid=#{contactid} and def=1) order by creatime desc")
     Company searchByContactIdDef(Integer contactid);
 
 }
