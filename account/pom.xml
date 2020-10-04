@@ -24,7 +24,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.16</version>
         </dependency>
         <dependency>
             <groupId>com.targetmol.parent</groupId>
@@ -86,7 +85,7 @@
                 <configuration>
                     <imageName>192.168.3.13:5000/${project.artifactId}:${project.version}</imageName>
                     <serverId>my-docker-account</serverId>
-                    <baseImage>memiiso/centos8-java8</baseImage>
+                    <baseImage>digivalet/centos8-java</baseImage>
                     <entryPoint>["java","-jar","/${project.build.finalName}-exec.jar"]</entryPoint>
                     <resources>
                         <resource>
