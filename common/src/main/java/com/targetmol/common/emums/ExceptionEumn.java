@@ -58,8 +58,8 @@ public enum  ExceptionEumn {
     GROUP_PID_IS_NOT_FOUND(400,"父ID不存在，保存失败"),
     BIND_GROUP_FAILD(400,"绑定组失败"),
     CUST_VISIT_REPORT_ID_IS_NOT_FOUND(404,"报告ID不存在"),
+    INVOICE_INFO_IS_NOT_FOUND(404,"发票信息不存在"),
     ;
-
     private Integer code;
     private String msg;
 
