@@ -48,7 +48,6 @@ public class InvoiceInfoController {
     @DeleteMapping("{invoiceid}")
     public ResponseEntity<ResultMsg> delInvoiceInfo(@PathVariable("invoiceid") Integer invoiceid){
         invoiceInfoService.delInvoiceInfo(invoiceid);
-
         return ResponseEntity.ok(ResultMsg.success());
 
     }
