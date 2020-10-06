@@ -59,6 +59,7 @@ public enum  ExceptionEumn {
     BIND_GROUP_FAILD(400,"绑定组失败"),
     CUST_VISIT_REPORT_ID_IS_NOT_FOUND(404,"报告ID不存在"),
     INVOICE_INFO_IS_NOT_FOUND(404,"发票信息不存在"),
+    BIND_CONTACT_IS_NOT_FOUND(404,"子联系人不存在"),
     ;
     private Integer code;
     private String msg;

@@ -207,4 +207,23 @@ public class ContactService {
         }
     }
 
+    public void bindSubContact(Integer contid, Map<String, Object> map)  throws Exception{
+        if(contid==null ||map==null|| map.get("contacts")==null){
+            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
+        }
+        if(findByContId(contid)==null){
+            throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
+        }
+        List<Integer> contactids=(List<Integer>)map.get("contacts");
+        for(Integer id:contactids){
+             Contact cont=findByContId(id);
+             if(cont==null){
+                 throw new ErpExcetpion(ExceptionEumn.BIND_CONTACT_IS_NOT_FOUND);
+             }
+             if(contactDao.updateByPrimaryKeySelective(cont)!=1){
+                 throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+             }
+        }
+
+    }
 }

@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 
 @Slf4j
 @RequestMapping("/contact")
@@ -62,6 +65,14 @@ public class ContactController {
     public ResponseEntity<ResultMsg> deleteContanct(@PathVariable("contid") Integer  contid){
 
         contactService.setActived(contid,0);
+        return ResponseEntity.ok(ResultMsg.success());
+    }
+
+    //绑定子联系人
+    @PutMapping("{contid}/subcontact")
+    public ResponseEntity<ResultMsg> bindSubContact(@PathVariable("contid") Integer contid,
+                                                    @RequestBody  Map<String,Object> map) throws Exception{
+        contactService.bindSubContact(contid,map);
         return ResponseEntity.ok(ResultMsg.success());
     }
 
