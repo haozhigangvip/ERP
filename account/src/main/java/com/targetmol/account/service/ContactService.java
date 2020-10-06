@@ -215,11 +215,14 @@ public class ContactService {
             throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
         }
         List<Integer> contactids=(List<Integer>)map.get("contacts");
+
+        contactDao.setContactPidIsNull(contid);
         for(Integer id:contactids){
              Contact cont=findByContId(id);
              if(cont==null){
                  throw new ErpExcetpion(ExceptionEumn.BIND_CONTACT_IS_NOT_FOUND);
              }
+             cont.setPid(id);
              if(contactDao.updateByPrimaryKeySelective(cont)!=1){
                  throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
              }
