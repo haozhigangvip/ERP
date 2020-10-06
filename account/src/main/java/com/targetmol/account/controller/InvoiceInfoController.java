@@ -33,6 +33,7 @@ public class InvoiceInfoController {
     public ResponseEntity<ResultMsg> addInvoiceInfo(@RequestBody InvoiceInfo invoiceInfo){
         invoiceInfoService.addInvoiceInfo(invoiceInfo);
         return ResponseEntity.ok(ResultMsg.success());
+
     }
 
     //根据ID修改开票信息
