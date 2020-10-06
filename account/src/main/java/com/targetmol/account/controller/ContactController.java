@@ -39,7 +39,7 @@ public class ContactController {
             @RequestParam(value="showunactive" ,defaultValue="false")  Boolean showunactive,
             @RequestParam(value="pid",required = false) Integer pid) throws Exception{
         PageResult<Contact> conts=contactService.findByAll(page,pageSize,softBy,desc,key,showunactive,pid);
-        return conts ;
+        return conts;
     }
 
 
