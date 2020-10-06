@@ -25,21 +25,30 @@ public interface ContactDao extends BaseMapper<Contact> {
     })
     List<Contact> findAllByAnyPara(
             @Param("key") String key,@Param("showUnActived") Boolean showUnActived,
-            @Param("softby") String softby,@Param("desc") Boolean desc);
+            @Param("softby") String softby,@Param("desc") Boolean desc,
+            @Param("pid") Integer pid);
 
     class contactDaoProvider{
-        public String findAllByAnyPara(String key,Boolean showUnActived,String softby,Boolean desc){
+        public String findAllByAnyPara(String key,Boolean showUnActived,String softby,Boolean desc,Integer pid){
             String sqlstr="select a.*,b.name as salesname from contact as a left join `user` as b on a.saleid=b.uid  ";
             if(key!=null){
                 sqlstr +="where (a.contactid like CONCAT('%',#{key},'%') or a.name like CONCAT('%',#{key},'%'))";
             }
-              if(showUnActived==null||showUnActived==false){
+            if(showUnActived==null||showUnActived==false){
                 if(StringUtil.isEmpty(key)==false){
                     sqlstr +=" and (a.activated<>0)";
                 }else{
                     sqlstr +=" where (a.activated<>0)";
                 }
             }
+            if(pid!=null){
+               if(sqlstr.indexOf("where")>0){
+                   sqlstr +=" and (a.pid=#{pid}) ";
+               }else{
+                   sqlstr +=" where a.pic=#{pid}";
+               }
+            }
+
             if(softby!=null){
                  sqlstr+=" order by a." + softby+( desc?" DESC":" ASC");
             }

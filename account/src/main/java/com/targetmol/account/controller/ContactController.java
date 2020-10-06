@@ -23,6 +23,8 @@ public class ContactController {
               return ResponseEntity.ok(ResultMsg.success(contactService.findByContId(contid)));
     }
 
+
+
     //查询联系人
     @GetMapping
     public PageResult<Contact> findByAll (
@@ -31,9 +33,9 @@ public class ContactController {
             @RequestParam(value="softby",required = false) String softBy,
             @RequestParam(value="desc",defaultValue = "false") Boolean desc,
             @RequestParam(value="key",required = false) String key,
-            @RequestParam(value="showunactive" ,defaultValue="false") Boolean showunactive
-    ) throws Exception{
-        PageResult<Contact> conts=contactService.findByAll(page,pageSize,softBy,desc,key,showunactive);
+            @RequestParam(value="showunactive" ,defaultValue="false")  Boolean showunactive,
+            @RequestParam(value="pid",required = false) Integer pid) throws Exception{
+        PageResult<Contact> conts=contactService.findByAll(page,pageSize,softBy,desc,key,showunactive,pid);
         return conts;
     }
 

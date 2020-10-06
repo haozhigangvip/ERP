@@ -74,11 +74,11 @@ public class ContactService {
 
 
     //查询所有Contact
-    public PageResult<Contact> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showUnActive) throws Exception {
+    public PageResult<Contact> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key, Boolean showUnActive,Integer pid) throws Exception {
         //分页
         Page pg=PageHelper.startPage(page,pageSize);
 
-        List<Contact> result=contactDao.findAllByAnyPara(key,showUnActive,softBy,desc);
+        List<Contact> result=contactDao.findAllByAnyPara(key,showUnActive,softBy,desc,pid);
 
         PageInfo<Contact> pageInfo=new PageInfo<Contact>(pg.getResult());
         return new PageResult<Contact>(pageInfo.getTotal(),pageInfo.getPages(), result);

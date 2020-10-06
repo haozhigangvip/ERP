@@ -33,6 +33,7 @@ public class Contact implements Serializable {
     private Integer contvip;
     private String position;
     private Integer activated;
+    private Integer pid;
     @Column(name="saleid")
     private Integer saleid;
 
@@ -177,5 +178,14 @@ public class Contact implements Serializable {
 
     public void setSalesname(String salesname) {
         this.salesname = salesname;
+    }
+
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 }
