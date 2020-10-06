@@ -73,7 +73,7 @@ public class ContactController {
     public ResponseEntity<ResultMsg> bindSubContact(@PathVariable("contid") Integer contid,
                                                     @RequestBody  Map<String,Object> map) throws Exception{
         contactService.bindSubContact(contid,map);
-        return ResponseEntity.ok(ResultMsg.success());
+        return ResponseEntity.ok(ResultMsg.success()) ;
     }
 
 
