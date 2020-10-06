@@ -69,7 +69,7 @@ public interface ContactDao extends BaseMapper<Contact> {
     //根据contiID查找默认联系人名字及公司名
     @Select("select a.contactid,a.name as contactname,d.companyid,d.companyname from contact as a LEFT JOIN(select b.contactid,b.companyid,c.companyname from contact_company as b LEFT JOIN company_info as c on b.companyid=c.companyid where b.def=1) as d on a.contactid=d.contactid where a.contactid=#{contid}")
     Map<String,String> getConNameCompanyName(Integer contid);
-
-    @Update("update contact set pid=null where contactid=#{contid}")
+    //解绑所有PID等于contid的所有子联系人
+    @Update("update contact set pid=null where pid=#{contid}")
     Integer setContactPidIsNull(Integer contid);
 }

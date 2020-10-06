@@ -215,14 +215,15 @@ public class ContactService {
             throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
         }
         List<Integer> contactids=(List<Integer>)map.get("contacts");
-
+        //清除所有绑定联系人
         contactDao.setContactPidIsNull(contid);
+        //重新绑定所有子联系人
         for(Integer id:contactids){
              Contact cont=findByContId(id);
              if(cont==null){
                  throw new ErpExcetpion(ExceptionEumn.BIND_CONTACT_IS_NOT_FOUND);
              }
-             cont.setPid(id);
+             cont.setPid(contid);
              if(contactDao.updateByPrimaryKeySelective(cont)!=1){
                  throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
              }
