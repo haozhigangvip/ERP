@@ -22,10 +22,8 @@ public class InvoiceInfo {
     private String invoicePhone;
     private String bank;
     private String bankAccount;
-    private Integer addressid;
-
-    @Transient
-    private Address address;
+    @Column(insertable = false,updatable = false)
+    private String creatime;
 
 
     public Integer getId() {
@@ -92,19 +90,5 @@ public class InvoiceInfo {
         this.bankAccount = bankAccount;
     }
 
-    public Integer getAddressid() {
-        return addressid;
-    }
 
-    public void setAddressid(Integer addressid) {
-        this.addressid = addressid;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 }

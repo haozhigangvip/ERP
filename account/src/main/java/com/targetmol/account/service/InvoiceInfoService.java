@@ -4,6 +4,7 @@ import com.targetmol.account.dao.InvoiceinfoDao;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.domain.account.InvoiceInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.util.StringUtil;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Service
 public class InvoiceInfoService {
+    @Autowired
     private InvoiceinfoDao invoiceinfoDao;
 
     //根据联系人ID查开票信息
