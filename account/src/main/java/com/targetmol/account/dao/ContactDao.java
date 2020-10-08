@@ -52,7 +52,6 @@ public interface ContactDao extends BaseMapper<Contact> {
             if(softby!=null){
                  sqlstr+=" order by a." + softby+( desc?" DESC":" ASC");
             }
-            System.out.println(sqlstr);
             return sqlstr;
         }
 
