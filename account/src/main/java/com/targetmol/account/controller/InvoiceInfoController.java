@@ -48,6 +48,7 @@ public class InvoiceInfoController {
     //根据ID删除开票信息
     @DeleteMapping("{invoiceid}")
     public ResponseEntity<ResultMsg> delInvoiceInfo(@PathVariable("invoiceid") Integer invoiceid){
+        //TEST
         invoiceInfoService.delInvoiceInfo(invoiceid);
         return ResponseEntity.ok(ResultMsg.success());
 
