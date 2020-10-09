@@ -98,7 +98,7 @@ public class CustVisitReportService {
 
     //检查拜访报告是否正确
     private void checkCustVistReport(CustVisitReport custVisitReport){
-        //判断必填项是否齐全 123131
+        //判断必填项是否齐全 12313111
         if(custVisitReport==null|| StringUtil.isEmpty(custVisitReport.getContent())||custVisitReport.getSaleid()==null||custVisitReport.getVisitdate()==null){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
