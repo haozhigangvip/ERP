@@ -81,7 +81,7 @@
                 <configuration>
                     <imageName>192.168.3.14:5000/${project.artifactId}:${project.version}</imageName>
                     <serverId>my-docker-account</serverId>
-                    <baseImage>tomb853/centos8-openjdk11</baseImage>
+                    <baseImage>bruce48li/centos-8-jdk-8</baseImage>
                     <entryPoint>["java","-jar","/${project.build.finalName}-exec.jar"]</entryPoint>
                     <resources>
                         <resource>
