@@ -90,7 +90,7 @@ public class CustVisitReportService {
         //进行查询
         List<CustVisitReport> list=custVisitReportDao.findAll(softBy,desc,contid,startDate,endDate);
 
-        //封装到pageHelper
+        //封装到pageHelper11
         PageInfo<CustVisitReport> pageInfo=new PageInfo<>(pg.getResult());
         return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
     }
