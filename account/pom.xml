@@ -88,7 +88,7 @@
                 <configuration>
                     <imageName>192.168.3.14:5000/${project.artifactId}:${project.version}</imageName>
                     <serverId>my-docker-account</serverId>
-                    <baseImage>digivalet/centos8-java</baseImage>
+                    <baseImage>williamyeh/java8</baseImage>
                     <entryPoint>["java","-jar","/${project.build.finalName}-exec.jar"]</entryPoint>
                     <resources>
                         <resource>
