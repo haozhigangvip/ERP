@@ -90,7 +90,7 @@ public class CustVisitReportService {
         //进行查询
         List<CustVisitReport> list=custVisitReportDao.findAll(softBy,desc,contid,startDate,endDate);
 
-        //封装到pageHelper
+        //封装到pageHelper11
         PageInfo<CustVisitReport> pageInfo=new PageInfo<>(pg.getResult());
         return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
     }
@@ -98,7 +98,7 @@ public class CustVisitReportService {
 
     //检查拜访报告是否正确
     private void checkCustVistReport(CustVisitReport custVisitReport){
-        //判断必填项是否齐全
+        //判断必填项是否齐全 12313111
         if(custVisitReport==null|| StringUtil.isEmpty(custVisitReport.getContent())||custVisitReport.getSaleid()==null||custVisitReport.getVisitdate()==null){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
