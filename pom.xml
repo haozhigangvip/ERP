@@ -109,38 +109,19 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>com.spotify</groupId>-->
-<!--                <artifactId>docker-maven-plugin</artifactId>-->
-<!--                <version>0.4.13</version>-->
-<!--                <configuration>-->
-<!--                    <imageName>192.168.3.13:5050/${project.artifactId}:${project.version}</imageName>-->
-<!--                    <baseImage>memiiso/centos8-java8</baseImage>-->
-<!--                    <entryPoint>["java","-jar","/${project.build.finalName}.jar" ]</entryPoint>-->
-<!--                    <resources>-->
-<!--                        <resource>-->
-<!--                            <targetPath>/</targetPath>-->
-<!--                            <directory>${project.build.directory}</directory>-->
-<!--                            <include>${project.build.finalName}</include>-->
-<!--                        </resource>-->
-<!--                    </resources>-->
-<!--                    <dockerHost>http://192.168.3.13:5000</dockerHost>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
         </plugins>
 
     </build>
     <distributionManagement>
         <repository>
             <id>releases</id>
-            <url>http://192.168.3.14:8081/repository/maven-releases/</url>
+            <url>http://192.168.3.15:8081/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
-                <url>http://192.168.3.14:8081/repository/maven-snapshots/</url>
+            <url>http://192.168.3.15:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-
 
 
 </project>
