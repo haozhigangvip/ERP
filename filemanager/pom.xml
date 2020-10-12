@@ -8,17 +8,47 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>erp-registry</artifactId>
+
+    <artifactId>filemanager</artifactId>
 
     <dependencies>
-        <!--Eureka Service-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.targetmol.parent</groupId>
+            <artifactId>domain</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.targetmol.parent</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.0.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>2.0.3</version>
+        </dependency>
+
+        <!--Eureka Client-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
+            <!-- SpringBoot Maven插件 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -32,9 +62,9 @@
                 <version>0.4.13</version>
                 <configuration>
                     <imageName>192.168.3.14:5000/${project.artifactId}:${project.version}</imageName>
-                    <serverId>my-docker-registry</serverId>
+                    <serverId>my-docker-filemanager</serverId>
                     <baseImage>digivalet/centos8-java</baseImage>
-                    <entryPoint>["java","-jar","/${project.build.finalName}-exec.jar" ]</entryPoint>
+                    <entryPoint>["java","-jar","/${project.build.finalName}-exec.jar"]</entryPoint>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>

@@ -1,0 +1,36 @@
+server:
+  port: 8099
+  servlet:
+    path: /file
+logging:
+  level:
+    com.targetmol:  info
+
+spring:
+  application:
+    name: file-service
+  datasource:
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+
+mybatis:
+  type-aliases-package: com.targetmol.domain #别名路径
+  configuration:
+    map-underscore-to-camel-case: true      #驼峰命名
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://192.168.3.13:10086/eureka
+    registerWithEureka: true #服务注册开关
+    fetchRegistry: true #服务发现开关
+  instance:
+    prefer-ip-address: true
+    ip-address: 192.168.3.13
+ribbon:
+  ConnectionTimeout: 5000   #ribbon连接超时时长1000毫秒
+  ReadTimeout: 6000  #ribbon读取超时时长 6000毫秒
+  MaxAutoRetries: 2   #当前服务重启次数
+  MaxAutoRetriesNextServer: 3   #切换服务重试次数
+  OkToRetryOnAllOperations: false  #对所有操作请求都进行重试，如果是get则可以，如果是post，put等操作没有实现幂等的情况下是很危险的,所以设置为false
