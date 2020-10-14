@@ -15,7 +15,7 @@ public class InvoiceInfoController {
     @Autowired
     private InvoiceInfoService invoiceInfoService;
 
-    //根据联系人ID查询所有开票信息
+    //根据联系人ID查询所有开票信息123
     @GetMapping
     public ResponseEntity<ResultMsg> findAllInvoiceInfo(@RequestParam(value="contid") Integer contid){
         return ResponseEntity.ok(ResultMsg.success(invoiceInfoService.findAllByContId(contid)));

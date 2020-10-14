@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>erp-system</artifactId>
+    <artifactId>filemanager</artifactId>
 
     <dependencies>
         <dependency>
@@ -17,10 +17,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.targetmol.parent</groupId>
             <artifactId>domain</artifactId>
@@ -32,30 +28,19 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>5.0.5.RELEASE</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
         </dependency>
         <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper-spring-boot-starter</artifactId>
-            <version>2.0.3</version>
-        </dependency>
-        <!--分页助手-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-        </dependency>
-        <!--Eureka Client-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <groupId>net.oschina.zcx7878</groupId>
+            <artifactId>fastdfs-client-java</artifactId>
+            <version>1.27.0.0</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -74,7 +59,7 @@
                 <version>0.4.13</version>
                 <configuration>
                     <imageName>192.168.3.15:5000/${project.artifactId}:${project.version}</imageName>
-                    <serverId>my-docker-system</serverId>
+                    <serverId>my-docker-filemanager</serverId>
                     <baseImage>digivalet/centos8-java</baseImage>
                     <entryPoint>["java","-jar","/${project.build.finalName}-exec.jar"]</entryPoint>
                     <resources>
