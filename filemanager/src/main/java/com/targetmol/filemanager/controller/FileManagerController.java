@@ -27,17 +27,17 @@ public class FileManagerController{
     @Autowired
     FileManagerService fileManagerService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ResultMsg> upload(MultipartFile multipartFile) {
 
         return ResponseEntity.ok(ResultMsg.success(fileManagerService.upload(multipartFile)));
     }
-    @GetMapping()
+    @GetMapping
     public ModelAndView  getfile(@RequestParam("id") String fileid){
         String url="http://"+tracker_servers+":"+file_port+"/"+fileid;
         return  new ModelAndView(new RedirectView(url));
     }
-    @DeleteMapping()
+    @DeleteMapping
     public ResponseEntity<ResultMsg>  delfile(@RequestParam("id") String fileid){
         fileManagerService.delflile(fileid);
         return ResponseEntity.ok(ResultMsg.success());

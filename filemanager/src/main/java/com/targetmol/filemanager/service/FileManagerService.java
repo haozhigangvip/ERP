@@ -2,8 +2,8 @@ package com.targetmol.filemanager.service;
 
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
-
 import com.targetmol.filemanager.dao.FileManagerDao;
+import com.targetmol.filemanager.domain.FileSystem;
 import org.apache.commons.lang3.StringUtils;
 import org.csource.fastdfs.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import tk.mybatis.mapper.util.StringUtil;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +40,7 @@ public class FileManagerService {
     FileManagerDao fileManagerDao;
 
     //上传文件
-    public Map<String,String> upload( MultipartFile multipartFile){
+    public FileSystem upload( MultipartFile multipartFile){
         if(multipartFile ==null){
            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
@@ -48,26 +50,18 @@ public class FileManagerService {
             throw new ErpExcetpion(ExceptionEumn.FILE_UPLOAD_FAILD);
         }
 
-//        //第二步：将文件id及其它文件信息存储到mongodb中。
-//        FileSystem fileSystem = new FileSystem();
-//        fileSystem.setFileId(fileId);
-//        fileSystem.setFilePath(fileId);
-//        fileSystem.setFiletag(filetag);
-//        fileSystem.setBusinesskey(businesskey);
-//        fileSystem.setFileName(multipartFile.getOriginalFilename());
-//        fileSystem.setFileType(multipartFile.getContentType());
-//        if(StringUtils.isNotEmpty(metadata)){
-//            try {
-//                Map map = JSON.parseObject(metadata, Map.class);
-//                fileSystem.setMetadata(map);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        fileSystemRepository.save(fileSystem);
-        Map<String,String> map=new HashMap<>();
-        map.put("fileId",fileId);
-      return map;
+        //第二步：将文件id及其它文件信息存储到mongodb中。
+        FileSystem fileSystem = new FileSystem();
+        fileSystem.setFileId(fileId);
+        fileSystem.setFilePath(fileId);
+        Date day=new Date();
+        fileSystem.setExpireAt(day);
+        fileSystem.setFileName(multipartFile.getOriginalFilename());
+        fileSystem.setFileType(multipartFile.getContentType());
+
+        fileManagerDao.save(fileSystem);
+
+      return fileSystem;
     }
 
     //上传文件到fastDFS
@@ -85,7 +79,6 @@ public class FileManagerService {
         try {
             TrackerServer trackerServer = trackerClient.getConnection();
             //得到storage服务器
-
             StorageServer storeStorage = trackerClient.getStoreStorage(trackerServer);
             //创建storageClient来上传文件
             StorageClient1 storageClient1 = new StorageClient1(trackerServer,storeStorage);
@@ -126,25 +119,26 @@ public class FileManagerService {
         if (StringUtil.isEmpty(fileid)) {
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
-        throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
-//        //初始化fastDFS的环境
-//        initFdfsConfig();
-//        //创建trackerClient
-//        TrackerClient trackerClient = new TrackerClient();
-//        try {
-//            TrackerServer trackerServer = trackerClient.getConnection();
-//            //得到storage服务器
-//            StorageServer storeStorage = trackerClient.getStoreStorage(trackerServer);
-//            //得到storage客户端
-//            StorageClient1 storageClient1= new StorageClient1(trackerServer,storeStorage);
-//
-//            if(storageClient1==null || storageClient1.delete_file1(fileid)!=0){
-//
-//            }
-//           }catch (Exception e){
-//            e.printStackTrace();
-//            throw new ErpExcetpion(ExceptionEumn.FILE_DELETE_FAILD);
-//        }
+        //初始化fastDFS的环境
+        initFdfsConfig();
+
+        try {
+            //创建trackerClient
+            TrackerClient trackerClient = new TrackerClient();
+            TrackerServer trackerServer = trackerClient.getConnection();
+            //得到storage服务器
+            StorageServer storeStorage = trackerClient.getStoreStorage(trackerServer);
+            //得到storage客户端
+            StorageClient1 storageClient1= new StorageClient1(trackerServer,storeStorage);
+
+            if(storageClient1==null || storageClient1.delete_file1(fileid)!=0){
+                throw new ErpExcetpion(ExceptionEumn.FILE_DELETE_FAILD);
+
+            }
+           }catch (Exception e){
+            e.printStackTrace();
+            throw new ErpExcetpion(ExceptionEumn.FILE_DELETE_FAILD);
+        }
 
     }
 

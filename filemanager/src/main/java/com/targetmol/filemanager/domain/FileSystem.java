@@ -1,12 +1,15 @@
 package com.targetmol.filemanager.domain;
 
 
+//import org.springframework.data.mongodb.core.mapping.Document;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
+import java.util.Date;
 import java.util.Map;
 
-@Document(collection = "filesystem")
+@Document(collection = "tsbio_fs")
 public class FileSystem {
     @Id
     private String fileId;
@@ -25,11 +28,11 @@ public class FileSystem {
     //用户id，用于授权
     private String userId;
     //业务key
-    private String businesskey;
+    private String key;
     //业务标签
     private String filetag;
-    //文件元信息
-    private Map metadata;
+    //失效时间
+    private Date expireAt;
 
 
     public String getFileId() {
@@ -96,13 +99,6 @@ public class FileSystem {
         this.userId = userId;
     }
 
-    public String getBusinesskey() {
-        return businesskey;
-    }
-
-    public void setBusinesskey(String businesskey) {
-        this.businesskey = businesskey;
-    }
 
     public String getFiletag() {
         return filetag;
@@ -112,11 +108,19 @@ public class FileSystem {
         this.filetag = filetag;
     }
 
-    public Map getMetadata() {
-        return metadata;
+    public Date getExpireAt() {
+        return expireAt;
     }
 
-    public void setMetadata(Map metadata) {
-        this.metadata = metadata;
+    public void setExpireAt(Date expireAt) {
+        this.expireAt = expireAt;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
