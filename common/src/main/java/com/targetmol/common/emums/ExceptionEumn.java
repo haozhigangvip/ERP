@@ -60,6 +60,9 @@ public enum  ExceptionEumn {
     CUST_VISIT_REPORT_ID_IS_NOT_FOUND(404,"报告ID不存在"),
     INVOICE_INFO_IS_NOT_FOUND(404,"发票信息不存在"),
     BIND_CONTACT_IS_NOT_FOUND(404,"子联系人不存在"),
+    FILE_UPLOAD_FAILD(400,"文件上传失败"),
+    FILE_INIT_FAILD(400,"文件服务初始化失败"),
+    FILE_DELETE_FAILD(400,"文件删除失败"),
     ;
     private Integer code;
     private String msg;
