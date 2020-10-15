@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 
 @Component
-public class LoginFilter extends ZuulFilter {
+public class    LoginFilter extends ZuulFilter {
     @Value("${auth.tokenValiditySeconds}")
     int tokenValiditySeconds;
     @Autowired

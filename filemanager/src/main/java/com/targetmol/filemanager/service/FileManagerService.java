@@ -2,6 +2,7 @@ package com.targetmol.filemanager.service;
 
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.common.utils.NumberUtils;
 import com.targetmol.filemanager.dao.FileManagerDao;
 import com.targetmol.filemanager.domain.FileSystem;
 import org.apache.commons.lang3.StringUtils;
@@ -12,11 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import tk.mybatis.mapper.util.StringUtil;
 
-
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 
 /**
  * @author Administrator
@@ -35,6 +34,12 @@ public class FileManagerService {
     int network_timeout_in_seconds;
     @Value("${tsbio.fastdfs.charset}")
     String charset;
+    @Value("${tsbio.fastdfs.expireAt}")
+    Integer expireAt;
+    @Value("${tsbio.fastdfs.shorturl}")
+    String shortUrl;
+    @Value("${tsbio.fastdfs.file_port}")
+    String file_port;
 
     @Autowired
     FileManagerDao fileManagerDao;
@@ -49,23 +54,27 @@ public class FileManagerService {
         if(StringUtils.isEmpty(fileId)){
             throw new ErpExcetpion(ExceptionEumn.FILE_UPLOAD_FAILD);
         }
-
+        String urlid=getlinkNo();
         //第二步：将文件id及其它文件信息存储到mongodb中。
         FileSystem fileSystem = new FileSystem();
         fileSystem.setFileId(fileId);
         fileSystem.setFilePath(fileId);
-        Date day=new Date();
-        fileSystem.setExpireAt(day);
+        Date date =getMongoDate(new Date());
+        fileSystem.setCreatime(date);
+        fileSystem.setExpireAt(adddate(date,expireAt));
         fileSystem.setFileName(multipartFile.getOriginalFilename());
         fileSystem.setFileType(multipartFile.getContentType());
 
-        fileManagerDao.save(fileSystem);
+        fileSystem.setUrlId(urlid);
 
-      return fileSystem;
+        fileSystem.setShortUrl(shortUrl+urlid);
+        fileSystem.setKey(NumberUtils.generateCode(4));
+
+        fileManagerDao.save(fileSystem);
+        return fileSystem;
     }
 
     //上传文件到fastDFS
-
     /**
      *
      * @param multipartFile 文件
@@ -142,4 +151,56 @@ public class FileManagerService {
 
     }
 
+    private Date adddate(Date date,Integer day){
+        Calendar calendar=new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(calendar.DATE,day);
+        return calendar.getTime();
+    }
+    private static Date getMongoDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(date);
+        ca.add(Calendar.HOUR_OF_DAY, 8);
+        String dt = sdf.format(ca.getTime());
+        Date result = null;
+        try {
+            return sdf.parse(dt);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return date;
+        }
+    }
+    //根据短URL获取长URL
+    public String getShortUrl(String urlid, String key) {
+
+        FileSystem fs=fileManagerDao.findByUrlid(urlid);
+        if(fs==null){
+            throw new ErpExcetpion(ExceptionEumn.FILE_IS_EXPIRE);
+        }
+        if(key==null||fs.getKey()==null||!fs.getKey().equals(key)){
+            throw new ErpExcetpion(ExceptionEumn.VERCODE_IS_ERR);
+        }
+
+        return "http://"+tracker_servers+":"+file_port+"/"+fs.getFileId();
+    }
+
+
+    //生成6为不重复代码
+    private String getlinkNo() {
+        String linkNo = "";
+        // 用字符数组的方式随机
+        String model = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        char[] m = model.toCharArray();
+        for (int j = 0; j < 6; j++) {
+            char c = m[(int) (Math.random() * 36)];
+            // 保证六位随机数之间没有重复的
+            if (linkNo.contains(String.valueOf(c))) {
+                j--;
+                continue;
+            }
+            linkNo = linkNo + c;
+        }
+        return linkNo;
+    }
 }

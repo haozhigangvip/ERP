@@ -20,7 +20,7 @@ public class User implements Serializable {
     private Integer departmentid;
     private String phone;
     private String email;
-    private Integer onsales;
+    private Integer issales;
     @Column(insertable = false)
     private Date creatime;
     private String utype;
@@ -113,12 +113,12 @@ public class User implements Serializable {
         this.salt = salt;
     }
 
-    public Integer getOnsales() {
-        return onsales;
+    public Integer getIssales() {
+        return issales;
     }
 
-    public void setOnsales(Integer onsales) {
-        this.onsales = onsales;
+    public void setIssales(Integer issales) {
+        this.issales = issales;
     }
 
     public String getUtype() {

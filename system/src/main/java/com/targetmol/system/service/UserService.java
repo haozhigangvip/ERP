@@ -65,13 +65,13 @@ public class UserService {
             case 0:
                 break;
             case 1:
-                criteria2.orEqualTo("actived",1)
-                        .orEqualTo("actived",null);
+                criteria2.orEqualTo("activated",1)
+                        .orEqualTo("activated",null);
                 example.and(criteria2);
                 break;
             case 2:
-                criteria2.orEqualTo("actived",0)
-                        .orEqualTo("actived",null);
+                criteria2.orEqualTo("activated",0)
+                        .orEqualTo("activated",null);
                 example.and(criteria2);
                 break;
             default:
@@ -137,8 +137,8 @@ public class UserService {
         checkUserProperty(user);
         //设置用户状态，1为在职，0为离职
         user.setActivated(1);
-        if(user.getOnsales()==null){
-            user.setOnsales(0);
+        if(user.getIssales()==null){
+            user.setIssales(0);
         }
 
         //检查用户名是否存在
@@ -170,7 +170,7 @@ public class UserService {
     //判断USER数据是否齐全
     private  void checkUserProperty(User user){
         //判断参数是否齐全
-        if(user==null|| StringUtil.isEmpty(user.getUsername())==true||StringUtil.isEmpty(user.getPassword())==true){
+        if(user==null|| StringUtil.isEmpty(user.getUsername())==true){
             throw new ErpExcetpion(ExceptionEumn.USERNAME_PASSWORD_CANNOT_BE_NULL);
         }
         if(StringUtil.isEmpty(user.getEmail())){
@@ -189,8 +189,8 @@ public class UserService {
 
         //检查用户数据
         checkUserProperty(user);
-
-        if(userDao.selectByPrimaryKey(user.getUid())==null){
+        User u=userDao.selectByPrimaryKey(user.getUid());
+        if(u==null){
             throw new ErpExcetpion(ExceptionEumn.USERS_ISNOT_FOUND);
         }
 
@@ -198,14 +198,19 @@ public class UserService {
         checkDerprtmentId(user.getDepartmentid());
 
         //加密密码
-        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
-        String npassword=bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(npassword);
+        if(StringUtil.isEmpty(user.getPassword())==false){
+            BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+            String npassword=bCryptPasswordEncoder.encode(user.getPassword());
+            user.setPassword(npassword);
+        }else{
+            user.setPassword(u.getPassword());
+        }
 
 
         //不允许修改用户名和激活标记
-        user.setUsername(null);
+        // user.setUsername(null);
         user.setActivated(null);
+
         checkDerprtmentId(user.getDepartmentid());
 
         //保存
@@ -246,6 +251,9 @@ public class UserService {
         user=userDao.selectOne(user);
         if(user==null){
             throw new ErpExcetpion(ExceptionEumn.USERNAMEANDPASSWORD_ISNOT_MATCH);
+        }
+        if(user.getActivated()!=1){
+            throw new ErpExcetpion(ExceptionEumn.USER_IS_UNACTIVATED);
         }
         AuthUserExt resultUser=new AuthUserExt();
         BeanUtils.copyProperties(user,resultUser);

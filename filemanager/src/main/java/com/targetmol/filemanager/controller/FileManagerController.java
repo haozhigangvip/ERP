@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Map;
+
 
 /**
  * @author Administrator
@@ -27,21 +29,25 @@ public class FileManagerController{
     @Autowired
     FileManagerService fileManagerService;
 
-    @PostMapping
-    public ResponseEntity<ResultMsg> upload(MultipartFile multipartFile) {
+    @PostMapping("/file")
+    public ResponseEntity<ResultMsg> upload(MultipartFile file) {
 
-        return ResponseEntity.ok(ResultMsg.success(fileManagerService.upload(multipartFile)));
+        return ResponseEntity.ok(ResultMsg.success(fileManagerService.upload(file)));
     }
-    @GetMapping
+    @GetMapping("/file")
     public ModelAndView  getfile(@RequestParam("id") String fileid){
         String url="http://"+tracker_servers+":"+file_port+"/"+fileid;
         return  new ModelAndView(new RedirectView(url));
     }
-    @DeleteMapping
+    @DeleteMapping("/file")
     public ResponseEntity<ResultMsg>  delfile(@RequestParam("id") String fileid){
         fileManagerService.delflile(fileid);
         return ResponseEntity.ok(ResultMsg.success());
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<ResultMsg> getShortfile(@PathVariable("id") String urlid, @RequestBody String key){
+        return ResponseEntity.ok(ResultMsg.success(fileManagerService.getShortUrl(urlid,key)));
+    }
 
 }

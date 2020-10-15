@@ -3,6 +3,7 @@ package com.targetmol.filemanager.domain;
 
 //import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
@@ -13,6 +14,8 @@ import java.util.Map;
 public class FileSystem {
     @Id
     private String fileId;
+    //短URL ID
+    private String urlId;
     //文件请求路径
     private String filePath;
     //文件大小
@@ -27,13 +30,40 @@ public class FileSystem {
     private int fileHeight;
     //用户id，用于授权
     private String userId;
-    //业务key
+    //验证码
     private String key;
     //业务标签
     private String filetag;
+    //创建时间
+    private Date creatime;
     //失效时间
     private Date expireAt;
+    //短URL
+    private String shortUrl;
 
+    public Date getCreatime() {
+        return creatime;
+    }
+
+    public void setCreatime(Date creatime) {
+        this.creatime = creatime;
+    }
+
+    public String getUrlId() {
+        return urlId;
+    }
+
+    public void setUrlId(String urlId) {
+        this.urlId = urlId;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
+    }
 
     public String getFileId() {
         return fileId;

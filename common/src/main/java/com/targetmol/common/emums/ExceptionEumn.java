@@ -63,6 +63,9 @@ public enum  ExceptionEumn {
     FILE_UPLOAD_FAILD(400,"文件上传失败"),
     FILE_INIT_FAILD(400,"文件服务初始化失败"),
     FILE_DELETE_FAILD(400,"文件删除失败"),
+    FILE_IS_EXPIRE(404,"文件已失效"),
+    VERCODE_IS_ERR(400,"验证码错误"),
+    USER_IS_UNACTIVATED(401,"用户已停用"),
     ;
     private Integer code;
     private String msg;

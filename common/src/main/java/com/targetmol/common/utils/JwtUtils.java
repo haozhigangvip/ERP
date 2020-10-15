@@ -107,7 +107,7 @@ public class JwtUtils {
             try {
                 Jwt jwt=  JwtHelper.decodeAndVerify(jwtToken, new RsaVerifier(PUBLIC_KEY));
                 String claims = jwt.getClaims();
-                AuthUser user=JsonUtils.parse(claims, AuthUser.class);
+                    AuthUser user=JsonUtils.parse(claims, AuthUser.class);
                 user.setJwtToken(jwtToken);
                 return user;
             }catch (Exception e){

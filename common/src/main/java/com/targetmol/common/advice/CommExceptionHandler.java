@@ -13,7 +13,7 @@ public class CommExceptionHandler {
     @ExceptionHandler(ErpExcetpion.class) //拦截RuntimeException异常
     public ResponseEntity<ExceptionResult> handleExceprion(ErpExcetpion e){
         ExceptionEumn eumn=e.getExceptionEumnumn();
-        return ResponseEntity.status(eumn.getCode()).body(new ExceptionResult(e.getExceptionEumnumn() ));
+        return ResponseEntity.status(200).body(new ExceptionResult(e.getExceptionEumnumn() ));
     }
 
 }
