@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.targetmol.common.client.UserFeignClent;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.auth.ErpAuthToken;
 import com.targetmol.domain.system.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,9 @@ import tk.mybatis.mapper.util.StringUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -50,6 +53,9 @@ public class AuthService {
     @Autowired
     private UserFeignClent userClient;
 
+    @Autowired
+    UserFeignClent userFeignClent;
+
     //从头部获取JWT信息
     public String getJwtHeard(HttpServletRequest request){
         //取出头信息
@@ -65,9 +71,16 @@ public class AuthService {
     //用户认证申请令牌，将令牌存储到redis
     public ErpAuthToken login(String username, String password, String clientId, String clientSecret,String code ) {
 
+        ResponseEntity rs=userFeignClent.login(username);
+        Integer codex=(Integer) ((ResultMsg) rs.getBody()).getCode();
+        if(codex==402) {
+            throw  new ErpExcetpion(ExceptionEumn.USER_IS_UNACTIVATED);
+        }
+
         //请求spring security申请令牌
         ErpAuthToken erpAuthToken = this.applyToken(username, password, clientId, clientSecret,code);
-
+        LinkedHashMap<String, Object> data=(LinkedHashMap<String,Object>)((ResultMsg) rs.getBody()).getData();
+        Integer uid=(Integer)data.get("uid");
         if(erpAuthToken == null){
             throw  new ErpExcetpion(ExceptionEumn.USERNAMEANDPASSWORD_ISNOT_MATCH);
         }
@@ -76,7 +89,7 @@ public class AuthService {
         //存储到redis中的内容
         String jsonString = JSON.toJSONString(erpAuthToken);
         //将令牌存储到redis
-        boolean result = this.saveToken(access_token, jsonString, tokenValiditySeconds);
+        boolean result = this.saveToken(access_token,uid ,jsonString, tokenValiditySeconds);
         if (!result) {
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_APPLY_FOR_TOKEN);
         }
@@ -86,23 +99,23 @@ public class AuthService {
 
 
     //存储到令牌到redis
-    private boolean saveToken(String access_token,String content,long ttl){
-        String key = "user_token:" + access_token;
+    private boolean saveToken(String access_token,Integer uid,String content,long ttl){
+        String key = "user_token:" + uid+"_"+access_token;
         stringRedisTemplate.boundValueOps(key).set(content,ttl, TimeUnit.SECONDS);
         Long expire = stringRedisTemplate.getExpire(key, TimeUnit.SECONDS);
         return expire>0;
     }
 
     //删除token
-    public boolean delToken(String access_token){
-        String key = "user_token:" + access_token;
-        stringRedisTemplate.delete(key);
+    public boolean delToken(String access_token,Integer uid){
+        Set<String> keys = stringRedisTemplate.keys("user_token:"+uid+"_" + access_token);
+        stringRedisTemplate.delete(keys);
         return true;
     }
 
     //从redis查询令牌
-    public ErpAuthToken getUserToken(String token){
-        String key = "user_token:" + token;
+    public ErpAuthToken getUserToken(String token,Integer uid){
+        String key = "user_token:" + uid+"_"+token;
         //从redis中取到令牌信息
         String value = stringRedisTemplate.opsForValue().get(key);
         //转成对象
@@ -112,7 +125,7 @@ public class AuthService {
 
             //存储到redis中的内容
             String jsonString = JSON.toJSONString(authToken);
-            this.saveToken(token, jsonString, tokenValiditySeconds);
+            this.saveToken(token, uid,jsonString, tokenValiditySeconds);
             //返回JWT令牌
             return authToken;
         } catch (Exception e) {
@@ -127,6 +140,7 @@ public class AuthService {
     private ErpAuthToken applyToken(String username, String password, String clientId, String clientSecret,String code){
 
         if(code==null){
+            //动态更新用户dcode
             userClient.refreshCode(username);
         }
 

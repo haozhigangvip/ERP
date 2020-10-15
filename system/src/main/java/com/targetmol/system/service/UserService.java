@@ -17,6 +17,7 @@ import com.targetmol.system.dao.UserDao;
 import com.targetmol.system.dao.UserRoleDao;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ import tk.mybatis.mapper.util.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -45,6 +47,10 @@ public class UserService {
 
     @Autowired
     private PermissionService permissionService;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
 
     //查询所有用
     public PageResult<UserExt> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer active,Boolean showsales){
@@ -237,6 +243,10 @@ public class UserService {
         if(userDao.updateByPrimaryKey(user)!=1){
             throw new  ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
+        //注销该用户
+        if (active==0){
+            delToken(uid);
+        }
 
     }
 
@@ -249,12 +259,10 @@ public class UserService {
         User user=new User();
         user.setUsername(username);
         user=userDao.selectOne(user);
-        if(user==null){
-            throw new ErpExcetpion(ExceptionEumn.USERNAMEANDPASSWORD_ISNOT_MATCH);
-        }
-        if(user.getActivated()!=1){
+        if(user==null || user.getActivated()!=1){
             throw new ErpExcetpion(ExceptionEumn.USER_IS_UNACTIVATED);
         }
+
         AuthUserExt resultUser=new AuthUserExt();
         BeanUtils.copyProperties(user,resultUser);
         //查询权限
@@ -350,6 +358,14 @@ public class UserService {
             userDao.updateByPrimaryKeySelective(user);
         }
 
+
+    }
+
+
+    //删除redis中的用户登录记录
+    public void delToken(Integer uid){
+        Set<String> keys = stringRedisTemplate.keys("user_token:" + uid+"_*");
+        stringRedisTemplate.delete(keys);
     }
 }
 

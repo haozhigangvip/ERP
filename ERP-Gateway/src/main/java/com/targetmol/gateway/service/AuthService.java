@@ -28,8 +28,8 @@ public class AuthService {
 
     }
     //存储到令牌到redis
-    public boolean saveToken(String access_token,String content,long ttl){
-        String key = "user_token:" + access_token;
+    public boolean saveToken(String access_token,Integer uid,String content,long ttl){
+        String key = "user_token:" + uid+"_"+access_token;
         stringRedisTemplate.boundValueOps(key).set(content,ttl, TimeUnit.SECONDS);
         Long expire = stringRedisTemplate.getExpire(key, TimeUnit.SECONDS);
         return expire>0;
@@ -48,9 +48,9 @@ public class AuthService {
 
     //从redis取出JWT令牌
     //查询令牌的有效期
-    public ErpAuthToken getRedisInfo(String access_token){
+    public ErpAuthToken getRedisInfo(String access_token,Integer uid){
         //key
-        String key = "user_token:"+access_token;
+        String key = "user_token:"+uid+"_"+access_token;
         String result=stringRedisTemplate.opsForValue().get(key);
         if(result==null){
             return null;

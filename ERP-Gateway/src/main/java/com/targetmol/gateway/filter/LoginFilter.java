@@ -81,14 +81,14 @@ public class    LoginFilter extends ZuulFilter {
 
 
         //从redis取出JWT令牌
-        ErpAuthToken erpAuthToken=authService.getRedisInfo(user.getJti());
+        ErpAuthToken erpAuthToken=authService.getRedisInfo(user.getJti(),user.getUid());
         if(erpAuthToken==null ||StringUtil.isEmpty(erpAuthToken.getJwt_token())||!userJwt.equals(erpAuthToken.getJwt_token())){
             responseError(ctx,ExceptionEumn.PERMISSION_GRANT_FAILED);
             return null;
         }
         //再次保存到Redis中，重新刷新过期时间
         String jsonString = JSON.toJSONString(erpAuthToken);
-        authService.saveToken(user.getJti(),jsonString,tokenValiditySeconds);
+        authService.saveToken(user.getJti(),user.getUid(),jsonString,tokenValiditySeconds);
         return null;
     }
 

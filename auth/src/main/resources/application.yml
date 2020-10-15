@@ -35,7 +35,7 @@ auth:
   tokenValiditySeconds: 7200  #token存储到redis的过期时间
   clientId: XcWebApp
   clientSecret: XcWebApp
-  cookieDomain: 192.168.3.245
+  cookieDomain: erp.targetmol.cn:9000
   cookieMaxAge: 7200    #cookie存活时间 -1表示关闭浏览器就释放cookie
 encrypt:
   key-store:
@@ -46,12 +46,12 @@ encrypt:
 eureka:
   client:
     service-url:
-      defaultZone:  http://192.168.3.245:10086/eureka
+      defaultZone:  http://192.168.3.13:10086/eureka
     registerWithEureka: true #服务注册开关
     fetchRegistry: true #服务发现开关
   instance:
     prefer-ip-address: true
-    ip-address: 192.168.3.245
+    ip-address: 127.0.0.1
 ribbon:
   ConnectionTimeout: 5000   #ribbon连接超时时长1000毫秒
   ReadTimeout: 6000  #ribbon读取超时时长 6000毫秒

@@ -51,9 +51,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         //通过用户管理模块调用获取用户信息
         ResponseEntity rs=userFeignClent.login(username);
+
         if(rs==null){
             throw new ErpExcetpion(ExceptionEumn.LOGIN_USERNAME_IS_FAIL);
         }
+        Integer code=(Integer) ((ResultMsg) rs.getBody()).getCode();
+        if(code==402) {
+           return null;
+        }
+
         LinkedHashMap<String, Object> result=(LinkedHashMap<String,Object>)((ResultMsg) rs.getBody()).getData();
         AuthUserExt usertext = new AuthUserExt();
         usertext.setUsername(result.get("username").toString());
@@ -73,9 +79,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         List<String> user_permission = new ArrayList<>();
         for ( LinkedHashMap<String,Object> item:permissions){
-            String code=(String)item.get("code");
-            if(StringUtil.isEmpty(code)==false){
-                user_permission.add(code);
+            String codex=(String)item.get("code");
+            if(StringUtil.isEmpty(codex)==false){
+                user_permission.add(codex);
             }
         }
 //        user_permission.add("company_list_all");

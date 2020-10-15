@@ -65,7 +65,7 @@ public enum  ExceptionEumn {
     FILE_DELETE_FAILD(400,"文件删除失败"),
     FILE_IS_EXPIRE(404,"文件已失效"),
     VERCODE_IS_ERR(400,"验证码错误"),
-    USER_IS_UNACTIVATED(401,"用户已停用"),
+    USER_IS_UNACTIVATED(402,"用户已停用"),
     ;
     private Integer code;
     private String msg;

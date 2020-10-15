@@ -25,7 +25,7 @@ eureka:
     eviction-interval-timer-in-ms: 4000
   client:
     service-url:
-      defaultZone:  http://192.168.3.245:10086/eureka
+      defaultZone:  http://192.168.3.13:10086/eureka
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1

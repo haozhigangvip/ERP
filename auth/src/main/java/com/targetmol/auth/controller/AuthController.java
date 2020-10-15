@@ -50,7 +50,7 @@ public class  AuthController {
     private RestTemplate restTemplate;
 
     @PostMapping("/login")
-    public ResponseEntity<ResultMsg> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<ResultMsg> login(@RequestBody LoginRequest loginRequest,HttpServletRequest request) {
         if(loginRequest == null || StringUtils.isEmpty(loginRequest.getUsername())){
             throw new ErpExcetpion(ExceptionEumn.LOGIN_USERNAME_IS_NULL);
         }
@@ -116,11 +116,13 @@ public class  AuthController {
 
     //登出
     @GetMapping("/logout")
-    public ResponseEntity<ResultMsg> logout() {
+    public ResponseEntity<ResultMsg> logout(HttpServletRequest request) {
         //从cookie中获取token
         String uid=getTokenFormCookie();
+       String jwt=request.getHeader("Authorization").replace("Bearer ","");
+        AuthUser user=jwtUtils.getUserInfo(jwt);
         //删除redis中的token
-        authService.delToken(uid);
+        authService.delToken(user.getJti(),user.getUid());
         //清除token
         clearCookie(uid);
         //返回成功
@@ -142,7 +144,7 @@ public class  AuthController {
 
         if(user.getJti()!=null){
             //拿身份令牌从redis中取出jwt令牌
-            ErpAuthToken erpAuthToken=authService.getUserToken(user.getJti());
+            ErpAuthToken erpAuthToken=authService.getUserToken(user.getJti(),user.getUid());
             if(erpAuthToken==null){
                 throw new ErpExcetpion(ExceptionEumn.PERMISSION_GRANT_FAILED);
             }
