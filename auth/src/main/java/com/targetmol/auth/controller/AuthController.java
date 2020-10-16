@@ -68,7 +68,7 @@ public class  AuthController {
         //用户身份令牌
         String access_token = erpAuthToken.getAccess_token();
         //将令牌存储到cookie
-        this.saveCookie(access_token);
+//        this.saveCookie(access_token);
         Map<String,String> mp=new HashMap<>();
         mp.put("access_token",erpAuthToken.getAccess_token());
         mp.put("jwt_token",erpAuthToken.getJwt_token());
@@ -124,7 +124,7 @@ public class  AuthController {
         //删除redis中的token
         authService.delToken(user.getJti(),user.getUid());
         //清除token
-        clearCookie(uid);
+//        clearCookie(uid);
         //返回成功
         return ResponseEntity.ok(ResultMsg.success());
     }
@@ -149,7 +149,7 @@ public class  AuthController {
                 throw new ErpExcetpion(ExceptionEumn.PERMISSION_GRANT_FAILED);
             }
              //重新更新cookie
-             saveCookie(user.getJti());
+//             saveCookie(user.getJti());
            }
 
         //返回JWT_TOKEN获取用户信息
