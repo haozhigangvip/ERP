@@ -34,6 +34,10 @@ public class FileManagerController{
 
         return ResponseEntity.ok(ResultMsg.success(fileManagerService.upload(file)));
     }
+    @GetMapping()
+    public ModelAndView view(){
+        return new  ModelAndView("/index");
+    }
     @GetMapping("/file")
     public ModelAndView  getfile(@RequestParam("id") String fileid){
         String url="http://"+tracker_servers+":"+file_port+"/"+fileid;
@@ -46,8 +50,8 @@ public class FileManagerController{
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ResultMsg> getShortfile(@PathVariable("id") String urlid, @RequestBody String key){
-        return ResponseEntity.ok(ResultMsg.success(fileManagerService.getShortUrl(urlid,key)));
+        public ResponseEntity<ResultMsg> getShortfile(@PathVariable("id") String urlid, @RequestBody() Map<String,String> mp){
+        return ResponseEntity.ok(ResultMsg.success(fileManagerService.getShortUrl(urlid,mp.get("key"))));
     }
 
 }
