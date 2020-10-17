@@ -5,6 +5,7 @@ import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.utils.NumberUtils;
 import com.targetmol.filemanager.dao.FileManagerDao;
 import com.targetmol.filemanager.domain.FileSystem;
+import com.targetmol.filemanager.domain.Shortfile;
 import org.apache.commons.lang3.StringUtils;
 import org.csource.fastdfs.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,9 +172,9 @@ public class FileManagerService {
             return date;
         }
     }
-    //根据短URL获取长URL
-    public String getShortUrl(String urlid, String key) {
-
+    //根据短URL下载文件
+    public Shortfile getShortUrl(String urlid, String key) {
+        Shortfile sf=new Shortfile();
         FileSystem fs=fileManagerDao.findByUrlid(urlid);
         if(fs==null){
             throw new ErpExcetpion(ExceptionEumn.FILE_IS_EXPIRE);
@@ -181,8 +182,9 @@ public class FileManagerService {
         if(key==null||fs.getKey()==null||!fs.getKey().equals(key)){
             throw new ErpExcetpion(ExceptionEumn.VERCODE_IS_ERR);
         }
-
-        return "http://"+tracker_servers+":"+file_port+"/"+fs.getFileId();
+        sf.setFileid(fs.getFileId());
+        sf.setB(downloadfile(sf.getFileid()));
+        return sf;
     }
 
 
@@ -202,5 +204,38 @@ public class FileManagerService {
             linkNo = linkNo + c;
         }
         return linkNo;
+    }
+
+    public byte[] downloadfile(String fileid) {
+
+            if (StringUtil.isEmpty(fileid)) {
+                throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
+            }
+            //初始化fastDFS的环境
+            initFdfsConfig();
+
+            try {
+                //创建trackerClient
+                TrackerClient trackerClient = new TrackerClient();
+                TrackerServer trackerServer = trackerClient.getConnection();
+                //得到storage服务器
+                StorageServer storeStorage = trackerClient.getStoreStorage(trackerServer);
+                //得到storage客户端
+                StorageClient1 storageClient1= new StorageClient1(trackerServer,storeStorage);
+
+                if(storageClient1==null){
+                    throw new ErpExcetpion(ExceptionEumn.FILE_IS_EXPIRE);
+                }
+                byte[] b =  storageClient1.download_file1(fileid);
+                if(b==null){
+                    throw new ErpExcetpion(ExceptionEumn.FILE_IS_EXPIRE);
+                }
+                return b;
+            }catch (Exception e){
+                e.printStackTrace();
+                throw new ErpExcetpion(ExceptionEumn.FILE_IS_EXPIRE);
+            }
+
+
     }
 }
