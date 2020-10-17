@@ -51,7 +51,7 @@ eureka:
     fetchRegistry: true #服务发现开关
   instance:
     prefer-ip-address: true
-    ip-address: 127.0.0.1
+    ip-address: 192.168.3.13
 ribbon:
   ConnectionTimeout: 5000   #ribbon连接超时时长1000毫秒
   ReadTimeout: 6000  #ribbon读取超时时长 6000毫秒
