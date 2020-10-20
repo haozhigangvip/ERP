@@ -33,7 +33,7 @@ zuul:
   prefix: /api  #添加路由前缀
   routes:
     account-service:
-      path: /account/**
+      path: /sales/**
       serviceId: ACCOUNT-SERVICE  #ID为该服务所对应的appliaction name
       strip-prefix: false
       sensitiveHeaders:   #不过滤任何cookie

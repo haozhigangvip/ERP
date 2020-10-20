@@ -66,6 +66,12 @@ public enum  ExceptionEumn {
     FILE_IS_EXPIRE(404,"文件已失效"),
     VERCODE_IS_ERR(400,"验证码错误"),
     USER_IS_UNACTIVATED(402,"用户已停用"),
+    RETURN_REASON_IS_NOT_FOUND(404,"退货原因不存在"),
+    ACCOUNT_GRADE_IS_NOT_FOUND(404,"客户等级不存在"),
+    ACCOUNT_TYPE_IS_NOT_FOUND(404,"客户类型不存在"),
+    PI_IS_NOT_FOUND(404,"该客户角色不存在"),
+    ORDER_SOURCE_IS_NOT_FOUND(404,"订单来源不存在"),
+    CREDIT_IS_NOT_FOUND(404,"信用等级不存在")
     ;
     private Integer code;
     private String msg;

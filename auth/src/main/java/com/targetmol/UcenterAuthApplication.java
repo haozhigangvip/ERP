@@ -15,7 +15,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EntityScan("com.targetmol.domain")//扫描实体类
-@MapperScan(basePackages= {"com.targetmol.account.dao"})
+@MapperScan(basePackages= {"com.targetmol.sales.dao"})
 @SpringBootApplication
 public class UcenterAuthApplication {
     public static void main(String[] args) {
