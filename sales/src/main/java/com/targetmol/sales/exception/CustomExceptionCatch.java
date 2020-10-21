@@ -6,6 +6,7 @@ import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.ResultMsg;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Administrator
  * @version 1.0
  **/
-//@ControllerAdvice//控制器增强
+@ControllerAdvice//控制器增强
 public class CustomExceptionCatch  extends ErpExcetpion {
     protected static ImmutableMap.Builder<Class<? extends Throwable>, ExceptionEumn> builder = ImmutableMap.builder();
     //定义map，配置异常类型所对应的错误代码

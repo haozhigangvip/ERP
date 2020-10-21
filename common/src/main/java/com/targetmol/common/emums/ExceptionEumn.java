@@ -46,7 +46,7 @@ public enum  ExceptionEumn {
     LOGIN_PASSWORD_IS_NULL(400,"密码不能为空"),
     NETWOK_IS_BUSY(500,"网络繁忙，请稍后再试"),
     LOGIN_USERNAME_IS_FAIL(400,"错误的用户名"),
-    PERMESSION_DENIED(401,"权限不足"),
+    PERMESSION_DENIED(420,"权限不足"),
     PERMESSION_PID_IS_NOT_FOUND(404,"权限父ID不存在"),
     SUB_PERMISSION_ALREADY_EXISTS(400,"该权限存在子权限，不能删除"),
     AUTO_LOGIN_FAILD(401,"自动登录失败"),
