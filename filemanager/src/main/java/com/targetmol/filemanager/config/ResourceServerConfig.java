@@ -1,8 +1,7 @@
-package com.targetmol.system.config;
+package com.targetmol.filemanager.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled=true,securedEnabled=true)//激活方法上的
-public class ResourceServerConfig  extends ResourceServerConfigurerAdapter {
+public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private static final String PUBLIC_KEY = "publickey.txt";
 
     //定义JwtTokenStore，使用jwt令牌
@@ -57,7 +56,7 @@ public class ResourceServerConfig  extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         //所有请求必须认证通过
        http.authorizeRequests()
-               .antMatchers("/api/sys/**","/sys/**").permitAll()     //放行
+               .antMatchers("/api/file/**","/file/**").permitAll()     //放行
                .anyRequest().authenticated();
 
     }

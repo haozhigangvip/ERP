@@ -32,7 +32,7 @@ public class Company  implements Serializable {
     private Date creatime;
     private Integer saleid;
     private Integer activated;
-    @JsonIgnore
+    @Transient
     private Integer def;
 
 
