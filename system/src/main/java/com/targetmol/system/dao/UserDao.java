@@ -19,7 +19,7 @@ public interface UserDao  extends BaseMapper<User> {
 
 
 
-    @Select("select uid,name from user where activated=1 and onsales=1")
+    @Select("select uid,name from user where activated=1 and issales=1")
     List<Map<String,Object>> getSales();
 
 

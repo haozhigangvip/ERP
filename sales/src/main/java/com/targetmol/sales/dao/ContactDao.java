@@ -35,7 +35,7 @@ public interface ContactDao extends BaseMapper<Contact> {
                 sqlstr +="where (a.contactid like CONCAT('%',#{key},'%') or a.name like CONCAT('%',#{key},'%'))";
             }
             if(showUnActived==null||showUnActived==false){
-                if(StringUtil.isEmpty(key)==false){
+                if(sqlstr.indexOf("where")>0){
                     sqlstr +=" and (a.activated<>0)";
                 }else{
                     sqlstr +=" where (a.activated<>0)";
@@ -50,7 +50,7 @@ public interface ContactDao extends BaseMapper<Contact> {
             }
 
             if(softby!=null){
-                 sqlstr+=" order by a." + softby+( desc?" DESC":" ASC");
+                     sqlstr+=" order by a." + softby+( desc?" DESC":" ASC");
             }
             return sqlstr;
         }

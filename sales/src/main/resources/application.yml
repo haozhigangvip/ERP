@@ -31,8 +31,7 @@ eureka:
   instance:
     prefer-ip-address: true
     #ip-address:  ${spring.cloud.client.ip-address}
-    ip-address: 192.168.3.13
-    hostname: 192.168.3.13
+    ip-address: ${host}
 ribbon:
   MaxAutoRetries: 2 #最大重试次数，当Eureka中可以找到服务，但是服务连不上时将会重试，如果eureka中找不到服务则直接走断路器
   MaxAutoRetriesNextServer: 3 #切换实例的重试次数

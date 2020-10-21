@@ -1,5 +1,6 @@
 package com.targetmol;
 import com.targetmol.common.filter.FeignClientFilter;
+import com.targetmol.common.utils.JwtUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -14,6 +15,11 @@ import tk.mybatis.spring.annotation.MapperScan;
 public class SalesApplication {
     public static void main(String[] args) {
         SpringApplication.run(SalesApplication.class,args);
+    }
+
+    @Bean
+    public JwtUtils jwtUtils(){
+        return new JwtUtils();
     }
 
     @Bean

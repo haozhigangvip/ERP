@@ -15,5 +15,5 @@ eureka:
   instance:
     prefer-ip-address: true
     #ip-address:  ${spring.cloud.client.ip-address}
-    ip-address:  192.168.3.13
+    ip-address:  ${host}
     #hostname:  ${spring.cloud.client.ip-address}

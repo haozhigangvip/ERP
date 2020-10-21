@@ -41,7 +41,7 @@ public class UserController extends BaseController {
             @RequestParam(value="desc",defaultValue = "false") Boolean desc,
             @RequestParam(value="key",required = false) String key,
             //active属性：0 所有 ，1仅看已激活 ，2仅看未激活
-            @RequestParam(value="active" ,defaultValue="1") Integer active,
+            @RequestParam(value="active" ,defaultValue="0") Integer active,
             @RequestParam(value="showsales" ,defaultValue="false")Boolean showsales
     ){
 
