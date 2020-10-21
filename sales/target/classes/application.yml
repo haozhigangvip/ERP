@@ -1,14 +1,14 @@
 server:
   port: 8082
   servlet:
-    path: /account
+    path: /sales
 logging:
   level:
     com.targetmol:  info
 
 spring:
   application:
-    name: account-service
+    name: sales-service
   datasource:
     #driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver 11111
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -30,7 +30,7 @@ eureka:
     fetchRegistry: true #  服务发现开关
   instance:
     prefer-ip-address: true
-    ip-address: 192.168.3.13
+    ip-address: 192.168.3.13 #212313
 ribbon:
   MaxAutoRetries: 2 #最大重试次数，当Eureka中可以找到服务，但是服务连不上时将会重试，如果eureka中找不到服务则直接走断路器
   MaxAutoRetriesNextServer: 3 #切换实例的重试次数
