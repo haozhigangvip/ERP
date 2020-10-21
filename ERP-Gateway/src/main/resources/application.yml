@@ -28,9 +28,9 @@ eureka:
       defaultZone:  http://192.168.3.13:10086/eureka
   instance:
     prefer-ip-address: true
-    #ip-address:  ${spring.cloud.client.ip-address}
-    ip-address:  192.168.3.245
-    #hostname:  ${spring.cloud.client.ip-address}
+    hostname: 192.168.3.13
+    ip-address: 192.168.3.13
+
 zuul:
   prefix: /api  #添加路由前缀
   routes:
