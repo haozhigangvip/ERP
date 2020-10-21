@@ -40,7 +40,8 @@ eureka:
       defaultZone:  http://192.168.3.13:10086/eureka
   instance:
     prefer-ip-address: true
-    ip-address: localhost
+    ip-address:  ${spring.cloud.client.ip-address}
+    hostname:  ${spring.cloud.client.ip-address}
 ribbon:
   ConnectionTimeout: 5000   #ribbon连接超时时长1000毫秒
   ReadTimeout: 6000  #ribbon读取超时时长 6000毫秒

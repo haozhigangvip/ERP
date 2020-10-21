@@ -50,8 +50,8 @@ eureka:
     registerWithEureka: true #服务注册开关
     fetchRegistry: true #服务发现开关
   instance:
-    prefer-ip-address: true
-    ip-address: localhost
+    ip-address:  ${spring.cloud.client.ip-address}
+    hostname:  ${spring.cloud.client.ip-address}
 ribbon:
   ConnectionTimeout: 5000   #ribbon连接超时时长1000毫秒
   ReadTimeout: 6000  #ribbon读取超时时长 6000毫秒

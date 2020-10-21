@@ -40,7 +40,8 @@ eureka:
 
   instance:
     prefer-ip-address: true
-    ip-address: localhost
+    ip-address:  ${spring.cloud.client.ip-address}
+    hostname:  ${spring.cloud.client.ip-address}
 jwt:
   config:
     key: targetmol  #jwt 私钥
