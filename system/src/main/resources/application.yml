@@ -40,7 +40,7 @@ eureka:
 
   instance:
     prefer-ip-address: true
-    ip-address: 192.168.3.13
+    ip-address: localhost
 jwt:
   config:
     key: targetmol  #jwt 私钥
