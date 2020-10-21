@@ -29,7 +29,7 @@ eureka:
   instance:
     prefer-ip-address: true
     #ip-address:  ${spring.cloud.client.ip-address}
-    ip-address:  192.168.3.13
+    ip-address:  192.168.3.245
     #hostname:  ${spring.cloud.client.ip-address}
 zuul:
   prefix: /api  #添加路由前缀
@@ -83,7 +83,7 @@ data-filter:
   authPath: #需要验证token的请求地址,可设置多个,会触发JwtAuthPreFilter
     - /api/sys/**
   userLoginPath: #登录请求地址,可设置多个,会触发LoginAddJwtPostFilter
-    - /api/sales/**
+    - /api/**
     - /api/oss/login/**
     - /api/oss/logout/**
     - /api/oss/ujwt
