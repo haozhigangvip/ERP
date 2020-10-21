@@ -50,7 +50,8 @@ eureka:
     registerWithEureka: true #服务注册开关
     fetchRegistry: true #服务发现开关
   instance:
-    ip-address:  ${spring.cloud.client.ip-address}
+    #ip-address:  ${spring.cloud.client.ip-address}
+    ip-address:  192.168.3.13
     hostname:  ${spring.cloud.client.ip-address}
 ribbon:
   ConnectionTimeout: 5000   #ribbon连接超时时长1000毫秒

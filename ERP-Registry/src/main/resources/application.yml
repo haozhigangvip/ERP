@@ -14,5 +14,6 @@ eureka:
     eviction-interval-timer-in-ms: 60000    #服务注册表清理间隔（单位毫秒，默认就是60*1000）
   instance:
     prefer-ip-address: true
-    ip-address:  ${spring.cloud.client.ip-address}
+    #ip-address:  ${spring.cloud.client.ip-address}
+    ip-address:  192.168.3.13
     hostname:  ${spring.cloud.client.ip-address}
