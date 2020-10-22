@@ -41,6 +41,8 @@ public class FileManagerService {
     String shortUrl;
     @Value("${tsbio.fastdfs.file_port}")
     String file_port;
+    @Value("${tsbio.fastdfs.longurl}")
+    String longUrl;
 
     @Autowired
     FileManagerDao fileManagerDao;
@@ -65,7 +67,7 @@ public class FileManagerService {
         fileSystem.setExpireAt(adddate(date,expireAt));
         fileSystem.setFileName(multipartFile.getOriginalFilename());
         fileSystem.setFileType(multipartFile.getContentType());
-
+        fileSystem.setLongUrl(longUrl+fileId);
         fileSystem.setUrlId(urlid);
 
         fileSystem.setShortUrl(shortUrl+urlid);

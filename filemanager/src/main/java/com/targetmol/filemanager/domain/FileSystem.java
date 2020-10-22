@@ -40,6 +40,17 @@ public class FileSystem {
     private Date expireAt;
     //短URL
     private String shortUrl;
+    //短URL
+    private String longUrl;
+
+
+    public String getLongUrl() {
+        return longUrl;
+    }
+
+    public void setLongUrl(String longUrl) {
+        this.longUrl = longUrl;
+    }
 
     public Date getCreatime() {
         return creatime;

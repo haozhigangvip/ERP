@@ -58,3 +58,4 @@ tsbio:
     file_port: 8888   #下载文件端口
     expireAt: 30  #网页过期时间（天）
     shortUrl: http://tar.red:66/
+    longUrl: http://erp.targetmol.cn:9000/f/
