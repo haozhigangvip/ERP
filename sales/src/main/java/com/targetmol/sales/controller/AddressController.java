@@ -18,9 +18,9 @@ public class AddressController {
     private AddressServcie addressServcie;
 
     //按ID查询地址
-    @GetMapping("{addrid}")
-    public ResponseEntity<ResultMsg> findbyContactid(@PathVariable("addrid") Integer addrid){
-        return ResponseEntity.ok(ResultMsg.success(addressServcie.findByContId(addrid)));
+    @GetMapping("{id}")
+    public ResponseEntity<ResultMsg> findbyContactid(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(ResultMsg.success(addressServcie.findbyId(id)));
     }
 
 

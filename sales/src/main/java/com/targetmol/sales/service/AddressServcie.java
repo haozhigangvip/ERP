@@ -58,13 +58,15 @@ public class AddressServcie {
         return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
     }
 
-    //按contid查询所有Address
-    public List<Address> findByContId(Integer contID){
+    //按id查询所有Address
+    public List<Address> findByContId(Integer id){
         Example example=new Example(Address.class);
-        example.and(example.createCriteria().andEqualTo("contactid",contID)
+        example.and(example.createCriteria().andEqualTo("contactid",id)
                 .andEqualTo("activated",1));
         return addressDao.selectByExample(example);
     }
+
+
 
     //按id查询address
     public Address findbyAddrId(Integer addrid){
@@ -133,5 +135,9 @@ public class AddressServcie {
         if(addressDao.updateByPrimaryKeySelective(address)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
         }
+    }
+
+    public Address findbyId(Integer id) {
+       return( addressDao.selectByPrimaryKey(id));
     }
 }

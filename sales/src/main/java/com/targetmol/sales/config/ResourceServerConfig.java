@@ -46,6 +46,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
      * 获取非对称加密公钥 Key
      * @return 公钥 Key dfsfds
      */
+
     private String getPubKey() {
         Resource resource = new ClassPathResource(PUBLIC_KEY);
         try {

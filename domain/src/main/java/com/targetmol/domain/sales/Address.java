@@ -27,6 +27,30 @@ public class Address  implements Serializable {
     @Column(name = "defa")
     private Integer def;
     private Integer activated;
+    @Transient
+    private String detaAddress;
+    @Transient
+    private String detaAddress2;
+
+    public String getDetaAddress() {
+        if(street!=null){
+            return (country + " " + state + " " + city +" " + street);
+        }else
+        {
+            return street;
+        }
+    }
+
+    public String getDetaAddress2() {
+        if(street2!=null){
+            return (country + " " + state + " " + city +" " + street2);
+        }else
+        {
+            return street2;
+        }
+    }
+
+
 
 
     public Integer getDef() {
