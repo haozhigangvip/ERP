@@ -32,7 +32,7 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 auth:
-  tokenValiditySeconds: 7200  #token存储到redis的过期时间
+  tokenValiditySeconds: 86400  #token存储到redis的过期时间,24小时
   clientId: XcWebApp
   clientSecret: XcWebApp
   cookieDomain: erp.targetmol.cn:9000

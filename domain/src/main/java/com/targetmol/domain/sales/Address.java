@@ -1,6 +1,7 @@
 package com.targetmol.domain.sales;
 
 import tk.mybatis.mapper.annotation.KeySql;
+import tk.mybatis.mapper.util.StringUtil;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,7 +34,7 @@ public class Address  implements Serializable {
     private String detaAddress2;
 
     public String getDetaAddress() {
-        if(street!=null){
+        if(StringUtil.isEmpty(street)==false){
             return (country + " " + state + " " + city +" " + street);
         }else
         {
@@ -42,7 +43,7 @@ public class Address  implements Serializable {
     }
 
     public String getDetaAddress2() {
-        if(street2!=null){
+        if(StringUtil.isEmpty(street2)==false){
             return (country + " " + state + " " + city +" " + street2);
         }else
         {
