@@ -47,7 +47,7 @@ public class FileManagerController{
 //        return  vw;
 //    }
     //查看图片
-    @GetMapping(value = "img",produces ={ MediaType.IMAGE_JPEG_VALUE,MediaType.APPLICATION_PDF_VALUE})
+    @GetMapping(value = "img",produces ={ MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_GIF_VALUE,MediaType.IMAGE_PNG_VALUE,MediaType.APPLICATION_PDF_VALUE})
     public byte[]  showimg(@RequestParam("id") String  fileid) {
        byte[] b= fileManagerService.downloadfile(fileid);
         return b;
