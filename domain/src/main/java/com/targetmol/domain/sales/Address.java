@@ -35,7 +35,7 @@ public class Address  implements Serializable {
 
     public String getDetaAddress() {
         if(StringUtil.isEmpty(street)==false){
-            return (country + " " + state + " " + city +" " + street);
+            return (country=="China"?"中国":country + state + city + street);
         }else
         {
             return street;
@@ -44,7 +44,7 @@ public class Address  implements Serializable {
 
     public String getDetaAddress2() {
         if(StringUtil.isEmpty(street2)==false){
-            return (country + " " + state + " " + city +" " + street2);
+            return (country=="China"?"中国":country +  state + city + street2);
         }else
         {
             return street2;
