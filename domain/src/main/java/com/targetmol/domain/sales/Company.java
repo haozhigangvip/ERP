@@ -32,13 +32,21 @@ public class Company  implements Serializable {
     private Date creatime;
     private Integer saleid;
     private Integer activated;
+    private Integer imgurl;
+
     @Transient
     private Integer def;
 
 
     private List<Contact> contacts;
 
+    public Integer getImgurl() {
+        return imgurl;
+    }
 
+    public void setImgurl(Integer imgurl) {
+        this.imgurl = imgurl;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
