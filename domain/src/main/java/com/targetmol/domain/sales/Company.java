@@ -32,7 +32,7 @@ public class Company  implements Serializable {
     private Date creatime;
     private Integer saleid;
     private Integer activated;
-    private Integer imgurl;
+    private Integer fileurl;
 
     @Transient
     private Integer def;
@@ -40,12 +40,12 @@ public class Company  implements Serializable {
 
     private List<Contact> contacts;
 
-    public Integer getImgurl() {
-        return imgurl;
+    public Integer getFileurl() {
+        return fileurl;
     }
 
-    public void setImgurl(Integer imgurl) {
-        this.imgurl = imgurl;
+    public void setFileurl(Integer fileurl) {
+        this.fileurl = fileurl;
     }
 
     public static long getSerialVersionUID() {
