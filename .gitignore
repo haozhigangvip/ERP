@@ -12,10 +12,8 @@ gen
 ERP-Gateway/target/
 ERP-Registry/target/
 sales/target/
-auth/src/test/java/com/targetmol/auth/
 auth/target/
 common/target/
 domain/target/
 system/target/
-account/target/
 filemanager/target/

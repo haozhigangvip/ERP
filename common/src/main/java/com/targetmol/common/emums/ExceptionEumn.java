@@ -71,7 +71,8 @@ public enum  ExceptionEumn {
     ACCOUNT_TYPE_IS_NOT_FOUND(404,"客户类型不存在"),
     PI_IS_NOT_FOUND(404,"该客户角色不存在"),
     ORDER_SOURCE_IS_NOT_FOUND(404,"订单来源不存在"),
-    CREDIT_IS_NOT_FOUND(404,"信用等级不存在")
+    CREDIT_IS_NOT_FOUND(404,"信用等级不存在"),
+    INQURIYORDER_IS_NOT_FOUND(404,"询价单不存在"),
     ;
     private Integer code;
     private String msg;
