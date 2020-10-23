@@ -1,4 +1,4 @@
-package com.targetmol.sales.exception;
+package com.targetmol.system.exception;
 
 
 import com.google.common.collect.ImmutableMap;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @version 1.0
  **/
 @ControllerAdvice//控制器增强
-public class CustomExceptionCatch  extends ErpExcetpion {
+public class CustomExceptionCatch extends ErpExcetpion {
     protected static ImmutableMap.Builder<Class<? extends Throwable>, ExceptionEumn> builder = ImmutableMap.builder();
     //定义map，配置异常类型所对应的错误代码
     private static ImmutableMap<Class<? extends Throwable>,ExceptionEumn> EXCEPTIONS;
