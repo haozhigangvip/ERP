@@ -37,4 +37,12 @@ public class Oauth2Util {
         }
         return map;
     }
+    public static Integer getUserid(HttpServletRequest request){
+        Map<String,String> mp=getJwtClaimsFromHeader(request);
+        if(mp!=null && mp.get("uid")!=null){
+           return Integer.parseInt(String.valueOf(mp.get("uid")));
+        }
+        return null;
+    }
+
 }

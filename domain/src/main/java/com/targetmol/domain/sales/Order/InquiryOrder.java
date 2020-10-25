@@ -1,16 +1,20 @@
 package com.targetmol.domain.sales.Order;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.targetmol.utils.NumberUtils;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.*;
 import java.util.Currency;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 询价单
  */
 
 @Table(name="inquiry_order")
+@JsonIgnoreProperties(value = { "handler" })
 public class InquiryOrder {
     @Id
     @KeySql(useGeneratedKeys= true)
@@ -35,15 +39,29 @@ public class InquiryOrder {
     private Double  amount;     //订单不含税金额
     private Double  discount;   //订单折扣金额
     private Double  discountrate;//订单折扣率
-    private Double  taxamount;  //订单含税金额
     private Double  taxrate;    //订单税率
-    @Transient
-    private Double tax;        //订单税额
     private Double deliveryfee;//订单运费
-    private String Currency;    //币种
+    private String currencyod;    //币种
     private String deliverymethod;//快递方式
     private String courier;     //快递公司
     private String note;        //订单备注
+
+    @Transient
+    private Double  taxamount;  //订单含税金额
+    @Transient
+    private Double tax;        //订单税额
+
+    @Transient
+    private List<InquiryOrderItem> inquiryOrderItemList;
+
+
+    public Double getTaxamount() {
+        return NumberUtils.round(amount==null?0:amount*(taxrate==null?0:taxrate/100),2);
+    }
+
+    public Double getTax() {
+        return NumberUtils.round(amount==null?0:amount+(amount==null?0:amount*(taxrate==null?0:taxrate/100)),2);
+    }
 
 
     public Integer getId() {
@@ -198,13 +216,6 @@ public class InquiryOrder {
         this.discountrate = discountrate;
     }
 
-    public Double getTaxamount() {
-        return taxamount;
-    }
-
-    public void setTaxamount(Double taxamount) {
-        this.taxamount = taxamount;
-    }
 
     public Double getTaxrate() {
         return taxrate;
@@ -212,14 +223,6 @@ public class InquiryOrder {
 
     public void setTaxrate(Double taxrate) {
         this.taxrate = taxrate;
-    }
-
-    public Double getTax() {
-        return tax;
-    }
-
-    public void setTax(Double tax) {
-        this.tax = tax;
     }
 
     public Double getDeliveryfee() {
@@ -230,12 +233,12 @@ public class InquiryOrder {
         this.deliveryfee = deliveryfee;
     }
 
-    public String getCurrency() {
-        return Currency;
+    public String getCurrencyod() {
+        return currencyod;
     }
 
-    public void setCurrency(String currency) {
-        Currency = currency;
+    public void setCurrencyod(String currencyod) {
+        this.currencyod = currencyod;
     }
 
     public String getDeliverymethod() {
@@ -260,5 +263,13 @@ public class InquiryOrder {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public List<InquiryOrderItem> getInquiryOrderItemList() {
+        return inquiryOrderItemList;
+    }
+
+    public void setInquiryOrderItemList(List<InquiryOrderItem> inquiryOrderItemList) {
+        this.inquiryOrderItemList = inquiryOrderItemList;
     }
 }

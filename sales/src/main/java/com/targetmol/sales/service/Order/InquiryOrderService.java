@@ -1,11 +1,18 @@
 package com.targetmol.sales.service.Order;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
+import com.targetmol.common.vo.PageResult;
+import com.targetmol.domain.sales.Account.Address;
 import com.targetmol.domain.sales.Order.InquiryOrder;
 import com.targetmol.sales.dao.Order.InquiryOrderDao;
+import com.targetmol.sales.dao.Order.InquiryOrderItemDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
@@ -14,29 +21,71 @@ import java.util.List;
 public class InquiryOrderService {
     @Autowired
     private InquiryOrderDao inquiryOrderDao;
-    //查找所有
-    public List<InquiryOrder> findAll() {
-        return inquiryOrderDao.selectAll();
+    @Autowired
+    private InquiryOrderItemDao inquiryOrderItemDao;
+
+    //查找所有询价单
+    public PageResult<InquiryOrder> findAll(String key,Integer page,Integer pageSize,String softBy,Boolean desc) {
+
+        //分页
+        Page pg= PageHelper.startPage(page,pageSize);
+        //过滤
+        Example example=new Example(Address.class);
+        Example.Criteria criteria1=example.createCriteria();
+        Example.Criteria criteria2=example.createCriteria();
+        Example.Criteria criteria3=example.createCriteria();
+
+        if(StringUtil.isNotEmpty(key)){
+            criteria1.orLike("companyname","%"+key.trim()+"%")
+                    .orLike("orderid","%"+key.toUpperCase().trim()+"%");
+            example.and(criteria1);
+        }
+        //排序
+        if(StringUtil.isNotEmpty(softBy)) {
+            String orderByClause=softBy+(desc ? " DESC" : " ASC");
+            example.setOrderByClause(orderByClause);
+        }
+        //进行查询
+        List<InquiryOrder>  list=inquiryOrderDao.selectByExample(example);
+        //封装到pageHelper
+        PageInfo<InquiryOrder> pageInfo=new PageInfo<InquiryOrder>(pg.getResult());
+        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
     }
 
     //根据ID查找
     public InquiryOrder findById(Integer id) {
-        return inquiryOrderDao.selectByPrimaryKey(id);
+        InquiryOrder result=inquiryOrderDao.findInquiryOrderById(id);
+        return result;
     }
 
-    //添加
+    //添加询价单
     public void addnew(InquiryOrder inquiryOrder) {
-      checkInquriyOrder(inquiryOrder);
-        if(inquiryOrderDao.insert(inquiryOrder)!=1){
+        //检查参数
+        checkInquriyOrder(inquiryOrder);
+        //添加询价单
+        if(inquiryOrderDao.insertSelective(inquiryOrder)!=1){
+            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+        }
+        //设置订单ID，并保存
+        inquiryOrder.setOrderid("INQ"+inquiryOrder.getId());
+        if(inquiryOrderDao.updateByPrimaryKeySelective(inquiryOrder)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
     }
+
     //修改
     public void update(InquiryOrder inquiryOrder) {
+        //检查参数
         checkInquriyOrder(inquiryOrder);
-        if(inquiryOrderDao.selectByPrimaryKey(inquiryOrder.getId())==null){
+        //查询该询价单是否存在
+        InquiryOrder oldInquiryOrder=inquiryOrderDao.selectByPrimaryKey(inquiryOrder.getId());
+        if(oldInquiryOrder==null){
             throw new ErpExcetpion(ExceptionEumn.PI_IS_NOT_FOUND);
         }
+        //设置ID及ORDERID不可修改
+        inquiryOrder.setId(oldInquiryOrder.getId());
+        inquiryOrder.setOrderid(oldInquiryOrder.getOrderid());
+        //保存询价单
         if(inquiryOrderDao.updateByPrimaryKey(inquiryOrder)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
@@ -44,9 +93,11 @@ public class InquiryOrderService {
     }
     //删除
     public void delete(Integer id) {
+        //查询询价单ID是否存在
         if(inquiryOrderDao.selectByPrimaryKey(id)==null){
             throw new ErpExcetpion(ExceptionEumn.INQURIYORDER_IS_NOT_FOUND);
         }
+        //删除询价单
         if(inquiryOrderDao.deleteByPrimaryKey(id)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
         }

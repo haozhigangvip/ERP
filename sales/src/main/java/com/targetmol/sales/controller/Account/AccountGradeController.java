@@ -29,7 +29,7 @@ public class AccountGradeController {
     }
     //根据ID查找
     @GetMapping("{id}")
-    public ResponseEntity<ResultMsg> findById(@PathParam("id") Integer id){
+    public ResponseEntity<ResultMsg> findById(@PathVariable("id") Integer id){
 
         return ResponseEntity.ok(ResultMsg.success(accountGradeService.findById(id)));
     }
@@ -42,7 +42,7 @@ public class AccountGradeController {
 
     //修改
     @PutMapping("{id}")
-    public ResponseEntity<ResultMsg> update(@PathParam("id") Integer id, @RequestBody AccountGrade accountGrade){
+    public ResponseEntity<ResultMsg> update(@PathVariable("id") Integer id, @RequestBody AccountGrade accountGrade){
         accountGrade.setId(id);
         accountGradeService.update(accountGrade);
         return ResponseEntity.ok(ResultMsg.success());
@@ -50,7 +50,7 @@ public class AccountGradeController {
 
     //删除
     @DeleteMapping("{id}")
-    public ResponseEntity<ResultMsg> delete(@PathParam("id") Integer id){
+    public ResponseEntity<ResultMsg> delete(@PathVariable("id") Integer id){
         accountGradeService.delete(id);
         return ResponseEntity.ok(ResultMsg.success());
     }

@@ -2,6 +2,7 @@ package com.targetmol.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -74,5 +75,11 @@ public class NumberUtils {
             orderId = orderId < 0 ? -orderId : orderId; //String.hashCode() 值会为空
             return orderId;
         }
+
+    //保留小数
+    public static Double round(Double value, Integer tenth){
+        return   new BigDecimal(value).setScale(tenth,BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
 
 }

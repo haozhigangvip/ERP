@@ -29,7 +29,7 @@ public class AccountTypeController {
     }
     //根据ID查找
     @GetMapping("{id}")
-    public ResponseEntity<ResultMsg> findById(@PathParam("id") Integer id){
+    public ResponseEntity<ResultMsg> findById(@PathVariable("id") Integer id){
 
         return ResponseEntity.ok(ResultMsg.success(accountTypeService.findById(id)));
     }
@@ -42,7 +42,7 @@ public class AccountTypeController {
 
     //修改
     @PutMapping("{id}")
-    public ResponseEntity<ResultMsg> update(@PathParam("id") Integer id, @RequestBody AccountType accountType){
+    public ResponseEntity<ResultMsg> update(@PathVariable("id") Integer id, @RequestBody AccountType accountType){
         accountType.setId(id);
         accountTypeService.update(accountType);
         return ResponseEntity.ok(ResultMsg.success());
@@ -50,7 +50,7 @@ public class AccountTypeController {
 
     //删除
     @DeleteMapping("{id}")
-    public ResponseEntity<ResultMsg> delete(@PathParam("id") Integer id){
+    public ResponseEntity<ResultMsg> delete(@PathVariable("id") Integer id){
         accountTypeService.delete(id);
         return ResponseEntity.ok(ResultMsg.success());
     }

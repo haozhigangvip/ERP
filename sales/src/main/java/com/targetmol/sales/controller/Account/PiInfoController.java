@@ -29,7 +29,7 @@ public class PiInfoController {
     }
     //根据ID查找
     @GetMapping("{id}")
-    public ResponseEntity<ResultMsg> findById(@PathParam("id") Integer id){
+    public ResponseEntity<ResultMsg> findById(@PathVariable("id") Integer id){
 
         return ResponseEntity.ok(ResultMsg.success(piInfoService.findById(id)));
     }
@@ -42,7 +42,7 @@ public class PiInfoController {
 
     //修改
     @PutMapping("{id}")
-    public ResponseEntity<ResultMsg> update(@PathParam("id") Integer id, @RequestBody PiInfo piInfo){
+    public ResponseEntity<ResultMsg> update(@PathVariable("id") Integer id, @RequestBody PiInfo piInfo){
         piInfo.setId(id);
         piInfoService.update(piInfo);
         return ResponseEntity.ok(ResultMsg.success());
@@ -50,7 +50,7 @@ public class PiInfoController {
 
     //删除
     @DeleteMapping("{id}")
-    public ResponseEntity<ResultMsg> delete(@PathParam("id") Integer id){
+    public ResponseEntity<ResultMsg> delete(@PathVariable("id") Integer id){
         piInfoService.delete(id);
         return ResponseEntity.ok(ResultMsg.success());
     }

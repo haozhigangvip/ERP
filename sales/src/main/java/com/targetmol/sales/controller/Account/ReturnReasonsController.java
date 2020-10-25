@@ -29,7 +29,7 @@ public class ReturnReasonsController {
     }
     //根据ID查找
     @GetMapping("{id}")
-    public ResponseEntity<ResultMsg> findById(@PathParam("id") Integer id){
+    public ResponseEntity<ResultMsg> findById(@PathVariable("id") Integer id){
 
         return ResponseEntity.ok(ResultMsg.success(returnReasonsService.findById(id)));
     }
@@ -42,7 +42,7 @@ public class ReturnReasonsController {
 
     //修改
     @PutMapping("{id}")
-    public ResponseEntity<ResultMsg> update(@PathParam("id") Integer id,@RequestBody ReturnReasons returnReasons){
+    public ResponseEntity<ResultMsg> update(@PathVariable("id") Integer id,@RequestBody ReturnReasons returnReasons){
         returnReasons.setId(id);
         returnReasonsService.update(returnReasons);
         return ResponseEntity.ok(ResultMsg.success());
@@ -50,7 +50,7 @@ public class ReturnReasonsController {
 
     //删除
     @DeleteMapping("{id}")
-    public ResponseEntity<ResultMsg> delete(@PathParam("id") Integer id){
+    public ResponseEntity<ResultMsg> delete(@PathVariable("id") Integer id){
         returnReasonsService.delete(id);
         return ResponseEntity.ok(ResultMsg.success());
     }
