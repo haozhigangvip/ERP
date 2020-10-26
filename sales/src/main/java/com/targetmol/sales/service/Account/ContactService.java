@@ -232,7 +232,7 @@ public class ContactService {
     }
 
     public void assignCompany(Integer contid, Map<String, Object> map) throws Exception {
-        if(contid==null ||map==null|| map.get("contacts")==null){
+        if(contid==null ||map==null|| map.get("companys")==null){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
         if(findByContId(contid)==null){
