@@ -244,6 +244,8 @@ public class ContactService {
         for(Map<String,Object> mp:maps){
             Integer companyid=(Integer)mp.get("companyid");
             Integer def=(Integer)mp.get("def");
+            def=def==null?0:1;
+
             Company company= companyService.findById(companyid);
             if(company==null){
                 throw new ErpExcetpion(ExceptionEumn.BIND_COMPANY_IS_NOT_FOUND);
