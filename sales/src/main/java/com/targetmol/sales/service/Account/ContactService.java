@@ -244,10 +244,15 @@ public class ContactService {
         if(findByContId(contid)==null){
             throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
         }
+
         //判断公司是否存在
         Company company= companyService.findById(companyid);
         if(company==null){
             throw new ErpExcetpion(ExceptionEumn.BIND_COMPANY_IS_NOT_FOUND);
+        }
+        //判断绑定的公司是否已经存在，如果存在就跳出
+        if(contactCompanyDao.findByContidAndCompanyId(contid,companyid)!=null){
+            return;
         }
 
         //判断是否为默认公司，如果是，去掉之前的默认公司
@@ -263,6 +268,7 @@ public class ContactService {
         if(contactCompanyDao.insert(contact_company)!=1){
             throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
+
     }
 
     //解绑公司

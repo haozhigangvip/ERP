@@ -17,7 +17,7 @@ public interface ContactCompanyDao  extends BaseMapper<Contact_Company> {
     @Select("select * from contact_company where  contactid=#{contid} and companyid=#{companyid}")
     Contact_Company findByContidAndCompanyId(Integer contid,Integer companyid);
 
-    //根据contid，跟新第一个为默认公司
-    @Update("update  contact_company set def=1 where  contactid=#{contid}  limit 1")
+    //根据contid，更新最后的绑定日期的公司为默认公司
+    @Update("update  contact_company set def=1 where  contactid=#{contid}   order by creatime desc limit 1")
     Integer updateDefa21CompanyContid(Integer contid);
 }
