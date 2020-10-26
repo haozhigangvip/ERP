@@ -78,13 +78,20 @@ public class ContactController {
         return ResponseEntity.ok(ResultMsg.success()) ;
     }
 
-    //绑定解绑公司
+    //绑定公司
     @PutMapping("{contid}/assignCompany")
     public ResponseEntity<ResultMsg> assignCompany(@PathVariable("contid" )Integer contid,
-                                                   @RequestBody List<Map<String,Object>> maps) throws Exception{
-        contactService.assignCompany(contid,maps);
+                                                   @RequestBody Map<String,Object> map) throws Exception{
+        contactService.assignCompany(contid,map);
         return ResponseEntity.ok(ResultMsg.success()) ;
     }
 
+    //绑定公司
+    @PutMapping("{contid}/unassignCompany")
+    public ResponseEntity<ResultMsg> unassignCompany(@PathVariable("contid" )Integer contid,
+                                                   @RequestBody Map<String,Object> map){
+        contactService.unassignCompany(contid,map);
+        return ResponseEntity.ok(ResultMsg.success()) ;
+    }
 
 }

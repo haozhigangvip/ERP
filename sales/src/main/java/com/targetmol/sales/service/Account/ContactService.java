@@ -231,35 +231,59 @@ public class ContactService {
 
     }
 
-    public void assignCompany(Integer contid, List<Map<String, Object>> maps) throws Exception {
-        if(contid==null ||maps==null|| maps.size()<1){
+    //绑定公司
+    public void assignCompany(Integer contid,Map<String, Object> map) throws Exception {
+        Integer companyid=(Integer)map.get("companyid");
+        Integer def=(Integer)map.get("def");
+        def=def==null?0:def;
+
+        if(contid==null ||map==null|| map.get("companyid")==null){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
+        //判断联系人是否存在
         if(findByContId(contid)==null){
             throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
         }
-        //清除所有绑定联系人
-        contactCompanyDao.deleteByPrimaryKey(contid);
-        //重新绑定所有单位
-        for(Map<String,Object> mp:maps){
-            Integer companyid=(Integer)mp.get("companyid");
-            Integer def=(Integer)mp.get("def");
-            def=def==null?0:1;
-
-            Company company= companyService.findById(companyid);
-            if(company==null){
-                throw new ErpExcetpion(ExceptionEumn.BIND_COMPANY_IS_NOT_FOUND);
-            }
-            Contact_Company contact_company=new Contact_Company();
-            contact_company.setContactid(contid);
-            contact_company.setCompanyid(companyid);
-            contact_company.setDef(def);
-            if(contactCompanyDao.insert(contact_company)!=1){
-                throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
-            }
+        //判断公司是否存在
+        Company company= companyService.findById(companyid);
+        if(company==null){
+            throw new ErpExcetpion(ExceptionEumn.BIND_COMPANY_IS_NOT_FOUND);
         }
 
+        //判断是否为默认公司，如果是，去掉之前的默认公司
+        if(def==1){
+            if(contactCompanyDao.updateDef20CompanyByContId(contid)<0){
+                throw new ErpExcetpion(ExceptionEumn.ASSIGNCOMPANY_IS_FAIL);
+            }
+        }
+        Contact_Company contact_company=new Contact_Company();
+        contact_company.setContactid(contid);
+        contact_company.setCompanyid(companyid);
+        contact_company.setDef(def);
+        if(contactCompanyDao.insert(contact_company)!=1){
+            throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+        }
+    }
 
-
+    //解绑公司
+    public void unassignCompany(Integer contid, Map<String, Object> map) {
+        Integer companyid=(Integer)map.get("companyid");
+        if(contid==null ||map==null|| map.get("companyid")==null){
+            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
+        }
+        Contact_Company contact_company=contactCompanyDao.findByContidAndCompanyId(contid,companyid);
+        if(contact_company==null){
+            throw new ErpExcetpion(ExceptionEumn.ASSIGNCOMPANY_IS_NOT_FOUND);
+        }
+        //解绑公司
+        if(contactCompanyDao.delete(contact_company)<=0){
+            throw new ErpExcetpion(ExceptionEumn.ASSIGNCOMPANY_IS_FAIL);
+        }
+        //如果删除的公司为默认公司，指定剩余第一个公司为默认公司
+        if(contact_company.getDef()==1){
+            if(contactCompanyDao.updateDefa21CompanyContid(contid)<0){
+                throw new ErpExcetpion(ExceptionEumn.ASSIGNCOMPANY_IS_FAIL);
+            }
+        }
     }
 }

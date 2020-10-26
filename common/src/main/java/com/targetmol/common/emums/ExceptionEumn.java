@@ -74,6 +74,8 @@ public enum  ExceptionEumn {
     CREDIT_IS_NOT_FOUND(404,"信用等级不存在"),
     INQURIYORDER_IS_NOT_FOUND(404,"询价单不存在"),
     BIND_COMPANY_IS_NOT_FOUND(404,"绑定的公司ID不存在"),
+    ASSIGNCOMPANY_IS_FAIL(400,"绑定公司失败"),
+    ASSIGNCOMPANY_IS_NOT_FOUND(404,"没有绑定过该公司"),
     ;
     private Integer code;
     private String msg;
