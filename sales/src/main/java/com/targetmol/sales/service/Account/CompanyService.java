@@ -39,7 +39,7 @@ public class CompanyService {
 
 
     //查询所有Company
-    public PageResult<Company> findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer actived) {
+    public Object findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer actived) {
         //分页
         Page pg=PageHelper.startPage(page,pageSize);
         //过滤
@@ -67,7 +67,13 @@ public class CompanyService {
         }
         //封装到pageHelper
         PageInfo<Company> pageInfo=new PageInfo<>(pg.getResult());
-        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
+        if(pageSize==0){
+            return  list;
+
+        }else{
+            return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
+
+        }
     }
 
 
