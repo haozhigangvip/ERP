@@ -78,10 +78,10 @@ public class InquiryOrderService {
             Double price=item.getPrice();       //单价
             Double quantiy=item.getQuantiy();   //数量
 
-            //判断是否为赠品
-            if(item.getGifit()==1){
-
-            }
+//            //判断是否为赠品
+//            if(item.getGifit()==1){
+//
+//            }
             Double discount=item.getDiscount();//折扣金额
             item.setAmount(NumberUtils.round(price*quantiy-discount,2));
 
