@@ -36,10 +36,11 @@ public class InquiryOrder {
     private Date estimatedate;  //预计到货日期
     private Date creatime;      //创建时间
     private String  orderstate; //订单状态
-    private Double subtotal; //订单明细合计
-    private Double  amount;     //订单不含税总金额
-    private Double tax;         //订单税额
-    private Double deliveryfee;//订单运费
+    private Double  amount;     //订单总金额
+    private Double itemtotal;    //订单明细无税金额
+    private Double itemtotaltax; //订单明细汉水金额
+    private Double deliveryfee;  //订单运费
+    private Double adjustment;   //订单调整金额
     private String currencyod;    //币种
     private String deliverymethod;//快递方式
     private String courier;     //快递公司
@@ -50,20 +51,28 @@ public class InquiryOrder {
     private List<InquiryOrderItem> inquiryOrderItemList;
 
 
-    public Double getTax() {
-        return tax;
+    public Double getAdjustment() {
+        return adjustment;
     }
 
-    public void setTax(Double tax) {
-        this.tax = tax;
+    public void setAdjustment(Double adjustment) {
+        this.adjustment = adjustment;
     }
 
-    public Double getSubtotal() {
-        return subtotal;
+    public Double getItemtotal() {
+        return itemtotal;
     }
 
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
+    public void setItemtotal(Double itemtotal) {
+        this.itemtotal = itemtotal;
+    }
+
+    public Double getItemtotaltax() {
+        return itemtotaltax;
+    }
+
+    public void setItemtotaltax(Double itemtotaltax) {
+        this.itemtotaltax = itemtotaltax;
     }
 
     public Integer getId() {

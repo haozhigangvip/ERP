@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(rollbackFor = {Exception.class,ErpExcetpion.class})
 public class CompanyService {
     @Autowired
     private CompanyDao companyDao;
@@ -38,9 +39,10 @@ public class CompanyService {
 
 
     //查询所有Company
-    public Object findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer actived) {
+    public PageResult findByAll(Integer page, Integer pageSize, String softBy, Boolean desc, String key,Integer actived) {
         //分页
-        Page pg=PageHelper.startPage(page,pageSize);
+        Page  pg=PageHelper.startPage(page,pageSize);
+
         //过滤
         Example example=new Example(Company.class);
         Example.Criteria criteria1=example.createCriteria();
@@ -63,15 +65,15 @@ public class CompanyService {
         //进行查询
         List<Company> list=companyDao.selectByExample(example);
         //封装到pageHelper
-        PageInfo<Company> pageInfo=new PageInfo<>(pg.getResult());
-
-        if(pageSize==0){
-            return  list;
+        PageInfo<Company> pageInfo=null;
+        if(pageSize!=0){
+            pageInfo=new PageInfo<>(pg.getResult());
 
         }else{
-            return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
-
+            pageInfo=new PageInfo<>();
         }
+
+        return new PageResult<>(pageInfo.getTotal(),pageInfo.getPages(), list);
     }
 
 

@@ -11,12 +11,14 @@ import com.targetmol.common.vo.PageResult;
 import com.targetmol.domain.sales.Account.CustVisitReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional(rollbackFor = {Exception.class,ErpExcetpion.class})
 public class CustVisitReportService {
     @Autowired
     private CustVisitReportDao custVisitReportDao;

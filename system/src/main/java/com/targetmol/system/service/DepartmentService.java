@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = {Exception.class,ErpExcetpion.class})
 public class DepartmentService {
     @Autowired
     private DepartmentDao departmentDao;

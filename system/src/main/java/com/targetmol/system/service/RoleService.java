@@ -13,6 +13,7 @@ import com.targetmol.system.dao.RolePermissionDao;
 import com.targetmol.system.dao.UserRoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional(rollbackFor = {Exception.class,ErpExcetpion.class})
 public class RoleService {
     @Autowired
     private RoleDao roleDao;

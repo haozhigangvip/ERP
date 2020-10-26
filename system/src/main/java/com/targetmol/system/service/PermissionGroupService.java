@@ -9,6 +9,7 @@ import com.targetmol.system.dao.PermissionGroupDao;
 import com.targetmol.system.dao.PermissionGroupItemDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 
 @Service
+@Transactional(rollbackFor = {Exception.class,ErpExcetpion.class})
 public class PermissionGroupService {
     @Autowired
     private PermissionGroupDao permissionGroupDao;

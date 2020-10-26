@@ -6,10 +6,12 @@ import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.domain.sales.Account.AccountType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
 @Service
+@Transactional(rollbackFor = {Exception.class,ErpExcetpion.class})
 public class AccountTypeService {
     @Autowired
     private AccountTypeDao accountTypeDao;

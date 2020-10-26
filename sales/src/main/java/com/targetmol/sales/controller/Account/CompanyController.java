@@ -2,6 +2,8 @@ package com.targetmol.sales.controller.Account;
 
 
 import com.targetmol.common.controller.BaseController;
+import com.targetmol.common.vo.PageResult;
+import com.targetmol.domain.sales.Account.Contact;
 import com.targetmol.sales.service.Account.CompanyService;
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.sales.Account.Company;
@@ -26,7 +28,7 @@ public class CompanyController extends BaseController {
     //查询所有单位
 //    @PreAuthorize("hasAuthority('company_list_all')")
     @GetMapping
-    public ResponseEntity<ResultMsg> findByAll(
+    public PageResult<Contact> findByAll(
             @RequestParam(value="page",defaultValue = "1") Integer page,
             @RequestParam(value="pageSize",defaultValue = "20") Integer pageSize,
             @RequestParam(value="softBy",required = false) String softBy,
@@ -34,9 +36,7 @@ public class CompanyController extends BaseController {
             @RequestParam(value="key",required = false) String key,
             @RequestParam(value="actived" ,defaultValue="1") Integer actived
             ){
-        Object object=companyService.findByAll(page,pageSize,softBy,desc,key,actived);
-
-        return ResponseEntity.ok(ResultMsg.success(object));
+        return companyService.findByAll(page,pageSize,softBy,desc,key,actived);
     }
     //添加单位
     @PostMapping

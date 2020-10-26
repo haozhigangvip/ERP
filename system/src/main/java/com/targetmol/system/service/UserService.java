@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = {Exception.class,ErpExcetpion.class})
 public class UserService {
     @Autowired
     private UserDao userDao;

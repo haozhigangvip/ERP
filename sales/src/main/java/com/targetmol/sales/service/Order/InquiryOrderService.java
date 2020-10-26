@@ -16,12 +16,14 @@ import javafx.scene.control.DatePicker;
 import org.jcp.xml.dsig.internal.dom.DOMUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
 
-@Service
+@Service()
+@Transactional(rollbackFor = {Exception.class,ErpExcetpion.class})
 public class InquiryOrderService {
     @Autowired
     private InquiryOrderDao inquiryOrderDao;
@@ -70,10 +72,12 @@ public class InquiryOrderService {
         if(inquiryOrderDao.insertSelective(inquiryOrder)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
+        //设置订单ID
+        String orderid="INQ"+inquiryOrder.getId();
+        inquiryOrder.setOrderid(orderid);
 
          //添加询价单明细
         List<InquiryOrderItem> items=inquiryOrder.getInquiryOrderItemList();
-
 
         Double sumAmount=0.00;
         Double sumtax=0.00;
@@ -85,34 +89,42 @@ public class InquiryOrderService {
             //计算金额
             //判断是否为赠品
             Double price=item.getPrice();       //单价
-            if(item.getGifit()==1) {
+            if(item.getGifit()!=null&& item.getGifit()==1) {
                 price=0.00;
             }
             Double quantiy=item.getQuantiy();   //数量
             Double itemtotal=price*quantiy;      //商品金额；
-            Double discountRate=item.getDiscountrate();//扣率
-            Double discount=itemtotal*(discountRate/100);//商品折扣金额
-            Double taxrate=item.getTaxrate();
-            Double tax=(itemtotal-discount)*(taxrate/100);//税额
-            Double amount=itemtotal-discount+tax;       //商品税价合计
 
+            Double discountRate=item.getDiscountrate();//扣率
+            discountRate=discountRate==null?0:discountRate;
+            Double discount=itemtotal*(discountRate/100);//商品折扣金额
+            itemtotal=itemtotal-discount;
+            Double taxrate=item.getTaxrate();
+            Double tax=NumberUtils.round(itemtotal*(taxrate/100),2);//税额
+            Double amount=NumberUtils.round(itemtotal+tax,2);       //商品税价合计
+            item.setOrderid(orderid);
             item.setPrice(price);
             item.setAmount(amount);
 
-            sumAmount +=amount;
-
-            sumTaxAmount +=NumberUtils.round(amount*item.getTaxrate(),2);
+            sumAmount +=itemtotal;
+            sumTaxAmount+=tax;
 
             //保存明细
             if(inquiryOrderItemDao.insert(item)!=1){
                 throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
             }
 
-
         }
         inquiryOrder.setAmount(sumAmount);
+        inquiryOrder.setItemtotal(sumAmount);
+        inquiryOrder.setItemtotaltax(sumTaxAmount);
+        Double deliveryfree=inquiryOrder.getDeliveryfee();
+        deliveryfree=deliveryfree==null?0:deliveryfree;
+        Double adjustment=inquiryOrder.getAdjustment();
+        adjustment=adjustment==null?0:adjustment;
+        inquiryOrder.setAmount(sumAmount+sumTaxAmount+deliveryfree+adjustment);//计算订单总金额（含税）
+
         //设置订单ID，并保存
-        inquiryOrder.setOrderid("INQ"+inquiryOrder.getId());
         if(inquiryOrderDao.updateByPrimaryKeySelective(inquiryOrder)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }

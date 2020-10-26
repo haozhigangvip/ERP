@@ -20,6 +20,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.util.*;
 
 @Service
+@Transactional(rollbackFor = {Exception.class,ErpExcetpion.class})
 public class ContactService {
     @Autowired
     private ContactDao contactDao;
