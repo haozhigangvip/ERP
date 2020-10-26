@@ -59,13 +59,12 @@ public class CompanyService {
             String orderByClause=softBy+(desc ? " DESC" : " ASC");
             example.setOrderByClause(orderByClause);
         }
+
         //进行查询
         List<Company> list=companyDao.selectByExample(example);
-//        if(list ==null ||list.size()==0){
-//            throw new ErpExcetpion(ExceptionEumn.COMPANYS_ISNOT_FOUND);
-//        }
         //封装到pageHelper
         PageInfo<Company> pageInfo=new PageInfo<>(pg.getResult());
+
         if(pageSize==0){
             return  list;
 

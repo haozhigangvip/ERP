@@ -36,33 +36,35 @@ public class InquiryOrder {
     private Date estimatedate;  //预计到货日期
     private Date creatime;      //创建时间
     private String  orderstate; //订单状态
-    private Double  amount;     //订单不含税金额
-    private Double  discount;   //订单折扣金额
-    private Double  discountrate;//订单折扣率
-    private Double  taxrate;    //订单税率
+    private Double subtotal; //订单明细合计
+    private Double  amount;     //订单不含税总金额
+    private Double tax;         //订单税额
     private Double deliveryfee;//订单运费
     private String currencyod;    //币种
     private String deliverymethod;//快递方式
     private String courier;     //快递公司
     private String note;        //订单备注
 
-    @Transient
-    private Double  taxamount;  //订单含税金额
-    @Transient
-    private Double tax;        //订单税额
 
     @Transient
     private List<InquiryOrderItem> inquiryOrderItemList;
 
 
-    public Double getTaxamount() {
-        return NumberUtils.round(amount==null?0:amount*(taxrate==null?0:taxrate/100),2);
-    }
-
     public Double getTax() {
-        return NumberUtils.round(amount==null?0:amount+(amount==null?0:amount*(taxrate==null?0:taxrate/100)),2);
+        return tax;
     }
 
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
+
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
+    }
 
     public Integer getId() {
         return id;
@@ -200,30 +202,6 @@ public class InquiryOrder {
         this.amount = amount;
     }
 
-    public Double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Double discount) {
-        this.discount = discount;
-    }
-
-    public Double getDiscountrate() {
-        return discountrate;
-    }
-
-    public void setDiscountrate(Double discountrate) {
-        this.discountrate = discountrate;
-    }
-
-
-    public Double getTaxrate() {
-        return taxrate;
-    }
-
-    public void setTaxrate(Double taxrate) {
-        this.taxrate = taxrate;
-    }
 
     public Double getDeliveryfee() {
         return deliveryfee;

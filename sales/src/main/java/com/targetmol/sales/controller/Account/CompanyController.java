@@ -34,8 +34,9 @@ public class CompanyController extends BaseController {
             @RequestParam(value="key",required = false) String key,
             @RequestParam(value="actived" ,defaultValue="1") Integer actived
             ){
+        Object object=companyService.findByAll(page,pageSize,softBy,desc,key,actived);
 
-        return ResponseEntity.ok(ResultMsg.success(companyService.findByAll(page,pageSize,softBy,desc,key,actived)));
+        return ResponseEntity.ok(ResultMsg.success(object));
     }
     //添加单位
     @PostMapping

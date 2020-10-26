@@ -12,6 +12,8 @@ import com.targetmol.domain.sales.Order.InquiryOrderItem;
 import com.targetmol.sales.dao.Order.InquiryOrderDao;
 import com.targetmol.sales.dao.Order.InquiryOrderItemDao;
 import com.targetmol.utils.NumberUtils;
+import javafx.scene.control.DatePicker;
+import org.jcp.xml.dsig.internal.dom.DOMUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -71,31 +73,44 @@ public class InquiryOrderService {
 
          //添加询价单明细
         List<InquiryOrderItem> items=inquiryOrder.getInquiryOrderItemList();
+
+
+        Double sumAmount=0.00;
+        Double sumtax=0.00;
+        Double sumTaxAmount=0.00;
+
         for (InquiryOrderItem item:items) {
             //判断参数是否齐全
             checkInquiryOrderItem(item);
             //计算金额
-            Double price=item.getPrice();       //单价
-            Double quantiy=item.getQuantiy();   //数量
-            Double discount=item.getDiscount();//折扣金额
-
             //判断是否为赠品
+            Double price=item.getPrice();       //单价
             if(item.getGifit()==1) {
-                item.setDiscount(0.00);
-                item.setDiscountrate(0.00);
-                item.setAmount(0.00);
-
-            }else{
-                item.setAmount(NumberUtils.round(price*quantiy-discount,2));
+                price=0.00;
             }
+            Double quantiy=item.getQuantiy();   //数量
+            Double itemtotal=price*quantiy;      //商品金额；
+            Double discountRate=item.getDiscountrate();//扣率
+            Double discount=itemtotal*(discountRate/100);//商品折扣金额
+            Double taxrate=item.getTaxrate();
+            Double tax=(itemtotal-discount)*(taxrate/100);//税额
+            Double amount=itemtotal-discount+tax;       //商品税价合计
+
+            item.setPrice(price);
+            item.setAmount(amount);
+
+            sumAmount +=amount;
+
+            sumTaxAmount +=NumberUtils.round(amount*item.getTaxrate(),2);
 
             //保存明细
             if(inquiryOrderItemDao.insert(item)!=1){
                 throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
             }
 
-        }
 
+        }
+        inquiryOrder.setAmount(sumAmount);
         //设置订单ID，并保存
         inquiryOrder.setOrderid("INQ"+inquiryOrder.getId());
         if(inquiryOrderDao.updateByPrimaryKeySelective(inquiryOrder)!=1){
