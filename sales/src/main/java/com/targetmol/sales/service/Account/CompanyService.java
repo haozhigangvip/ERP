@@ -24,6 +24,7 @@ public class CompanyService {
     @Autowired
     private CompanyDao companyDao;
 
+
     //按id查询company
     public Company findById(Integer companyid){
 
@@ -136,6 +137,7 @@ public class CompanyService {
         if (company==null){
             throw  new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
         }
+
         company.setActivated(active);
         if(companyDao.updateByPrimaryKeySelective(company)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);

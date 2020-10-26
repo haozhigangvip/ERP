@@ -71,11 +71,19 @@ public class ContactController {
     //绑定子联系人
     @PutMapping("{contid}/subcontact")
     public ResponseEntity<ResultMsg> bindSubContact(@PathVariable("contid") Integer contid,
-                                                    @RequestBody  Map<String,Object> map) throws Exception{
+                                                    @RequestBody  Map<String,Object> map,
+                                                    @RequestParam(value = "unbind",defaultValue = "false") Boolean unbind) throws Exception{
         contactService.bindSubContact(contid,map);
         return ResponseEntity.ok(ResultMsg.success()) ;
     }
 
+    //绑定解绑公司
+    @PutMapping("{contid}/assignCompany")
+    public ResponseEntity<ResultMsg> assignCompany(@PathVariable("contid" )Integer contid,
+                                                   @RequestBody Map<String,Object> map) throws Exception{
+        contactService.assignCompany(contid,map);
+        return ResponseEntity.ok(ResultMsg.success()) ;
+    }
 
 
 }

@@ -8,6 +8,7 @@ import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.domain.sales.Account.Address;
 import com.targetmol.domain.sales.Order.InquiryOrder;
+import com.targetmol.domain.sales.Order.InquiryOrderItem;
 import com.targetmol.sales.dao.Order.InquiryOrderDao;
 import com.targetmol.sales.dao.Order.InquiryOrderItemDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,23 @@ public class InquiryOrderService {
         if(inquiryOrderDao.insertSelective(inquiryOrder)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
+
+         //添加询价单明细
+        List<InquiryOrderItem> items=inquiryOrder.getInquiryOrderItemList();
+        for (InquiryOrderItem item:items) {
+            //判断参数是否齐全
+
+            //计算金额
+            Double price=item.getPrice();       //单价
+            Double quantiy=item.getQuantiy();   //数量
+
+            //保存明细
+            if(inquiryOrderItemDao.insert(item)!=1){
+                throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+            }
+
+        }
+
         //设置订单ID，并保存
         inquiryOrder.setOrderid("INQ"+inquiryOrder.getId());
         if(inquiryOrderDao.updateByPrimaryKeySelective(inquiryOrder)!=1){
@@ -105,7 +123,9 @@ public class InquiryOrderService {
 
     //检查参数
     private void checkInquriyOrder(InquiryOrder inquiryOrder){
-        if(inquiryOrder.getCompanyid()==null||inquiryOrder.getContactid()==null||StringUtil.isEmpty(inquiryOrder.getCompanyname())){
+        if(inquiryOrder.getCompanyid()==null||inquiryOrder.getContactid()==null||
+                StringUtil.isEmpty(inquiryOrder.getCompanyname())||inquiryOrder.getInquiryOrderItemList()==null||
+                inquiryOrder.getInquiryOrderItemList().size()<1){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
     }

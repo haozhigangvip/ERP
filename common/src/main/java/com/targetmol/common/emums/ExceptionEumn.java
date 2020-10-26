@@ -73,6 +73,7 @@ public enum  ExceptionEumn {
     ORDER_SOURCE_IS_NOT_FOUND(404,"订单来源不存在"),
     CREDIT_IS_NOT_FOUND(404,"信用等级不存在"),
     INQURIYORDER_IS_NOT_FOUND(404,"询价单不存在"),
+    BIND_COMPANY_IS_NOT_FOUND(404,"绑定的公司ID不存在"),
     ;
     private Integer code;
     private String msg;
