@@ -231,25 +231,27 @@ public class ContactService {
 
     }
 
-    public void assignCompany(Integer contid, Map<String, Object> map) throws Exception {
-        if(contid==null ||map==null|| map.get("companys")==null){
+    public void assignCompany(Integer contid, List<Map<String, Object>> maps) throws Exception {
+        if(contid==null ||maps==null|| maps.size()<1){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
         if(findByContId(contid)==null){
             throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
         }
-        List<Integer> companys=(List<Integer>)map.get("companys");
         //清除所有绑定联系人
         contactCompanyDao.deleteByPrimaryKey(contid);
         //重新绑定所有单位
-        for(Integer id:companys){
-            Company company= companyService.findById(id);
+        for(Map<String,Object> mp:maps){
+            Integer companyid=(Integer)mp.get("companyid");
+            Integer def=(Integer)mp.get("def");
+            Company company= companyService.findById(companyid);
             if(company==null){
                 throw new ErpExcetpion(ExceptionEumn.BIND_COMPANY_IS_NOT_FOUND);
             }
             Contact_Company contact_company=new Contact_Company();
             contact_company.setContactid(contid);
-            contact_company.setCompanyid(id);
+            contact_company.setCompanyid(companyid);
+            contact_company.setDef(def);
             if(contactCompanyDao.insert(contact_company)!=1){
                 throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
             }
