@@ -77,13 +77,17 @@ public class InquiryOrderService {
             //计算金额
             Double price=item.getPrice();       //单价
             Double quantiy=item.getQuantiy();   //数量
-
-//            //判断是否为赠品
-//            if(item.getGifit()==1){
-//
-//            }
             Double discount=item.getDiscount();//折扣金额
-            item.setAmount(NumberUtils.round(price*quantiy-discount,2));
+
+            //判断是否为赠品
+            if(item.getGifit()==1) {
+                item.setDiscount(0.00);
+                item.setDiscountrate(0.00);
+                item.setAmount(0.00);
+
+            }else{
+                item.setAmount(NumberUtils.round(price*quantiy-discount,2));
+            }
 
             //保存明细
             if(inquiryOrderItemDao.insert(item)!=1){
