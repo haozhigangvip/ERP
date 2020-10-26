@@ -11,6 +11,8 @@ import com.targetmol.domain.sales.Order.InquiryOrder;
 import com.targetmol.domain.sales.Order.InquiryOrderItem;
 import com.targetmol.sales.dao.Order.InquiryOrderDao;
 import com.targetmol.sales.dao.Order.InquiryOrderItemDao;
+import com.targetmol.utils.NumberUtils;
+import org.jcp.xml.dsig.internal.dom.DOMUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -62,7 +64,7 @@ public class InquiryOrderService {
     //添加询价单
     public void addnew(InquiryOrder inquiryOrder) {
         //检查参数
-        checkInquriyOrder(inquiryOrder);
+        checkInquiryOrder(inquiryOrder);
         //添加询价单
         if(inquiryOrderDao.insertSelective(inquiryOrder)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
@@ -72,10 +74,17 @@ public class InquiryOrderService {
         List<InquiryOrderItem> items=inquiryOrder.getInquiryOrderItemList();
         for (InquiryOrderItem item:items) {
             //判断参数是否齐全
-
+            checkInquiryOrderItem(item);
             //计算金额
             Double price=item.getPrice();       //单价
             Double quantiy=item.getQuantiy();   //数量
+
+            //判断是否为赠品
+            if(item.getGifit()==1){
+
+            }
+            Double discount=item.getDiscount();//折扣金额
+            item.setAmount(NumberUtils.round(price*quantiy-discount,2));
 
             //保存明细
             if(inquiryOrderItemDao.insert(item)!=1){
@@ -94,7 +103,7 @@ public class InquiryOrderService {
     //修改
     public void update(InquiryOrder inquiryOrder) {
         //检查参数
-        checkInquriyOrder(inquiryOrder);
+        checkInquiryOrder(inquiryOrder);
         //查询该询价单是否存在
         InquiryOrder oldInquiryOrder=inquiryOrderDao.selectByPrimaryKey(inquiryOrder.getId());
         if(oldInquiryOrder==null){
@@ -121,11 +130,20 @@ public class InquiryOrderService {
         }
     }
 
-    //检查参数
-    private void checkInquriyOrder(InquiryOrder inquiryOrder){
+    //检查订单参数
+    private void checkInquiryOrder(InquiryOrder inquiryOrder){
         if(inquiryOrder.getCompanyid()==null||inquiryOrder.getContactid()==null||
                 StringUtil.isEmpty(inquiryOrder.getCompanyname())||inquiryOrder.getInquiryOrderItemList()==null||
                 inquiryOrder.getInquiryOrderItemList().size()<1){
+            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
+        }
+    }
+
+    //检查订单明细参数
+    private void checkInquiryOrderItem(InquiryOrderItem inquiryOrderItem){
+        if(inquiryOrderItem==null||inquiryOrderItem.getQuantiy()==null||
+                inquiryOrderItem.getQuantiy()<0||StringUtil.isEmpty(inquiryOrderItem.getName())||
+                StringUtil.isEmpty(inquiryOrderItem.getTsid())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
     }

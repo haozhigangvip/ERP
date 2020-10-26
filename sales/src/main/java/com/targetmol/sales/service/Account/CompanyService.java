@@ -48,7 +48,7 @@ public class CompanyService {
         Example.Criteria criteria2=example.createCriteria();
         if(StringUtil.isNotEmpty(key)){
             criteria1.orLike("companyname","%"+key.trim()+"%")
-                    .orEqualTo("comid",key.toUpperCase().trim());
+                    .orLike("comid","%"+key.toUpperCase().trim()+"%");
             example.and(criteria1);
         }
         if(actived==1){
