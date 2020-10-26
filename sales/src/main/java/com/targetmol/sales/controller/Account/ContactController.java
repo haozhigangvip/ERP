@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -80,8 +81,8 @@ public class ContactController {
     //绑定解绑公司
     @PutMapping("{contid}/assignCompany")
     public ResponseEntity<ResultMsg> assignCompany(@PathVariable("contid" )Integer contid,
-                                                   @RequestBody Map<String,Object> map) throws Exception{
-        contactService.assignCompany(contid,map);
+                                                   @RequestBody List<Map<String,Object>> maps) throws Exception{
+        contactService.assignCompany(contid,maps);
         return ResponseEntity.ok(ResultMsg.success()) ;
     }
 
