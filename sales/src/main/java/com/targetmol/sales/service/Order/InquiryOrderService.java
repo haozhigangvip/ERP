@@ -112,6 +112,7 @@ public class InquiryOrderService {
 
     }
 
+    //添加明细
     private  InquiryOrder addItem(InquiryOrder inquiryOrder){
         Double sumAmount=0.00;
         Double sumtax=0.00;
@@ -161,7 +162,7 @@ public class InquiryOrderService {
 
 
 
-    //删除
+    //删除询价单
     public void delete(Integer id) {
         //查询询价单ID是否存在
         if(inquiryOrderDao.selectByPrimaryKey(id)==null){
