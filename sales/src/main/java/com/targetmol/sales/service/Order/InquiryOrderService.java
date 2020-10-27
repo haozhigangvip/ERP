@@ -71,56 +71,10 @@ public class InquiryOrderService {
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
         //设置订单ID
-        String orderid="INQ"+inquiryOrder.getId();
-        inquiryOrder.setOrderid(orderid);
+        inquiryOrder.setOrderid("INQ"+inquiryOrder.getId());
 
-         //添加询价单明细
-        List<InquiryOrderItem> items=inquiryOrder.getInquiryOrderItemList();
-
-        Double sumAmount=0.00;
-        Double sumtax=0.00;
-        Double sumTaxAmount=0.00;
-
-        for (InquiryOrderItem item:items) {
-            //判断参数是否齐全
-            checkInquiryOrderItem(item);
-            //计算金额
-            //判断是否为赠品
-            Double price=item.getPrice();       //单价
-            if(item.getGifit()!=null&& item.getGifit()==1) {
-                price=0.00;
-            }
-            Double quantiy=item.getQuantiy();   //数量
-            Double itemtotal=price*quantiy;      //商品金额；
-
-            Double discountRate=item.getDiscountrate();//扣率
-            discountRate=discountRate==null?0:discountRate;
-            Double discount=itemtotal*(discountRate/100);//商品折扣金额
-            itemtotal=itemtotal-discount;
-            Double taxrate=item.getTaxrate();
-            Double tax=NumberUtils.round(itemtotal*(taxrate/100),2);//税额
-            Double amount=NumberUtils.round(itemtotal+tax,2);       //商品税价合计
-            item.setOrderid(orderid);
-            item.setPrice(price);
-            item.setAmount(amount);
-
-            sumAmount +=itemtotal;
-            sumTaxAmount+=tax;
-
-            //保存明细
-            if(inquiryOrderItemDao.insert(item)!=1){
-                throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
-            }
-
-        }
-        inquiryOrder.setAmount(sumAmount);
-        inquiryOrder.setItemtotal(sumAmount);
-        inquiryOrder.setItemtotaltax(sumTaxAmount);
-        Double deliveryfree=inquiryOrder.getDeliveryfee();
-        deliveryfree=deliveryfree==null?0:deliveryfree;
-        Double adjustment=inquiryOrder.getAdjustment();
-        adjustment=adjustment==null?0:adjustment;
-        inquiryOrder.setAmount(sumAmount+sumTaxAmount+deliveryfree+adjustment);//计算订单总金额（含税）
+        //添加询价单明细
+        inquiryOrder=addItem(inquiryOrder);
 
         //设置订单ID，并保存
         if(inquiryOrderDao.updateByPrimaryKeySelective(inquiryOrder)!=1){
@@ -140,12 +94,73 @@ public class InquiryOrderService {
         //设置ID及ORDERID不可修改
         inquiryOrder.setId(oldInquiryOrder.getId());
         inquiryOrder.setOrderid(oldInquiryOrder.getOrderid());
+        //删除明细
+        if(inquiryOrderItemDao.delByOrderId(inquiryOrder.getOrderid())<1){
+            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+        }
+
+        //添加明细
+        inquiryOrder=addItem(inquiryOrder);
         //保存询价单
         if(inquiryOrderDao.updateByPrimaryKey(inquiryOrder)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
 
+
+
+
+
     }
+
+    private  InquiryOrder addItem(InquiryOrder inquiryOrder){
+        Double sumAmount=0.00;
+        Double sumtax=0.00;
+        Double sumTaxAmount=0.00;
+        String orderid=inquiryOrder.getOrderid();
+        List<InquiryOrderItem> items=inquiryOrder.getInquiryOrderItemList();
+        for (InquiryOrderItem item:items) {
+            //判断参数是否齐全
+            checkInquiryOrderItem(item);
+            //计算金额
+            //判断是否为赠品
+            Double price=item.getPrice();       //单价
+            if(item.getGifit()!=null&& item.getGifit()==1) {
+                price=0.00;
+            }
+            Double quantiy=item.getQuantiy();   //数量
+            Double itemtotal=price*quantiy;      //商品金额；
+            Double discountRate=item.getDiscountrate();//扣率
+            discountRate=discountRate==null?0:discountRate;
+            Double discount=itemtotal*(discountRate/100);//商品折扣金额
+            itemtotal=itemtotal-discount;
+            Double taxrate=item.getTaxrate();
+            Double tax=NumberUtils.round(itemtotal*(taxrate/100),2);//税额
+            Double amount=NumberUtils.round(itemtotal+tax,2);       //商品税价合计
+            item.setOrderid(orderid);
+            item.setPrice(price);
+            item.setAmount(amount);
+            sumAmount +=itemtotal;
+            sumTaxAmount+=tax;
+
+            //保存明细
+            if(inquiryOrderItemDao.insert(item)!=1){
+                throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+            }
+        }
+        inquiryOrder.setAmount(sumAmount);
+        inquiryOrder.setItemtotal(sumAmount);
+        inquiryOrder.setItemtotaltax(sumTaxAmount);
+        Double deliveryfree=inquiryOrder.getDeliveryfee();
+        deliveryfree=deliveryfree==null?0:deliveryfree;
+        Double adjustment=inquiryOrder.getAdjustment();
+        adjustment=adjustment==null?0:adjustment;
+        inquiryOrder.setAmount(sumAmount+sumTaxAmount+deliveryfree+adjustment);//计算订单总金额（含税）
+
+        return inquiryOrder;
+    }
+
+
+
     //删除
     public void delete(Integer id) {
         //查询询价单ID是否存在

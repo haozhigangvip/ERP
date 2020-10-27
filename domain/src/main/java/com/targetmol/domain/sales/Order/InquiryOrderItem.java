@@ -28,21 +28,28 @@ public class InquiryOrderItem {
     private Double price;       //单据
     private Double amount;      //总金额无税
     private String currencyod;  //币种
-    private Double discount;    //折扣金额
+
     private Double discountrate;//扣率
     private Integer gifit;      //是否赠品，0默认，不是，1是
     private String  note;       //备注
     @Transient
-    private Double amounttax;   //总金额含税
+    private Double taxamount;   //总金额含税
     @Transient
     private Double tax;         //税额
+    @Transient
+    private  Double discount;   //折扣金额
 
-
-
-
-    public Double getAmounttax() {
+    //自动计算含税金额
+    public Double getTaxamount() {
         return NumberUtils.round(amount==null?0:amount+(amount==null?0:amount*(taxrate==null?0:taxrate/100)),2);
     }
+
+    //自动计算折扣金额
+    public Double getDiscount() {
+        return  NumberUtils.round(price*quantiy*(discountrate/100),2);
+    }
+
+
 
 
     public Double getTax() {
@@ -154,13 +161,7 @@ public class InquiryOrderItem {
         this.currencyod = currencyod;
     }
 
-    public Double getDiscount() {
-        return discount;
-    }
 
-    public void setDiscount(Double discount) {
-        this.discount = discount;
-    }
 
     public Double getDiscountrate() {
         return discountrate;

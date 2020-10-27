@@ -10,4 +10,7 @@ import java.util.List;
 public interface InquiryOrderItemDao extends BaseMapper<InquiryOrderItem> {
     @Select("select * from inquiry_order_item where orderid=#{orderid}")
     List<InquiryOrderItem> findByOrderId(@RequestParam("orderid") String orderid);
+
+    @Select("delete  from inquiry_order_item where orderid=#{orderid}")
+    Integer delByOrderId(@RequestParam("orderid") String orderid);
 }

@@ -47,6 +47,7 @@ public class InquiryOrder {
     private String note;        //订单备注
 
 
+
     @Transient
     private List<InquiryOrderItem> inquiryOrderItemList;
 
