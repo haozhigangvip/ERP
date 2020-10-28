@@ -1,5 +1,6 @@
 package com.targetmol.domain.system;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.*;
@@ -11,13 +12,20 @@ public class Area implements Serializable {
     @KeySql(useGeneratedKeys= true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(insertable = false,updatable =false,name = "id")
+    @JsonIgnore
     private Integer id;
+    @JsonIgnore
     private String language;
     private String name;
     private String code;
+    private String key;
+    @JsonIgnore
     private String type;
-    private String isedit;
-    private String remark;
+    @JsonIgnore
+    private Integer activate;
+    @JsonIgnore
+
+    private Integer order;
 
     public Integer getId() {
         return id;
@@ -35,6 +43,13 @@ public class Area implements Serializable {
         this.language = language;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public String getCode() {
         return code;
@@ -60,19 +75,19 @@ public class Area implements Serializable {
         this.type = type;
     }
 
-    public String getIsedit() {
-        return isedit;
+    public Integer getActivate() {
+        return activate;
     }
 
-    public void setIsedit(String isedit) {
-        this.isedit = isedit;
+    public void setActivate(Integer activate) {
+        this.activate = activate;
     }
 
-    public String getRemark() {
-        return remark;
+    public Integer getOrder() {
+        return order;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 }

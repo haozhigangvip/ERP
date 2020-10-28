@@ -27,9 +27,10 @@ public interface AreaDao extends BaseMapper<Area> {
             }
 
             if(key!=null){
-                sqlstr +=" and name like '%"+key+"%'";
+                sqlstr +=" and `key` like '%"+key+"%'";
             }
-            sqlstr +=" order by id";
+            sqlstr +=" and activate=1";
+            sqlstr +=" order by `order` asc,`id` asc";
             return sqlstr;
         }
 
