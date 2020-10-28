@@ -30,9 +30,11 @@ public interface ContactDao extends BaseMapper<Contact> {
     class contactDaoProvider{
         public String findAllByAnyPara(String key,Boolean showUnActived,String softby,Boolean desc,Integer pid){
             String sqlstr="select a.*,b.name as salesname from contact as a left join `user` as b on a.saleid=b.uid  ";
+
             if(key!=null){
                 sqlstr +="where (a.contactid like CONCAT('%',#{key},'%') or a.name like CONCAT('%',#{key},'%'))";
             }
+
             if(showUnActived==null||showUnActived==false){
                 if(sqlstr.indexOf("where")>0){
                     sqlstr +=" and (a.activated<>0)";
@@ -40,6 +42,7 @@ public interface ContactDao extends BaseMapper<Contact> {
                     sqlstr +=" where (a.activated<>0)";
                 }
             }
+
             if(pid!=null){
                if(sqlstr.indexOf("where")>0){
                    sqlstr +=" and (a.pid=#{pid}) ";
