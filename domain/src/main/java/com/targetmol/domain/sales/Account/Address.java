@@ -24,9 +24,9 @@ public class Address  implements Serializable {
     private String country;
     private String zipcode;
     private String label;
+    private Integer contactid;
     @Column(insertable = false,updatable = false)
     private Date creatime;
-    @Column(name = "defa")
     private Integer def;
     private Integer activated;
     @Transient
@@ -50,6 +50,7 @@ public class Address  implements Serializable {
         this.phone1 = phone1;
     }
 
+
     public String getDetaAddress() {
         if(StringUtil.isEmpty(street)==false){
             return ((country.toUpperCase().equals("CHINA")?"中国":country) +  state + city + street);
@@ -69,7 +70,13 @@ public class Address  implements Serializable {
     }
 
 
+    public Integer getContactid() {
+        return contactid;
+    }
 
+    public void setContactid(Integer contactid) {
+        this.contactid = contactid;
+    }
 
     public Integer getDef() {
         return def;
