@@ -24,7 +24,7 @@ public class InvoiceInfoController {
     //根据开票信息ID进行查询
     @GetMapping("{invoiceid}")
     public ResponseEntity<ResultMsg> findAllState(@PathVariable("invoiceid") Integer invoiceid){
-        //TEST213411222
+            //TEST213411222
         return ResponseEntity.ok(ResultMsg.success(invoiceInfoService.findById(invoiceid)));
     }
 

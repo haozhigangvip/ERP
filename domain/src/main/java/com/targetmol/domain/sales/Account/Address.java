@@ -14,17 +14,18 @@ public class Address  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(insertable = false,updatable =false,name = "addrid")
     private Integer addrid;
-    private String attention;
+    private String linkman;
     private String street;
     private String street2;
     private String city;
+    private String phone;
+    private String phone1;
     private String state;
     private String country;
     private String zipcode;
     private String label;
     @Column(insertable = false,updatable = false)
     private Date creatime;
-    private Integer contactid;
     @Column(name = "defa")
     private Integer def;
     private Integer activated;
@@ -32,6 +33,22 @@ public class Address  implements Serializable {
     private String detaAddress;
     @Transient
     private String detaAddress2;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPhone1() {
+        return phone1;
+    }
+
+    public void setPhone1(String phone1) {
+        this.phone1 = phone1;
+    }
 
     public String getDetaAddress() {
         if(StringUtil.isEmpty(street)==false){
@@ -70,12 +87,19 @@ public class Address  implements Serializable {
         this.addrid = addrid;
     }
 
-    public String getAttention() {
-        return attention;
+    public String getLinkman() {
+        return linkman;
+    }
+    public void setLinkman(String linkman) {
+        this.linkman = linkman;
     }
 
-    public void setAttention(String attention) {
-        this.attention = attention;
+    public void setDetaAddress(String detaAddress) {
+        this.detaAddress = detaAddress;
+    }
+
+    public void setDetaAddress2(String detaAddress2) {
+        this.detaAddress2 = detaAddress2;
     }
 
     public String getStreet() {
@@ -126,8 +150,6 @@ public class Address  implements Serializable {
         this.zipcode = zipcode;
     }
 
-
-
     public String getLabel() {
         return label;
     }
@@ -142,14 +164,6 @@ public class Address  implements Serializable {
 
     public void setCreatime(Date creatime) {
         this.creatime = creatime;
-    }
-
-    public Integer getContactid() {
-        return contactid;
-    }
-
-    public void setContactid(Integer contactid) {
-        this.contactid = contactid;
     }
 
     public Integer getActivated() {
