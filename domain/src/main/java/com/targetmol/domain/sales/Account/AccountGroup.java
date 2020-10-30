@@ -16,7 +16,7 @@ public class AccountGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(insertable = false,updatable =false,name = "id")
     private Integer id;
-    private Integer code;    //组代码
+    private String code;    //组代码
     private String name;    //组名
     @Transient
     @JsonIgnore
@@ -38,15 +38,15 @@ public class AccountGroup {
                 this.id = id;
             }
 
-            public Integer getCode() {
-                return code;
-            }
+    public String getCode() {
+        return code;
+    }
 
-            public void setCode(Integer code) {
-                this.code = code;
-            }
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-            public String getName() {
+    public String getName() {
                 return name;
             }
 

@@ -33,13 +33,21 @@ public class AccountGroupService {
         if(StringUtil.isEmpty(accountGroup.getName())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
+
+        accountGroup.setCode( getNewCode(accountGroup.getPcode()));
+
         if(accountGroupDao.insert(accountGroup)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
 
     }
 
-
+    private String getNewCode(String pcode){
+        if(pcode==null){
+            pcode="AG-";
+        }
+         return  pcode+(String.valueOf( accountGroupDao.getMaxCode(pcode)+1));
+    }
 
     //修改
     public void update(AccountGroup accountGroup) {
