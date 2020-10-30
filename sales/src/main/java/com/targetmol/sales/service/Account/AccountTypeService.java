@@ -29,6 +29,7 @@ public class AccountTypeService {
         if(StringUtil.isEmpty(accountType.getType())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
+
         if(accountTypeDao.insert(accountType)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }

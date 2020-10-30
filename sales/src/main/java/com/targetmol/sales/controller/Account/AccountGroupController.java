@@ -1,60 +1,56 @@
 package com.targetmol.sales.controller.Account;
 
-import com.targetmol.sales.service.Account.PiInfoService;
 import com.targetmol.common.vo.ResultMsg;
-import com.targetmol.domain.sales.Account.PiInfo;
+import com.targetmol.domain.sales.Account.AccountGroup;
+import com.targetmol.sales.service.Account.AccountGroupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
-
 /**
- * 客户角色信息
+ * 客户分组
  */
 @Slf4j
-@RequestMapping("/piinfo")
+@RequestMapping("/accountgroup")
 @RestController
-public class PiInfoController {
+public class AccountGroupController {
     @Autowired
-    private PiInfoService piInfoService;
-
+    private AccountGroupService accountGroupService;
 
     //查找所有
     @GetMapping
     public ResponseEntity<ResultMsg> findAll(){
 
-        return ResponseEntity.ok(ResultMsg.success(piInfoService.findAll()));
+        return ResponseEntity.ok(ResultMsg.success(accountGroupService.findAll()));
     }
-
     //根据ID查找
     @GetMapping("{id}")
     public ResponseEntity<ResultMsg> findById(@PathVariable("id") Integer id){
 
-        return ResponseEntity.ok(ResultMsg.success(piInfoService.findById(id)));
+        return ResponseEntity.ok(ResultMsg.success(accountGroupService.findById(id)));
     }
     //添加
-    @PostMapping
-    public ResponseEntity<ResultMsg> addNew(@RequestBody PiInfo piInfo){
-        piInfoService.addnew(piInfo);
+    @PostMapping()
+    public ResponseEntity<ResultMsg> addNew(@RequestBody AccountGroup accountGroup){
+        accountGroupService.addnew(accountGroup);
         return ResponseEntity.ok(ResultMsg.success());
     }
 
+
     //修改
     @PutMapping("{id}")
-    public ResponseEntity<ResultMsg> update(@PathVariable("id") Integer id, @RequestBody PiInfo piInfo){
-        piInfo.setId(id);
-        piInfoService.update(piInfo);
+    public ResponseEntity<ResultMsg> update(@PathVariable("id") Integer id, @RequestBody AccountGroup accountGroup){
+        accountGroup.setId(id);
+        accountGroupService.update(accountGroup);
         return ResponseEntity.ok(ResultMsg.success());
     }
 
     //删除
     @DeleteMapping("{id}")
     public ResponseEntity<ResultMsg> delete(@PathVariable("id") Integer id){
-        piInfoService.delete(id);
+        accountGroupService.delete(id);
         return ResponseEntity.ok(ResultMsg.success());
     }
-
 
 }

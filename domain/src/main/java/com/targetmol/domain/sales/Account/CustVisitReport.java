@@ -1,9 +1,11 @@
 package com.targetmol.domain.sales.Account;
 
+import org.springframework.web.util.pattern.PathPattern;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Table(name="cust_visit_report")
@@ -29,6 +31,14 @@ public class CustVisitReport implements Serializable {
     @Transient
     private String companyName;
 
+    @Transient
+    private  String date;
+
+
+    public String getDate() {
+        SimpleDateFormat sf=new SimpleDateFormat("yyyy年MM月dd日 hh时mm分");
+        return sf.format(visitdate);
+    }
 
     public Integer getId() {
         return id;

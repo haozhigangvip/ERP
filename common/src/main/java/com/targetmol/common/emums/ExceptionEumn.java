@@ -76,6 +76,7 @@ public enum  ExceptionEumn {
     BIND_COMPANY_IS_NOT_FOUND(404,"绑定的公司ID不存在"),
     ASSIGNCOMPANY_IS_FAIL(400,"绑定公司失败"),
     ASSIGNCOMPANY_IS_NOT_FOUND(404,"没有绑定过该公司"),
+    ACCOUNT_GROUP_IS_NOT_FOUND(404,"客户组不存在"),
     ;
     private Integer code;
     private String msg;

@@ -65,7 +65,8 @@ public class InvoiceInfoService {
     }
     //检查发票信息是否齐全
     private void checkInvoiceInfo(InvoiceInfo invoiceInfo) {
-        if(invoiceInfo.getContid()==null|| StringUtil.isEmpty(invoiceInfo.getInvoiceTitle())||StringUtil.isEmpty(invoiceInfo.getTaxNumber())||StringUtil.isEmpty(invoiceInfo.getType())){
+        if(invoiceInfo.getContid()==null|| StringUtil.isEmpty(invoiceInfo.getInvoiceTitle())||
+                StringUtil.isEmpty(invoiceInfo.getTaxNumber())||StringUtil.isEmpty(invoiceInfo.getType())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
     }
