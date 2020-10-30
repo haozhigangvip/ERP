@@ -14,6 +14,8 @@ public class InvoiceInfo {
     private Integer contid;
     @Column(name = "invoice_title")
     private String invoiceTitle;
+    private String type;
+
     @Column(name = "tax_number")
     private String taxNumber;
     @Column(name = "invoice_address")
@@ -90,5 +92,19 @@ public class InvoiceInfo {
         this.bankAccount = bankAccount;
     }
 
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCreatime() {
+        return creatime;
+    }
+
+    public void setCreatime(String creatime) {
+        this.creatime = creatime;
+    }
 }
