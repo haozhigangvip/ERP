@@ -55,14 +55,25 @@ public class AccountGroupService {
         if(StringUtil.isEmpty(accountGroup.getGroupname())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
-
-        if(accountGroupDao.selectByPrimaryKey(accountGroup.getId())==null){
+        AccountGroup oldaccountGroup=accountGroupDao.selectByPrimaryKey(accountGroup.getId());
+        if(oldaccountGroup==null){
             throw new ErpExcetpion(ExceptionEumn.ACCOUNT_GROUP_IS_NOT_FOUND);
         }
-        if(accountGroupDao.getBycode(accountGroup.getPcode())==null){
-            throw new ErpExcetpion(ExceptionEumn.ACCOUNT_GROUP_PCODE_IS_NOT_FOUND);
+        //判断code是否变更
+        String code=accountGroup.getCode();
+        if(code!=oldaccountGroup.getCode()){
+            //判断code中的父code是否存在
+            if(code.length()>5){
+                if(accountGroupDao.getBycode(code.substring(0,code.length()-2))==null){
+                    throw new ErpExcetpion(ExceptionEumn.ACCOUNT_GROUP_PCODE_IS_NOT_FOUND);
+                }
+            }
+            //判断code是否存在
+            if(accountGroupDao.getBycode(code)!=null){
+                throw  new ErpExcetpion(ExceptionEumn.ACCOUNT_GROUP_IS_EXist);
+            }
         }
-
+        //保存
         if(accountGroupDao.updateByPrimaryKey(accountGroup)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
