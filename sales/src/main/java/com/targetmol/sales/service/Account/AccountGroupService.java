@@ -30,7 +30,7 @@ public class AccountGroupService {
 
     //添加
     public void addnew(AccountGroup accountGroup) {
-        if(StringUtil.isEmpty(accountGroup.getName())){
+        if(StringUtil.isEmpty(accountGroup.getGroupname())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
 
@@ -41,22 +41,28 @@ public class AccountGroupService {
         }
 
     }
-
+    //根据父ID获取新的code
     private String getNewCode(String pcode){
         if(pcode==null){
             pcode="AG-";
         }
-         return  pcode+(String.valueOf( accountGroupDao.getMaxCode(pcode)+1));
+        Integer maxcode=accountGroupDao.getMaxCode(pcode);
+        return  pcode+(String.format("%02d",(maxcode==null?(Integer)0:maxcode)+1));
     }
 
     //修改
     public void update(AccountGroup accountGroup) {
-        if(StringUtil.isEmpty(accountGroup.getName())){
+        if(StringUtil.isEmpty(accountGroup.getGroupname())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
+
         if(accountGroupDao.selectByPrimaryKey(accountGroup.getId())==null){
             throw new ErpExcetpion(ExceptionEumn.ACCOUNT_GROUP_IS_NOT_FOUND);
         }
+        if(accountGroupDao.getBycode(accountGroup.getPcode())==null){
+            throw new ErpExcetpion(ExceptionEumn.ACCOUNT_GROUP_PCODE_IS_NOT_FOUND);
+        }
+
         if(accountGroupDao.updateByPrimaryKey(accountGroup)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }

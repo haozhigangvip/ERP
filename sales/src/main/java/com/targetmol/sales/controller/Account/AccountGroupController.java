@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * 客户分组
  */
 @Slf4j
-@RequestMapping("/accountgroup")
+    @RequestMapping("/accountgroup")
 @RestController
 public class AccountGroupController {
     @Autowired

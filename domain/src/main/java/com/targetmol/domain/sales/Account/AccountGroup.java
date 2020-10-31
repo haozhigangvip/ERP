@@ -9,7 +9,7 @@ import javax.persistence.*;
         * 客户分组
         */
 
-@Table(name="account_goup")
+@Table(name="account_group")
 public class AccountGroup {
     @Id
     @KeySql(useGeneratedKeys= true)
@@ -17,9 +17,8 @@ public class AccountGroup {
     @Column(insertable = false,updatable =false,name = "id")
     private Integer id;
     private String code;    //组代码
-    private String name;    //组名
+    private String groupname;    //组名
     @Transient
-    @JsonIgnore
     private String pcode;     //组的父代码
 
     public String getPcode() {
@@ -46,11 +45,11 @@ public class AccountGroup {
         this.code = code;
     }
 
-    public String getName() {
-                return name;
-            }
+    public String getGroupname() {
+        return groupname;
+    }
 
-            public void setName(String name) {
-                this.name = name;
-            }
-        }
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
+    }
+}
