@@ -20,6 +20,7 @@ public class Company  implements Serializable {
     @Column(insertable = false,updatable =false,name = "companyid")
     private Integer companyid;
     private String companyname;
+    private String group;
     private String country;
     private String state;
     private String city;
@@ -51,6 +52,14 @@ public class Company  implements Serializable {
         return serialVersionUID;
     }
 
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
 
     public Integer getDef() {
         return def;
