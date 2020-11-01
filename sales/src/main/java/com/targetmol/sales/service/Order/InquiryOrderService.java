@@ -105,12 +105,9 @@ public class InquiryOrderService {
         if(inquiryOrderDao.updateByPrimaryKey(inquiryOrder)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
-
-
-
-
-
     }
+
+
 
     //添加明细
     private  InquiryOrder addItem(InquiryOrder inquiryOrder){
@@ -165,14 +162,22 @@ public class InquiryOrderService {
     //删除询价单
     public void delete(Integer id) {
         //查询询价单ID是否存在
-        if(inquiryOrderDao.selectByPrimaryKey(id)==null){
+        InquiryOrder inquiryOrder=inquiryOrderDao.selectByPrimaryKey(id);
+        if(inquiryOrder==null){
             throw new ErpExcetpion(ExceptionEumn.INQURIYORDER_IS_NOT_FOUND);
         }
         //删除询价单
         if(inquiryOrderDao.deleteByPrimaryKey(id)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
         }
+        //删除询价单明细
+        if(inquiryOrderItemDao.delByOrderId(inquiryOrder.getOrderid())<0){
+            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
+        }
+
     }
+
+
 
     //检查订单参数
     private void checkInquiryOrder(InquiryOrder inquiryOrder){
@@ -181,6 +186,7 @@ public class InquiryOrderService {
                 inquiryOrder.getInquiryOrderItemList().size()<1){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
+
     }
 
     //检查订单明细参数
