@@ -1,0 +1,5 @@
+com\targetmol\filemanager\service\FileManagerService.class
+com\targetmol\filemanager\controller\FileManagerController.class
+com\targetmol\filemanager\dao\FileManagerDao.class
+com\targetmol\ErpFileManagerApplication.class
+com\targetmol\filemanager\domain\FileSystem.class

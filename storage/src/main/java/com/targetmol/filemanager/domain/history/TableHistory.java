@@ -1,0 +1,84 @@
+package com.targetmol.filemanager.domain.history;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Id;
+import java.util.Date;
+
+
+@Document(collection = "tsbio_tablehistory")
+public class TableHistory {
+    @Id
+    private Integer id;         //ID
+    private String tablename;   //表名
+    private Integer tableid;    //表ID
+    private String type;        //操作类型（增删改查）
+    private String json;        //操作记录集
+    private Integer userid;     //用户ID
+    private Date creatime;      //创建时间
+    private String Note;        //备注
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTablename() {
+        return tablename;
+    }
+
+    public void setTablename(String tablename) {
+        this.tablename = tablename;
+    }
+
+    public Integer getTableid() {
+        return tableid;
+    }
+
+    public void setTableid(Integer tableid) {
+        this.tableid = tableid;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
+    public Date getCreatime() {
+        return creatime;
+    }
+
+    public void setCreatime(Date creatime) {
+        this.creatime = creatime;
+    }
+
+    public String getNote() {
+        return Note;
+    }
+
+    public void setNote(String note) {
+        Note = note;
+    }
+}

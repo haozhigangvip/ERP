@@ -15,7 +15,7 @@
         <module>ERP-Gateway</module>
         <module>system</module>
         <module>auth</module>
-        <module>filemanager</module>
+        <module>storage</module>
     </modules>
     <packaging>pom</packaging>
     <parent>

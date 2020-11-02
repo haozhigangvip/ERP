@@ -59,6 +59,15 @@ public class InquiryOrderController  extends BaseController {
         return ResponseEntity.ok(ResultMsg.success());
     }
 
+    //修改订单状态
+    @PutMapping("{id}/state")
+    public ResponseEntity<ResultMsg> modifyState(@PathVariable("id") Integer id,String state){
+        inquiryOrderService.modifyState(id,state);
+        return  ResponseEntity.ok(ResultMsg.success());
+    }
+
+
+
     //删除
     @DeleteMapping("{id}")
     public ResponseEntity<ResultMsg> delete(@PathVariable("id") Integer id){

@@ -91,9 +91,11 @@ public class InquiryOrderService {
         if(oldInquiryOrder==null){
             throw new ErpExcetpion(ExceptionEumn.PI_IS_NOT_FOUND);
         }
-        //设置ID及ORDERID不可修改
+        //设置ID、OrderId、订单状态不可修改
         inquiryOrder.setId(oldInquiryOrder.getId());
         inquiryOrder.setOrderid(oldInquiryOrder.getOrderid());
+        inquiryOrder.setOrderstate(oldInquiryOrder.getOrderstate());
+
         //删除明细
         if(inquiryOrderItemDao.delByOrderId(inquiryOrder.getOrderid())<1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
@@ -195,6 +197,22 @@ public class InquiryOrderService {
                 inquiryOrderItem.getQuantiy()<0||StringUtil.isEmpty(inquiryOrderItem.getName())||
                 StringUtil.isEmpty(inquiryOrderItem.getTsid())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
+        }
+    }
+
+    //修改订单状态
+    public void modifyState(Integer id, String state) {
+        if(id==null||StringUtil.isEmpty(state)==true){
+            throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
+        }
+        //判断询价单ID是否存在
+        InquiryOrder inquiryOrder=inquiryOrderDao.selectByPrimaryKey(id);
+        if(inquiryOrder==null){
+            throw new ErpExcetpion(ExceptionEumn.INQURIYORDER_IS_NOT_FOUND);
+        }
+        inquiryOrder.setOrderstate(state);
+        if(inquiryOrderDao.updateByPrimaryKeySelective(inquiryOrder)!=1){
+            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
     }
 }
