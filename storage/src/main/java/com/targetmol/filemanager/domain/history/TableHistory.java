@@ -15,7 +15,7 @@ public class TableHistory {
     private String json;        //操作记录集
     private Integer userid;     //用户ID
     private Date creatime;      //创建时间
-    private String Note;        //备注
+    private String note;        //备注
 
 
     public Integer getId() {
@@ -75,10 +75,10 @@ public class TableHistory {
     }
 
     public String getNote() {
-        return Note;
+        return note;
     }
 
     public void setNote(String note) {
-        Note = note;
+        this.note = note;
     }
 }

@@ -3,6 +3,7 @@ package com.targetmol.filemanager.controller.history;
 
 import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.filemanager.domain.file.Shortfile;
+import com.targetmol.filemanager.domain.history.TableHistory;
 import com.targetmol.filemanager.service.file.FileManagerService;
 import com.targetmol.filemanager.service.history.TableHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,11 @@ public class TableHistoryController {
     @Autowired
     TableHistoryService tableHistoryService;
 
-
+    @PostMapping()
+    public ResponseEntity<ResultMsg> addHistory(@RequestBody TableHistory history){
+        tableHistoryService.addHistory(history);
+        return ResponseEntity.ok(ResultMsg.success());
+    }
     @DeleteMapping
     public ResponseEntity<ResultMsg>  delfile(@RequestParam("id") String fileid){
 
