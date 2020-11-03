@@ -47,7 +47,7 @@ zuul:
 
     files-service:
       path: /storage/**
-      serviceId:  FILES-SERVICE  #ID为该服务所对应的appliaction name
+      serviceId:  STORAGE-SERVICE  #ID为该服务所对应的appliaction name
       strip-prefix: false
       sensitiveHeaders:    #不过滤任何cookie
 
