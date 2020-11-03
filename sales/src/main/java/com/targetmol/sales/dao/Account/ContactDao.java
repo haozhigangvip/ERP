@@ -47,7 +47,7 @@ public interface ContactDao extends BaseMapper<Contact> {
                if(sqlstr.indexOf("where")>0){
                    sqlstr +=" and (a.pid=#{pid}) ";
                }else{
-                   sqlstr +=" where a.pic=#{pid}";
+                   sqlstr +=" where a.pid=#{pid}";
                }
             }
 

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -29,12 +30,24 @@ public class TableHistoryController {
     @Autowired
     TableHistoryService tableHistoryService;
 
+    //添加历史记录
     @PostMapping()
     public ResponseEntity<ResultMsg> addHistory(@RequestBody TableHistory history){
         tableHistoryService.addHistory(history);
         return ResponseEntity.ok(ResultMsg.success());
     }
-    @DeleteMapping
+
+    //查询历史记录
+    @GetMapping ()
+    public ResponseEntity<ResultMsg> findHistory(@RequestParam("tablename") String tbname,
+                                                 @RequestParam("tableid")Integer tid,
+                                                 @RequestParam(value = "startdate",required = false)Date startdate,
+                                                 @RequestParam(value = "enddate",required = false)Date enddate) {
+       return ResponseEntity.ok(ResultMsg.success( tableHistoryService.findHistory(tbname,tid,startdate,enddate)));
+    }
+
+
+        @DeleteMapping
     public ResponseEntity<ResultMsg>  delfile(@RequestParam("id") String fileid){
 
         return ResponseEntity.ok(ResultMsg.success());

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.repository.Query;
 /**
  * Created by Administrator.
  */
+
 public interface FileManagerDao extends MongoRepository<FileSystem,String> {
     @Query(value="{'urlId':?0}")
      FileSystem findByUrlid(String urlid);

@@ -7,8 +7,7 @@ import java.util.Date;
 
 @Document(collection = "tsbio_tablehistory")
 public class TableHistory {
-    @Id
-    private Integer id;         //ID
+
     private String tablename;   //表名
     private Integer tableid;    //表ID
     private String type;        //操作类型（增删改查）
@@ -18,13 +17,7 @@ public class TableHistory {
     private String note;        //备注
 
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getTablename() {
         return tablename;
