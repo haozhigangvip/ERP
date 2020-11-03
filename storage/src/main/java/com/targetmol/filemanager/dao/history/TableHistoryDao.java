@@ -16,7 +16,7 @@ import java.util.List;
 @Component
 public interface TableHistoryDao extends MongoRepository<TableHistory,String> {
 
-    @Query(value="{'$and':[{'tablename':?0},{'tableid':?1},{'creatime'}]}")
+    @Query(value="{'$and':[{'tablename':?0},{'tableid':?1},{'creatime':{'$gte':?2}},{'creatime':{'$lt':?3}}]}")
     List<TableHistory> findAllHistory(String tbname, Integer tid, Date startdate, Date enddate);
 
 
