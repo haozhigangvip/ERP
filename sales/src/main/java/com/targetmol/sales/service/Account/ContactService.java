@@ -17,8 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
+import tk.mybatis.spring.annotation.MapperScan;
 
 import java.util.*;
+import java.util.concurrent.BlockingDeque;
 
 @Service
 @Transactional(rollbackFor = {Exception.class,ErpExcetpion.class})
@@ -192,6 +194,7 @@ public class ContactService {
              throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
             }
         }
+
         //将新的company集合绑定至中间表
         if(companys!=null&& companys.size()>0){
             for (Company company: companys) {
@@ -209,14 +212,18 @@ public class ContactService {
         }
     }
 
-    public void bindSubContact(Integer pid, Integer contid,Boolean ubind)  throws Exception{
-        if(contid==null ){
+    public void bindSubContact(Integer pid,Map<String,Object> mp)  throws Exception{
+
+        if(mp==null||mp.get("subcontid")==null ){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
+        Integer contid=(Integer)mp.get("subcontid");
+        Boolean unbind=(Boolean)mp.get("unbind");
+
         if(findByContId(contid)==null||(pid!=null && findByContId(pid)==null)){
             throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
         }
-            if(ubind==true){
+            if(unbind==true){
                 //解绑
                 pid=null;
             }
