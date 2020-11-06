@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.*;
 
@@ -292,5 +293,12 @@ public class ContactService {
                 throw new ErpExcetpion(ExceptionEumn.ASSIGNCOMPANY_IS_FAIL);
             }
         }
+    }
+
+    public List<Contact> findByName(String key) {
+        if(StringUtil.isEmpty(key)){
+            return null;
+        }
+        return contactDao.findAllByAnyPara(key,false,"creatime",false,null);
     }
 }
