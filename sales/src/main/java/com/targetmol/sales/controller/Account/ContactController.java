@@ -78,9 +78,10 @@ public class ContactController {
 
     //绑定子联系人
     @PutMapping("{contid}/subcontact")
-    public ResponseEntity<ResultMsg> bindSubContact(@PathVariable("pid") Integer pid,
-                                                    @RequestParam  ("subcontid") Integer contid) throws Exception{
-        contactService.bindSubContact(pid,contid);
+    public ResponseEntity<ResultMsg> bindSubContact(@PathVariable("contid") Integer pid,
+                                                    @RequestParam  ("subcontid") Integer contid,
+                                                    @RequestParam(value = "ubind" ,defaultValue = "false") Boolean ubind) throws Exception{
+        contactService.bindSubContact(pid,contid,ubind);
         return ResponseEntity.ok(ResultMsg.success()) ;
     }
 

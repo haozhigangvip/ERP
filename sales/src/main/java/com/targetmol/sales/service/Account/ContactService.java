@@ -209,18 +209,21 @@ public class ContactService {
         }
     }
 
-    public void bindSubContact(Integer pid, Integer contid)  throws Exception{
+    public void bindSubContact(Integer pid, Integer contid,Boolean ubind)  throws Exception{
         if(contid==null ){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
         if(findByContId(contid)==null||(pid!=null && findByContId(pid)==null)){
             throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
         }
-
-
-            if(contactDao.bindContact(pid,contid)!=1){
-                throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+            if(ubind==true){
+                //解绑
+                pid=null;
             }
+        if(contactDao.bindContact(pid,contid)!=1){
+            throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+        }
+
 
     }
 
