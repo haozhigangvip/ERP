@@ -209,27 +209,18 @@ public class ContactService {
         }
     }
 
-    public void bindSubContact(Integer contid, Map<String, Object> map)  throws Exception{
-        if(contid==null ||map==null|| map.get("contacts")==null){
+    public void bindSubContact(Integer pid, Integer contid)  throws Exception{
+        if(contid==null ){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
-        if(findByContId(contid)==null){
+        if(findByContId(contid)==null||(pid!=null && findByContId(pid)==null)){
             throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
         }
-        List<Integer> contactids=(List<Integer>)map.get("contacts");
-        //清除所有绑定联系人
-        contactDao.setContactPidIsNull(contid);
-        //重新绑定所有子联系人
-        for(Integer id:contactids){
-             Contact cont=findByContId(id);
-             if(cont==null){
-                 throw new ErpExcetpion(ExceptionEumn.BIND_CONTACT_IS_NOT_FOUND);
-             }
-             cont.setPid(contid);
-             if(contactDao.updateByPrimaryKeySelective(cont)!=1){
-                 throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
-             }
-        }
+
+
+            if(contactDao.bindContact(pid,contid)!=1){
+                throw  new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+            }
 
     }
 
@@ -301,4 +292,6 @@ public class ContactService {
         }
         return contactDao.findAllByAnyPara(key,false,"creatime",false,null);
     }
+
+
 }

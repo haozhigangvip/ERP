@@ -78,12 +78,13 @@ public class ContactController {
 
     //绑定子联系人
     @PutMapping("{contid}/subcontact")
-    public ResponseEntity<ResultMsg> bindSubContact(@PathVariable("contid") Integer contid,
-                                                    @RequestBody  Map<String,Object> map,
-                                                    @RequestParam(value = "unbind",defaultValue = "false") Boolean unbind) throws Exception{
-        contactService.bindSubContact(contid,map);
+    public ResponseEntity<ResultMsg> bindSubContact(@PathVariable("pid") Integer pid,
+                                                    @RequestParam  ("subcontid") Integer contid) throws Exception{
+        contactService.bindSubContact(pid,contid);
         return ResponseEntity.ok(ResultMsg.success()) ;
     }
+
+
 
     //绑定公司
     @PutMapping("{contid}/assignCompany")

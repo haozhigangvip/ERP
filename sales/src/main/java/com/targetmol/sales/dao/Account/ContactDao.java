@@ -27,6 +27,9 @@ public interface ContactDao extends BaseMapper<Contact> {
             @Param("softby") String softby,@Param("desc") Boolean desc,
             @Param("pid") Integer pid);
 
+    @Update("update contact set pid=#{pid} where contactid=#{contid}")
+    int bindContact(Integer pid, Integer contid);
+
     class contactDaoProvider{
         public String findAllByAnyPara(String key,Boolean showUnActived,String softby,Boolean desc,Integer pid){
             String sqlstr="select a.*,b.name as salesname from contact as a left join `user` as b on a.saleid=b.uid  ";
@@ -71,6 +74,6 @@ public interface ContactDao extends BaseMapper<Contact> {
     @Select("select a.contactid,a.name as contactname,d.companyid,d.companyname from contact as a LEFT JOIN(select b.contactid,b.companyid,c.companyname from contact_company as b LEFT JOIN company_info as c on b.companyid=c.companyid where b.def=1) as d on a.contactid=d.contactid where a.contactid=#{contid}")
     Map<String,String> getConNameCompanyName(Integer contid);
     //解绑所有PID等于contid的所有子联系人
-    @Update("update contact set pid=null where pid=#{contid}")
+    @Update("update contact set pid=null where contactid=#{contid} ")
     Integer setContactPidIsNull(Integer contid);
 }
