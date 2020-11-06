@@ -41,8 +41,8 @@ public class TableHistoryController {
     @GetMapping ()
     public ResponseEntity<ResultMsg> findHistory(@RequestParam("tablename") String tbname,
                                                  @RequestParam("tableid")Integer tid,
-                                                 @RequestParam(value = "startdate",required = false)Date startdate,
-                                                 @RequestParam(value = "enddate",required = false)Date enddate) {
+                                                 @RequestParam(value = "startdate",required = false)String startdate,
+                                                 @RequestParam(value = "enddate",required = false)String enddate) {
        return ResponseEntity.ok(ResultMsg.success( tableHistoryService.findHistory(tbname,tid,startdate,enddate)));
     }
 
