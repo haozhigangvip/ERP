@@ -2,8 +2,8 @@ package com.targetmol.sales.service.Account;
 
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
-import com.targetmol.domain.sales.Account.AccountGroup;
-import com.targetmol.sales.dao.Account.AccountGroupDao;
+import com.targetmol.domain.sales.Account.AreaGroup;
+import com.targetmol.sales.dao.Account.AreaGroupDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,30 +13,30 @@ import java.util.List;
 
 @Service
 @Transactional(rollbackFor = {Exception.class, ErpExcetpion.class})
-public class AccountGroupService {
+public class AreaGroupService {
     @Autowired
-    private AccountGroupDao accountGroupDao;
+    private AreaGroupDao accountGroupDao;
 
 
     //查找所有
-    public List<AccountGroup> findAll() {
+    public List<AreaGroup> findAll() {
         return accountGroupDao.selectAll();
     }
 
     //根据ID查找
-    public AccountGroup findById(Integer id) {
+    public AreaGroup findById(Integer id) {
         return accountGroupDao.selectByPrimaryKey(id);
     }
 
     //添加
-    public void addnew(AccountGroup accountGroup) {
-        if(StringUtil.isEmpty(accountGroup.getGroupname())){
+    public void addnew(AreaGroup areaGroup) {
+        if(StringUtil.isEmpty(areaGroup.getGroupname())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
 
-        accountGroup.setCode( getNewCode(accountGroup.getPcode()));
+        areaGroup.setCode( getNewCode(areaGroup.getPcode()));
 
-        if(accountGroupDao.insert(accountGroup)!=1){
+        if(accountGroupDao.insert(areaGroup)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
 
@@ -51,16 +51,16 @@ public class AccountGroupService {
     }
 
     //修改
-    public void update(AccountGroup accountGroup) {
-        if(StringUtil.isEmpty(accountGroup.getGroupname())){
+    public void update(AreaGroup areaGroup) {
+        if(StringUtil.isEmpty(areaGroup.getGroupname())){
             throw new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
         }
-        AccountGroup oldaccountGroup=accountGroupDao.selectByPrimaryKey(accountGroup.getId());
+        AreaGroup oldaccountGroup=accountGroupDao.selectByPrimaryKey(areaGroup.getId());
         if(oldaccountGroup==null){
             throw new ErpExcetpion(ExceptionEumn.ACCOUNT_GROUP_IS_NOT_FOUND);
         }
         //判断code是否变更
-        String code=accountGroup.getCode();
+        String code= areaGroup.getCode();
         if(code!=oldaccountGroup.getCode()){
             //判断code中的父code是否存在
             if(code.length()>5){
@@ -74,7 +74,7 @@ public class AccountGroupService {
             }
         }
         //保存
-        if(accountGroupDao.updateByPrimaryKey(accountGroup)!=1){
+        if(accountGroupDao.updateByPrimaryKey(areaGroup)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
 

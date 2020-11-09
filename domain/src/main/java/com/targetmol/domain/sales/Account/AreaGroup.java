@@ -10,7 +10,7 @@ import javax.persistence.*;
         */
 
 @Table(name="account_group")
-public class AccountGroup {
+public class AreaGroup {
     @Id
     @KeySql(useGeneratedKeys= true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

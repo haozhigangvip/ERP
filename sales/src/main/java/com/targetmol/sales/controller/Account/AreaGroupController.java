@@ -1,22 +1,22 @@
 package com.targetmol.sales.controller.Account;
 
 import com.targetmol.common.vo.ResultMsg;
-import com.targetmol.domain.sales.Account.AccountGroup;
-import com.targetmol.sales.service.Account.AccountGroupService;
+import com.targetmol.domain.sales.Account.AreaGroup;
+import com.targetmol.sales.service.Account.AreaGroupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 客户分组
+ * 区域分组
  */
 @Slf4j
-    @RequestMapping("/accountgroup")
+    @RequestMapping("/aeragroup")
 @RestController
-public class AccountGroupController {
+public class AreaGroupController {
     @Autowired
-    private AccountGroupService accountGroupService;
+    private AreaGroupService accountGroupService;
 
     //查找所有
     @GetMapping
@@ -32,17 +32,17 @@ public class AccountGroupController {
     }
     //添加
     @PostMapping()
-    public ResponseEntity<ResultMsg> addNew(@RequestBody AccountGroup accountGroup){
-        accountGroupService.addnew(accountGroup);
+    public ResponseEntity<ResultMsg> addNew(@RequestBody AreaGroup areaGroup){
+        accountGroupService.addnew(areaGroup);
         return ResponseEntity.ok(ResultMsg.success());
     }
 
 
     //修改
     @PutMapping("{id}")
-    public ResponseEntity<ResultMsg> update(@PathVariable("id") Integer id, @RequestBody AccountGroup accountGroup){
-        accountGroup.setId(id);
-        accountGroupService.update(accountGroup);
+    public ResponseEntity<ResultMsg> update(@PathVariable("id") Integer id, @RequestBody AreaGroup areaGroup){
+        areaGroup.setId(id);
+        accountGroupService.update(areaGroup);
         return ResponseEntity.ok(ResultMsg.success());
     }
 
