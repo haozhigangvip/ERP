@@ -6,10 +6,10 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.*;
 
 /**
-        * 客户分组
+        * 区域分组
         */
 
-@Table(name="account_group")
+@Table(name="area_group")
 public class AreaGroup {
     @Id
     @KeySql(useGeneratedKeys= true)
