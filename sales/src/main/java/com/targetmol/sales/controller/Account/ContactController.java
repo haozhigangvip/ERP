@@ -6,6 +6,7 @@ import com.targetmol.common.vo.ResultMsg;
 import com.targetmol.domain.sales.Account.Contact;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +45,10 @@ public class ContactController {
         PageResult<Contact> conts=contactService.findByAll(page,pageSize,softBy,desc,key,showunactive,pid);
         return conts;
     }
-
+    //根据联系人名称查询联系人
     @GetMapping("findByName")
-    public  ResponseEntity<ResultMsg> findByName(@RequestParam("key") String key){
-        return ResponseEntity.ok(ResultMsg.success(contactService.findByName(key)));
+    public  ResponseEntity<ResultMsg> findByName(@RequestParam(value = "key",required = false) String key,@RequestParam(value = "companyid",defaultValue ="0") Integer comid){
+        return ResponseEntity.ok(ResultMsg.success(contactService.findByName(key,comid)));
     }
 
 

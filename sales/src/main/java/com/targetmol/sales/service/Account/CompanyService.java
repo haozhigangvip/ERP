@@ -10,6 +10,7 @@ import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.domain.sales.Account.Company;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
@@ -27,8 +28,9 @@ public class CompanyService {
 
     //按id查询company
     public Company findById(Integer companyid){
-
-        Company result=companyDao.selectByPrimaryKey(companyid);
+        Company company=new Company();
+        company.setCompanyid(companyid);
+        Company result=companyDao.selectByPrimaryKey(company);
 
         return result;
     }

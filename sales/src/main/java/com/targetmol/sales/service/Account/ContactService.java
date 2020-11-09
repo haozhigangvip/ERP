@@ -296,11 +296,12 @@ public class ContactService {
         }
     }
 
-    public List<Contact> findByName(String key) {
-        if(StringUtil.isEmpty(key)){
-            return null;
-        }
-        return contactDao.findAllByAnyPara(key,false,"creatime",false,null);
+    public List<Contact> findByName(String key,Integer comid) {
+//        if(StringUtil.isEmpty(key)){
+//            return null;
+//        }
+        //return contactDao.findAllByAnyPara(key,false,"creatime",false,null);
+        return contactDao.findAllByNameAndCompanyId(key,comid);
     }
 
 

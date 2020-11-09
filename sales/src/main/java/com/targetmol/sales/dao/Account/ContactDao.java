@@ -5,6 +5,7 @@ import com.targetmol.common.mapper.BaseMapper;
 import com.targetmol.domain.sales.Account.Contact;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
+import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,15 @@ public interface ContactDao extends BaseMapper<Contact> {
 
     @Update("update contact set pid=#{pid} where contactid=#{contid}")
     int bindContact(Integer pid, Integer contid);
+
+
+    @SelectProvider(type=contactDaoProvider.class,method = "findAllByNameAndCompanyId")
+    @Results({
+            @Result(id=true,column = "contactid",property = "contactid"),
+            @Result(property = "companys",column = "contactid",many =
+            @Many(select = "com.targetmol.sales.dao.Account.CompanyDao.searchByContactIdDef",fetchType = FetchType.LAZY)),
+    })
+    List<Contact> findAllByNameAndCompanyId(String key, Integer comId);
 
     class contactDaoProvider{
         public String findAllByAnyPara(String key,Boolean showUnActived,String softby,Boolean desc,Integer pid){
@@ -58,6 +68,18 @@ public interface ContactDao extends BaseMapper<Contact> {
                      sqlstr+=" order by a." + softby+( desc?" DESC":" ASC");
             }
             return sqlstr;
+        }
+
+        public  String findAllByNameAndCompanyId(String key,Integer comId){
+            String sqlstr="select a.*,b.name as salesname from contact as a left join `user` as b on a.saleid=b.uid left join contact_company as c on a.contactid=c.contactid  where a.activated=1 ";
+            if(StringUtil.isEmpty(key)==false){
+                sqlstr+=" and a.name like '%" + key  +"%'";
+            }
+            if(comId!=0){
+                sqlstr+=" and c.companyid="+comId;
+            }
+
+        return sqlstr;
         }
 
     }
