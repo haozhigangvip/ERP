@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * 区域分组
  */
 @Slf4j
-    @RequestMapping("/aeragroup")
+@RequestMapping("/areagroup")
 @RestController
 public class AreaGroupController {
     @Autowired
