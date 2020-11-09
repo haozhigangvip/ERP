@@ -30,7 +30,7 @@ public class CompanyService {
     public Company findById(Integer companyid){
         Company company=new Company();
         company.setCompanyid(companyid);
-        Company result=companyDao.selectByPrimaryKey(company);
+        Company result=companyDao.selectOne(company);
 
         return result;
     }

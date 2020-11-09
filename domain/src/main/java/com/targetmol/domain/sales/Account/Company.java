@@ -20,7 +20,7 @@ public class Company  implements Serializable {
     @Column(insertable = false,updatable =false,name = "companyid")
     private Integer companyid;
     private String companyname;
-    private String group;
+    private String areagroup;
     private String country;
     private String state;
     private String city;
@@ -32,7 +32,7 @@ public class Company  implements Serializable {
     private Date creatime;
     private Integer saleid;
     private Integer activated;
-    private Integer fileurl;
+    private String fileurl;
 
     @Transient
     private Integer def;
@@ -40,11 +40,11 @@ public class Company  implements Serializable {
 
     private List<Contact> contacts;
 
-    public Integer getFileurl() {
+    public String getFileurl() {
         return fileurl;
     }
 
-    public void setFileurl(Integer fileurl) {
+    public void setFileurl(String fileurl) {
         this.fileurl = fileurl;
     }
 
@@ -53,12 +53,12 @@ public class Company  implements Serializable {
     }
 
 
-    public String getGroup() {
-        return group;
+    public String getAreagroup() {
+        return areagroup;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setAreagroup(String areagroup) {
+        this.areagroup = areagroup;
     }
 
     public Integer getDef() {
