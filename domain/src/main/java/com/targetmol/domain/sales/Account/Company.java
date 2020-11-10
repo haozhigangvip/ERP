@@ -34,7 +34,7 @@ public class Company  implements Serializable {
     private Integer activated;
     private String fileurl;
     @Transient
-    private Integer contid;
+    private Integer contactid;
     @Transient
     private Integer def;
 
@@ -62,12 +62,12 @@ public class Company  implements Serializable {
         this.areagroup = areagroup;
     }
 
-    public Integer getContid() {
-        return contid;
+    public Integer getContactid() {
+        return contactid;
     }
 
-    public void setContid(Integer contid) {
-        this.contid = contid;
+    public void setContactid(Integer contactid) {
+        this.contactid = contactid;
     }
 
     public Integer getDef() {
