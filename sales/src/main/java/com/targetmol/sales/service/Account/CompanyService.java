@@ -90,8 +90,8 @@ public class CompanyService {
         //判断公司名是否存在
         Company c1=new Company();
         c1.setCompanyname(company.getCompanyname());
-        Company com=companyDao.selectOne(c1);
-        if(com != null){
+        List<Company> coms=companyDao.select(c1);
+        if(coms!= null|| coms.size()>0){
             throw new ErpExcetpion(ExceptionEumn.COMPANYNAME_ALREADY_EXISTS);
         }
         company.setCreatime( new Timestamp(new Date().getTime()));
