@@ -126,9 +126,9 @@ public class ContactService {
         //检查联系人数据是否为空
         CheckContact(contact);
         //检查联系人名称是否存在
-        if(contactDao.findRepeatName(contact.getContactid(),contact.getName())!=null){
-            throw new ErpExcetpion(ExceptionEumn.CONTACTNAME_ALREADY_EXISTS);
-        }
+//        if(contactDao.findRepeatName(contact.getContactid(),contact.getName())!=null){
+//            throw new ErpExcetpion(ExceptionEumn.CONTACTNAME_ALREADY_EXISTS);
+//        }
 
        if(contactDao.updateByPrimaryKeySelective(contact)!=1){
            throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
