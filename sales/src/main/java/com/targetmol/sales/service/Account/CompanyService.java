@@ -106,11 +106,11 @@ public class CompanyService {
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
         }
         //绑定联系人
-        if(company.getContid()!=null){
+        if(company.getContactid()!=null){
             Map<String,Object> mp=new HashMap<>();
             mp.put("companyid",company.getCompanyid());
             try {
-                contactService.assignCompany(company.getContid(),mp);
+                contactService.assignCompany(company.getContactid(),mp);
             } catch (Exception e) {
                 throw new ErpExcetpion(ExceptionEumn.ASSIGNCONTACT_IS_FAIL);
             }
