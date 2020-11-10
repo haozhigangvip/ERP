@@ -78,7 +78,8 @@ public enum  ExceptionEumn {
     ASSIGNCOMPANY_IS_NOT_FOUND(404,"没有绑定过该公司"),
     ACCOUNT_GROUP_IS_NOT_FOUND(404,"客户组不存在"),
     ACCOUNT_GROUP_PCODE_IS_NOT_FOUND(404,"客户组父ID不存在"),
-    ACCOUNT_GROUP_IS_EXist(400,"客户组已存在")
+    ACCOUNT_GROUP_IS_EXist(400,"客户组已存在"),
+    ASSIGNCONTACT_IS_FAIL(400,"绑定公司失败"),
     ;
     private Integer code;
     private String msg;

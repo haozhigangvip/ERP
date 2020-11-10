@@ -17,14 +17,17 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(rollbackFor = {Exception.class,ErpExcetpion.class})
 public class CompanyService {
     @Autowired
     private CompanyDao companyDao;
-
+    @Autowired
+    private ContactService contactService;
 
     //按id查询company
     public Company findById(Integer companyid){
@@ -101,6 +104,16 @@ public class CompanyService {
         Integer rs=companyDao.insert(company);
         if (rs!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_SAVE);
+        }
+        //绑定联系人
+        if(company.getContid()!=null){
+            Map<String,Object> mp=new HashMap<>();
+            mp.put("companyid",company.getCompanyid());
+            try {
+                contactService.assignCompany(company.getContid(),mp);
+            } catch (Exception e) {
+                throw new ErpExcetpion(ExceptionEumn.ASSIGNCONTACT_IS_FAIL);
+            }
         }
     }
 
