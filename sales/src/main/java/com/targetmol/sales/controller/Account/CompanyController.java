@@ -63,7 +63,7 @@ public class CompanyController extends BaseController {
         return ResponseEntity.ok(ResultMsg.success());
     }
     //设置默认单位
-    @PutMapping("{def}")
+    @PutMapping("def")
     public ResponseEntity<ResultMsg> setDefCompany(@RequestBody Map<String,Integer> mp){
         companyService.setdefCompany(mp);
         return ResponseEntity.ok(ResultMsg.success());
