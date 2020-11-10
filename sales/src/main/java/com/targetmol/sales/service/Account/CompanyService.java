@@ -94,7 +94,7 @@ public class CompanyService {
         Company c1=new Company();
         c1.setCompanyname(company.getCompanyname());
         List<Company> coms=companyDao.select(c1);
-        if(coms!= null|| coms.size()>0){
+        if( coms.size()>0){
             throw new ErpExcetpion(ExceptionEumn.COMPANYNAME_ALREADY_EXISTS);
         }
         company.setCreatime( new Timestamp(new Date().getTime()));
@@ -139,9 +139,9 @@ public class CompanyService {
         if(company.getCompanyname()==null ||company.getCompanyname()=="") {
             throw  new ErpExcetpion(ExceptionEumn.NAME_CANNOT_BE_NULL);
         }
-        if(company.getSaleid()==null){
-            throw new ErpExcetpion(ExceptionEumn.SALESMAN_CANNOT_BE_NULL);
-        }
+//        if(company.getSaleid()==null){
+//            throw new ErpExcetpion(ExceptionEumn.SALESMAN_CANNOT_BE_NULL);
+//        }
 
     }
     //根据contid查找默认单位
