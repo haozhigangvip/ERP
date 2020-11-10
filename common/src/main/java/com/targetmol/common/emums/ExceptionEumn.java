@@ -80,6 +80,8 @@ public enum  ExceptionEumn {
     ACCOUNT_GROUP_PCODE_IS_NOT_FOUND(404,"客户组父ID不存在"),
     ACCOUNT_GROUP_IS_EXist(400,"客户组已存在"),
     ASSIGNCONTACT_IS_FAIL(400,"绑定公司失败"),
+    SET_DEF_COMPANY_IS_FAILD(400,"设置默认单位失败"),
+    CONTACT_COMPANY_IS_NOT_BIND(400,"改联系人和公司没有绑定"),
     ;
     private Integer code;
     private String msg;

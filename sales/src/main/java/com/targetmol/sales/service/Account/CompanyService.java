@@ -4,11 +4,13 @@ package com.targetmol.sales.service.Account;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.targetmol.domain.sales.Account.Contact;
 import com.targetmol.sales.dao.Account.CompanyDao;
 import com.targetmol.common.emums.ExceptionEumn;
 import com.targetmol.common.exception.ErpExcetpion;
 import com.targetmol.common.vo.PageResult;
 import com.targetmol.domain.sales.Account.Company;
+import com.targetmol.sales.dao.Account.ContactCompanyDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,8 @@ public class CompanyService {
     private CompanyDao companyDao;
     @Autowired
     private ContactService contactService;
+    @Autowired
+    private ContactCompanyDao contactCompanyDao;
 
     //按id查询company
     public Company findById(Integer companyid){
@@ -163,5 +167,37 @@ public class CompanyService {
         if(companyDao.updateByPrimaryKeySelective(company)!=1){
             throw new ErpExcetpion(ExceptionEumn.FAIIL_TO_DELETE);
         }
+    }
+    //根据联系人ID设置默认单位
+    public void setdefCompany(Map<String, Integer> mp) {
+        if(mp==null|| mp.get("contactid")==null||mp.get("companyid")==null){
+            throw  new ErpExcetpion(ExceptionEumn.OBJECT_VALUE_ERROR);
+        }
+        Integer contid=mp.get("contactid");
+        Integer comid=mp.get("companyid");
+//        //判断联系人ID是否存在
+//        try{
+//          Contact cont = contactService.findByContId(contid);
+//            if(cont==null){
+//                throw new ErpExcetpion(ExceptionEumn.CONTACT_ISNOT_FOUND);
+//            }
+//           Company comp=findById(comid);
+//            if(comp==null){
+//                throw  new ErpExcetpion(ExceptionEumn.COMPANY_ISNOT_FOUND);
+//            }
+//
+//        }catch (Exception e){
+//            throw new ErpExcetpion(ExceptionEumn.SET_DEF_COMPANY_IS_FAILD);
+//        }
+        if(contactCompanyDao.findByContidAndCompanyId(contid,comid)==null){
+            throw new ErpExcetpion(ExceptionEumn.CONTACT_COMPANY_IS_NOT_BIND);
+        }
+        if(contactCompanyDao.updateDef20CompanyByContId(contid)!=1){
+            throw new ErpExcetpion(ExceptionEumn.SET_DEF_COMPANY_IS_FAILD);
+        }
+        if(contactCompanyDao.updateDefa22CompanyContid(contid,comid)!=1){
+            throw new ErpExcetpion(ExceptionEumn.SET_DEF_COMPANY_IS_FAILD);
+        }
+
     }
 }

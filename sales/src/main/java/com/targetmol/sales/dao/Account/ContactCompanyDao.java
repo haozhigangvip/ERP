@@ -20,4 +20,9 @@ public interface ContactCompanyDao  extends BaseMapper<Contact_Company> {
     //根据contid，更新最后的绑定日期的公司为默认公司
     @Update("update  contact_company set def=1 where  contactid=#{contid}   order by creatime desc limit 1")
     Integer updateDefa21CompanyContid(Integer contid);
+
+    //根据contid为指定的companyid为默认公司
+    @Update("update  contact_company set def=1 where  contactid=#{contid} and  companyid=#{companyid}")
+    Integer updateDefa22CompanyContid(Integer contid,Integer companyid);
+
 }

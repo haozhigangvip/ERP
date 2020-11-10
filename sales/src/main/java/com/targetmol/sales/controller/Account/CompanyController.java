@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Slf4j
 @RequestMapping("/company")
 @RestController
@@ -60,5 +62,12 @@ public class CompanyController extends BaseController {
         companyService.setactive(companyid,0);
         return ResponseEntity.ok(ResultMsg.success());
     }
+    //设置默认单位
+    @PutMapping("{def}")
+    public ResponseEntity<ResultMsg> setDefCompany(@RequestBody Map<String,Integer> mp){
+        companyService.setdefCompany(mp);
+        return ResponseEntity.ok(ResultMsg.success());
+    }
+
 
 }
